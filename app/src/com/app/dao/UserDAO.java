@@ -18,7 +18,7 @@ public class UserDAO {
         User user = null;
 
         try {
-            conn = ConnectionManager.getConnection();
+            conn = ConnectionManager.getConnection("14819db");
 
             stmt = conn.prepareStatement("select * from user");
             rs = stmt.executeQuery();

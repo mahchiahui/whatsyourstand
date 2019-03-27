@@ -18,7 +18,7 @@ public class testing extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/test.html");
+        RequestDispatcher view = request.getRequestDispatcher("/html/LoginPage.html");
         User user = UserDAO.retrieveUser();
         System.out.println("user id: " + user.getUserId());
         System.out.println("username: " + user.getUsername());
