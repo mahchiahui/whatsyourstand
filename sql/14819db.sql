@@ -19,32 +19,49 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `verification`
+-- Database: `14819db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `voter`
+-- Table structure for table `token`
 --
 
-DROP TABLE IF EXISTS `voter`;
-CREATE TABLE IF NOT EXISTS `voter` (
-  `voterID` int(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `hashedPN` varchar(100) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `locationDocumentPath` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  PRIMARY KEY (`voterID`)
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE IF NOT EXISTS `token` (
+  `token` varchar(1000) NOT NULL,
+  `timestamp` varchar(1000) NOT NULL,
+  PRIMARY KEY (`token`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `voter`
+-- Dumping data for table `token`
 --
 
-INSERT INTO `voter` (`voterID`, `name`, `hashedPN`, `city`, `locationDocumentPath`, `email`) VALUES
-(1, 'Chia Hui Mah', '4123046840', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\out\\artifacts\\app_war_exploded\\\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg');
+INSERT INTO `token` (`token`, `timestamp`) VALUES
+('bs5ecppsjjjpr5udmng0jda8l0', '2019-03-30 09:23:40.923'),
+('123', '2019-03-30 12:18:57.667');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `userid` int(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  PRIMARY KEY (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userid`, `password`) VALUES
+(1, 'password');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
