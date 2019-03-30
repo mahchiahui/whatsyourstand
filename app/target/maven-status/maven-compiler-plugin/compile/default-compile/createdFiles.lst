@@ -1,0 +1,4 @@
+com/app/entity/User.class
+com/app/utility/ConnectionManager.class
+com/app/dao/UserDAO.class
+com/app/servlet/LoginServlet.class
