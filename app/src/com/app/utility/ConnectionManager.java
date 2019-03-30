@@ -80,7 +80,11 @@ public class ConnectionManager {
      * @return the connection
      * @throws SQLException if an error occurs when connecting
      */
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection(String database) throws SQLException {
+        int lastSlash = dbURL.lastIndexOf('/');
+        lastSlash++;
+        String url = dbURL.substring(0,lastSlash);
+        dbURL = url + database;
         String message = "dbURL: " + dbURL
                 + "  , dbUser: " + dbUser
                 + "  , dbPassword: " + dbPassword;

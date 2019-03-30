@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title Page-->
-    <title>Registration</title>
+    <title>Verification</title>
 
     <!-- Font special for pages-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
@@ -24,7 +24,7 @@
                     <h2 class="title">Verification Information</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form action="VoterVerification" method="post" enctype="multipart/form-data">
                         <div class="form-row">
                             <div class="name">Full name</div>
                             <div class="value">
@@ -51,6 +51,17 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="name">Phone Number</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-6" type="number" name="phoneNum">
+                                    <!--
+                                    <textarea class="textarea--style-6" name="message" placeholder="Message sent to the employer"></textarea>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="name">Upload Document</div>
                             <div class="value">
                                 <div class="input-group js-input-file">
@@ -60,11 +71,9 @@
                                 </div>
                                 <div class="label--desc">Upload your bank document, tax bill, residence proof or any other relevant file. Max file size 50 MB</div>
                             </div>
+                            Submit Verification Request: <input class="btn btn--radius-2 btn--blue-2" type="submit" />
                         </div>
                     </form>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn--radius-2 btn--blue-2" type="submit">Submit Verification Request</button>
                 </div>
             </div>
         </div>

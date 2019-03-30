@@ -18,14 +18,14 @@ public class UserDAO {
         User user = null;
 
         try {
-            conn = ConnectionManager.getConnection();
+            conn = ConnectionManager.getConnection("14819db");
 
             stmt = conn.prepareStatement("select * from user");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int userid = rs.getInt(1);
+                int userID = rs.getInt(1);
                 String username = rs.getString(2);
-                user = new User(userid, username);
+                user = new User(userID, username);
                 //refer to java api for more methods
             }
         } catch (SQLException se) {
@@ -35,5 +35,52 @@ public class UserDAO {
             ConnectionManager.close(conn, stmt, rs);
         }
         return user;
+    }
+
+    public static boolean insertUser(String password){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        int userID = 0;
+
+        //count number of voters
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            stmt = conn.prepareStatement("select Count(Distinct userid) from user");
+            rs = stmt.executeQuery();
+            rs.next();
+            userID = rs.getInt(1);
+        } catch (SQLException se) {
+            Logger.getLogger("UserDAO").log(Level.SEVERE, "broke in insertUser, counting user sql", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        //create new voterID
+        userID++;
+
+        //insert user into database
+        String sql = "INSERT INTO user (userid, password) VALUES (?,?)";
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt (1, userID);
+            stmt.setString(2, password);
+
+            int result = stmt.executeUpdate();
+            if(result == 0){
+                return false;
+            }
+        } catch (SQLException se) {
+            Logger.getLogger("UserDAO").log(Level.SEVERE, "broke in insertUser, inserting user in", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return true;
     }
 }
