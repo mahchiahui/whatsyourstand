@@ -31,7 +31,7 @@ public class ConnectionManager {
             // load database connection details
             String host = props.getProperty("db.host");
             String port = props.getProperty("db.port");
-            String dbName = props.getProperty("db.name");
+            String dbName = props.getProperty("db.name");  // name of database
             dbUser = props.getProperty("db.user");
 
             // grab environment variable to check if we are on production environment

@@ -5,12 +5,33 @@
          version="4.0">
 
     <servlet>
-        <servlet-name>testing</servlet-name>
-        <servlet-class>com.app.servlet.testing</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.app.servlet.LoginServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>testing</servlet-name>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SecondRegistrationServlet</servlet-name>
+        <servlet-class>com.app.servlet.SecondRegistrationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SecondRegistrationServlet</servlet-name>
+        <url-pattern>/second-registration</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>TestingServlet</servlet-name>
+        <servlet-class>com.app.servlet.TestingServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TestingServlet</servlet-name>
         <url-pattern>/testing</url-pattern>
     </servlet-mapping>
 

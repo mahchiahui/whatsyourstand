@@ -10,15 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-//@WebServlet(name = "com.app.servlet.LoginServlet")
-
-//@WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
+//@WebServlet("/second-registration")
+public class SecondRegistrationServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public LoginServlet () {
+    public SecondRegistrationServlet() {
         super();
     }
 
@@ -33,8 +30,8 @@ public class LoginServlet extends HttpServlet {
         System.out.println(username);
         System.out.println(password);
 
-        boolean isLogin = UserDAO.login(username, password);
-        System.out.println(isLogin);
+        boolean isRegis = UserDAO.registration(username, password, 0);
+        System.out.println(isRegis);
 
 /*
         // Suppose a user has successfully logged.
@@ -46,7 +43,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/LoginPage.html");
+        RequestDispatcher view = request.getRequestDispatcher("/html/SecondRegistrationPage.html");
         view.forward(request, response);
     }
 }
