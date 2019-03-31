@@ -37,10 +37,9 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String username = rs.getString(2);
                 String password = rs.getString(3);
-                String salt = rs.getString(4);
 
                 if (userid == Integer.parseInt(id)) {
-                    user = new User(userid, username, password, salt);
+                    user = new User(userid, username, password);
                     break;
                 }
             }
@@ -55,6 +54,12 @@ public class UserDAO {
         return user;
     }
 
+
+    /**
+     *
+     * @param name
+     * @return
+     */
     public static User searchUserByName (String name) {
         User user = null;
 
@@ -67,10 +72,9 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String username = rs.getString(2);
                 String password = rs.getString(3);
-                String salt = rs.getString(4);
 
                 if (name.equals(username)) {
-                    user = new User(userid, username, password, salt);
+                    user = new User(userid, username, password);
                     break;
                 }
 
@@ -103,13 +107,13 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String username = rs.getString(2);
                 String password = rs.getString(3);
-                String salt = rs.getString(4);
-                int role = rs.getInt(5);
-                int request_del = rs.getInt(6);
+
+                int role = rs.getInt(4);
+                int request_del = rs.getInt(5);
 
                 if (request_del == 1 && (role == 1 || role == 2)) {
                     // can only delete voter or candidate data here
-                    users.add(new User(userid, username, password, salt));
+                    users.add(new User(userid, username, password));
                 }
 
             }
@@ -181,20 +185,6 @@ public class UserDAO {
 
     }
 
-    public static boolean login (String username, String pwd) {
-        // step1: call searchUserByName
-        User user = searchUserByName(username);
-
-        if (user != null) {  // && user.getUsername().equals(username)
-            // hash pwd from input field and compare
-            String salt = user.getSalt();
-            String hashed = BCrypt.hashpw(pwd, salt);
-
-            return hashed.equals(user.getHashpwd());
-//            return pwd.equals(user.getHashpwd());
-        }
-        return false;
-    }
 
     public static boolean registration (String username, String pwd, int role) {
         // search for existing User By Name first

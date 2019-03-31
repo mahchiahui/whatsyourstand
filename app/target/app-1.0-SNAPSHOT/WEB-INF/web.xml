@@ -4,21 +4,57 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+
+    <!-- Servlets  -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.app.servlet.LoginServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.app.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminMainpageServlet</servlet-name>
+        <servlet-class>com.app.servlet.AdminMainpageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminMainpageServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CandidateMainpageServlet</servlet-name>
+        <servlet-class>com.app.servlet.CandidateMainpageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CandidateMainpageServlet</servlet-name>
+        <url-pattern>/candidate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VoterMainpageServlet</servlet-name>
+        <servlet-class>com.app.servlet.VoterMainpageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VoterMainpageServlet</servlet-name>
+        <url-pattern>/voter</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>SecondRegistrationServlet</servlet-name>
         <servlet-class>com.app.servlet.SecondRegistrationServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>SecondRegistrationServlet</servlet-name>
         <url-pattern>/second-registration</url-pattern>
@@ -29,10 +65,21 @@
         <servlet-name>TestingServlet</servlet-name>
         <servlet-class>com.app.servlet.TestingServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>TestingServlet</servlet-name>
         <url-pattern>/testing</url-pattern>
     </servlet-mapping>
+
+
+    <!-- Filters -->
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.app.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/*/</url-pattern>
+    </filter-mapping>
+
 
 </web-app>

@@ -4,6 +4,7 @@ public class Token {
     private int tokenId;
     private String token;
     private String timestamp;
+    private static final int EXPIRATION_HOURS = 24;
 
     public Token (int id, String token, String timestamp) {
         this.tokenId = id;

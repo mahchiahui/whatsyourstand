@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 
-@WebServlet(name = "TestingServlet", urlPatterns = {"/TestingServlet"})
+
 public class TestingServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -28,10 +28,11 @@ public class TestingServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /*
-        RequestDispatcher view = request.getRequestDispatcher("/html/test.html");
         User user = UserDAO.retrieveUser();
         System.out.println("user id: " + user.getUserId());
         System.out.println("username: " + user.getUsername());
+
+        RequestDispatcher view = request.getRequestDispatcher("/html/LogoutPage.html");
         view.forward(request, response);
         */
         ServletOutputStream out = response.getOutputStream();
