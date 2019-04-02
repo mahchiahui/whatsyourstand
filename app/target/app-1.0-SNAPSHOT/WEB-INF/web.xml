@@ -64,4 +64,14 @@
         <servlet-name>VerifyPhoneNumServlet</servlet-name>
         <url-pattern>/VerifyPhoneNum</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>dbtestServlet</servlet-name>
+        <servlet-class>com.app.servlet.dbtestServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dbtestServlet</servlet-name>
+        <url-pattern>/dbtestServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

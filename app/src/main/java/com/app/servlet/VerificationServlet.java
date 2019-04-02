@@ -27,7 +27,7 @@ public class VerificationServlet extends HttpServlet {
         String pNum = request.getParameter("phoneNum");
 
         //get upload file path
-        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+        String uploadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
 
         //create the directory if it does not exist
         File uploadDir = new File(uploadPath);
