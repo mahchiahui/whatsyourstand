@@ -45,4 +45,23 @@
         <url-pattern>/VoterVerification</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PhoneNumServlet</servlet-name>
+        <servlet-class>com.app.servlet.PhoneNumServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PhoneNumServlet</servlet-name>
+        <url-pattern>/phoneNumberCheck</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VerifyPhoneNumServlet</servlet-name>
+        <servlet-class>com.app.servlet.VerifyPhoneNumServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VerifyPhoneNumServlet</servlet-name>
+        <url-pattern>/VerifyPhoneNum</url-pattern>
+    </servlet-mapping>
 </web-app>
