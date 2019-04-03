@@ -52,7 +52,7 @@ public class AsymmetricCryptography {
         fos.close();
     }
 
-    public String encryptText(String msg, PrivateKey key)
+    public String encryptText(String msg, PublicKey key)
             throws NoSuchAlgorithmException, NoSuchPaddingException,
             UnsupportedEncodingException, IllegalBlockSizeException,
             BadPaddingException, InvalidKeyException {
@@ -60,7 +60,7 @@ public class AsymmetricCryptography {
         return Base64.encodeBase64String(cipher.doFinal(msg.getBytes("UTF-8")));
     }
 
-    public String decryptText(String msg, PublicKey key)
+    public String decryptText(String msg, PrivateKey key)
             throws InvalidKeyException, UnsupportedEncodingException,
             IllegalBlockSizeException, BadPaddingException {
         this.cipher.init(Cipher.DECRYPT_MODE, key);

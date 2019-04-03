@@ -22,30 +22,14 @@ public class VerificationTokenController {
         //create plaintext
         String plaintext = "token:" + fakeToken + " timestamp:" + timestamp.toString();
 
-        //generateKeys if no keys
-        String publicKeyPath = path + "\\KeyPair\\VerificationPublicKey";
-        String privateKeyPath = path + "\\KeyPair\\VerificationPrivateKey";
-        File temp = new File(publicKeyPath);
-        if (!temp.exists()){
-            try {
-                GenerateKeys gk = new GenerateKeys(1024);
-                gk.createKeys();
-                gk.writeToFile(publicKeyPath, gk.getPublicKey().getEncoded());
-                gk.writeToFile(privateKeyPath, gk.getPrivateKey().getEncoded());
-            } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-                System.err.println(e.getMessage());
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
+        //simulate getting a public key from the Q&A server
+        PublicKey qnaPubKey = ActualTokenController.getPublicKey(path);
 
-        //encrypt token with timestamp
+        //simulate encrypting token and timestamp, sending it to the Q&A system
         try{
             AsymmetricCryptography ac = new AsymmetricCryptography();
-            PrivateKey privateKey = ac.getPrivate(privateKeyPath);
-            PublicKey publicKey = ac.getPublic(publicKeyPath);
-            String encrypted_msg = ac.encryptText(plaintext, privateKey);
-            return ActualTokenController.receiveEncryptedMessage(publicKey,encrypted_msg);
+            String encrypted_msg = ac.encryptText(plaintext, qnaPubKey);
+            return ActualTokenController.receiveEncryptedMessage(encrypted_msg);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             System.err.println(e.getMessage());
         } catch (Exception e) {
