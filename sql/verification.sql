@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 30, 2019 at 05:10 PM
+-- Generation Time: Apr 03, 2019 at 01:06 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `voter` (
 --
 
 INSERT INTO `voter` (`voterID`, `name`, `hashedPN`, `city`, `locationDocumentPath`, `email`) VALUES
-(1, 'Chia Hui Mah', '4123046840', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\out\\artifacts\\app_war_exploded\\\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg');
+(1, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

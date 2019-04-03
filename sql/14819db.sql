@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 30, 2019 at 05:10 PM
+-- Generation Time: Apr 03, 2019 at 01:06 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -30,18 +30,18 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `token`;
 CREATE TABLE IF NOT EXISTS `token` (
+  `tokenID` int(100) NOT NULL,
   `token` varchar(1000) NOT NULL,
   `timestamp` varchar(1000) NOT NULL,
-  PRIMARY KEY (`token`)
+  PRIMARY KEY (`tokenID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `token`
 --
 
-INSERT INTO `token` (`token`, `timestamp`) VALUES
-('bs5ecppsjjjpr5udmng0jda8l0', '2019-03-30 09:23:40.923'),
-('123', '2019-03-30 12:18:57.667');
+INSERT INTO `token` (`tokenID`, `token`, `timestamp`) VALUES
+(1, '1234', '2019-04-03 09:00:22.141');
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`userid`, `password`) VALUES
-(1, 'password');
+(1, 'password'),
+(2, 'password'),
+(3, 'password'),
+(4, 'password');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

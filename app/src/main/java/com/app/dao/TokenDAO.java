@@ -14,16 +14,36 @@ public class TokenDAO {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
+        int tokenID = 0;
+
+        //count number of tokens
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            stmt = conn.prepareStatement("select Count(Distinct tokenID) from token");
+            rs = stmt.executeQuery();
+            rs.next();
+            tokenID = rs.getInt(1);
+        } catch (SQLException se) {
+            Logger.getLogger("TokenDAO").log(Level.SEVERE, "broke in insertToken, counting token sql", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        //create new voterID
+        tokenID++;
 
         //insert voter into database
-        String sql = "INSERT INTO token (token, timestamp) VALUES (?,?)";
+        String sql = "INSERT INTO token (tokenID, token, timestamp) VALUES (?,?,?)";
 
         try {
             conn = ConnectionManager.getConnection("14819db");
 
             stmt = conn.prepareStatement(sql);
-            stmt.setString (1, token);
-            stmt.setString(2, timestamp);
+            stmt.setInt(1,tokenID);
+            stmt.setString (2, token);
+            stmt.setString(3, timestamp);
 
             int result = stmt.executeUpdate();
             if(result == 0){

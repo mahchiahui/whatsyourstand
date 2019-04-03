@@ -24,10 +24,11 @@ public class VerificationServlet extends HttpServlet {
         String name = request.getParameter("full_name");
         String email = request.getParameter("email");
         String city = request.getParameter("city");
-        String pNum = request.getParameter("phoneNum");
+        //String pNum = request.getParameter("phoneNum");
+        String pNum = "4129036789";
 
         //get upload file path
-        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+        String uploadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
 
         //create the directory if it does not exist
         File uploadDir = new File(uploadPath);
@@ -51,7 +52,7 @@ public class VerificationServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/Verification.html");
+        RequestDispatcher view = request.getRequestDispatcher("/html/register-proofdoc.html");
         view.forward(request, response);
     }
 }
