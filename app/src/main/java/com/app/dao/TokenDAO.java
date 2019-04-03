@@ -70,8 +70,8 @@ public class TokenDAO {
             stmt = conn.prepareStatement("select * from token");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                String dbToken = rs.getString(1);
-                String dbTimestamp = rs.getString(2);
+                String dbToken = rs.getString(2);
+                String dbTimestamp = rs.getString(3);
                 if (token.equals(dbToken)) {
                     result = true;
                 }
