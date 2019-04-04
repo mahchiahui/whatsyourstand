@@ -18,11 +18,11 @@ import java.io.IOException;
 
 //@WebServlet(name = "com.app.servlet.LoginServlet")
 //@WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
+public class LoginCandidateServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public LoginServlet() {
+    public LoginCandidateServlet() {
         super();
     }
 
@@ -81,7 +81,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             // If not logined, redirect to login page (LoginServlet).
-            RequestDispatcher view = request.getRequestDispatcher("/html/LoginPage.html");
+            RequestDispatcher view = request.getRequestDispatcher("/html/login-candidate.html");
             view.forward(request, response);
         }
         else {  // if logined, go to main page
@@ -101,17 +101,6 @@ public class LoginServlet extends HttpServlet {
     public void redirect (HttpServletRequest request, HttpServletResponse response, User user)
         throws ServletException, IOException {
 
-//        int role = Integer.parseInt(request.getParameter("role"));
-        int role = user.getRole();
-        if (role == 0) {
-            response.sendRedirect(this.getServletContext().getContextPath() + "/admin");
-//            response.sendRedirect(this.getServletContext().getContextPath() + "/testing");
-        }
-        else if (role == 1) {
-            response.sendRedirect(this.getServletContext().getContextPath() + "/voter");
-        }
-        else {  // candidate
-            response.sendRedirect(this.getServletContext().getContextPath() + "/candidate");
-        }
+        response.sendRedirect(this.getServletContext().getContextPath() + "/candidate");
     }
 }

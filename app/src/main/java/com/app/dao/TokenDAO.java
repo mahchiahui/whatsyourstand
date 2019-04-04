@@ -1,6 +1,7 @@
 package com.app.dao;
 
 import com.app.utility.ConnectionManager;
+import com.app.utility.DateUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -72,7 +73,10 @@ public class TokenDAO {
             while (rs.next()) {
                 String dbToken = rs.getString(2);
                 String dbTimestamp = rs.getString(3);
-                if (token.equals(dbToken)) {
+                String curTime = DateUtil.getCurrentTime();
+
+                if (token.equals(dbToken) &&
+                    DateUtil.isTimeDiffLessThanOneDay(curTime, dbTimestamp)) {
                     result = true;
                 }
 
