@@ -27,10 +27,11 @@ public class SecondRegistrationServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        int role = Integer.parseInt(request.getParameter("role"));
         System.out.println(username);
         System.out.println(password);
 
-        boolean isRegis = UserDAO.registration(username, password, 0);
+        boolean isRegis = UserDAO.registration(username, password, role);
         System.out.println(isRegis);
 
 /*

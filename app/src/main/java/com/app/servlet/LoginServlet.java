@@ -36,10 +36,10 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
 
-        User user = LoginController.login(response, username, password, true);
+        User user = LoginController.login(response, username, password, 0, true);
 
         if (user != null) {  // Suppose a user has successfully logged
             System.out.println("Login succeed");
