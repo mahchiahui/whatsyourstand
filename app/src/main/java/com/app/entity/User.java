@@ -1,28 +1,28 @@
 package com.app.entity;
 
 public class User {
+
     private int userId;
     private String username;
     private String hashpwd;
-    private String salt;
 
-    private int role;
+    private int role;  // 0: admin; 1: voter; 2: candidate
     private int requestDel;
 
-    public User(int userId, String username, String pwd, String salt) {
+    public User(int userId, String username, String pwd) {
         this.userId = userId;
         this.username = username;
         this.hashpwd = pwd;
-        this.salt = salt;
+
         this.role = 0;
         this.requestDel = 0;
     }
 
-    public User(int userId, String username, String pwd, String salt, int role, int req_del) {
+    public User(int userId, String username, String pwd, int role, int req_del) {
         this.userId = userId;
         this.username = username;
         this.hashpwd = pwd;
-        this.salt = salt;
+
         this.role = role;
         this.requestDel = req_del;
     }
@@ -49,14 +49,6 @@ public class User {
 
     public void setHashpwd(String hashpwd) {
         this.hashpwd = hashpwd;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     public int getRole() {
