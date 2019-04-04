@@ -14,7 +14,7 @@ public class VoterMainpageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/voter-Q&A.html");
+        RequestDispatcher view = request.getRequestDispatcher("/html/voter-topQ&A.html");
         view.forward(request, response);
     }
 }

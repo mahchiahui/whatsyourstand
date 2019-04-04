@@ -41,7 +41,7 @@ public class LoginCandidateServlet extends HttpServlet {
 
         User user = LoginController.login(response, username, password, true);
 
-        if (user != null) {  // Suppose a user has successfully logged
+        if (user != null && user.getRole() == 2) {  // Suppose a user has successfully logged
             System.out.println("Login succeed");
             // Storing user information in an attribute of Session.
             session.setAttribute(Constants.SESSION_USER_KEY, user);
@@ -51,7 +51,9 @@ public class LoginCandidateServlet extends HttpServlet {
 //            response.sendRedirect(this.getServletContext().getContextPath() + "/testing");
         }
         else {
-            System.out.println("Login failed");
+//            System.out.println("Login failed");
+            RequestDispatcher view = request.getRequestDispatcher("/html/login-candidate.html");
+            view.forward(request, response);
         }
     }
 
@@ -101,6 +103,8 @@ public class LoginCandidateServlet extends HttpServlet {
     public void redirect (HttpServletRequest request, HttpServletResponse response, User user)
         throws ServletException, IOException {
 
-        response.sendRedirect(this.getServletContext().getContextPath() + "/candidate");
+        if (user.getRole() == 2) {
+            response.sendRedirect(this.getServletContext().getContextPath() + "/candidate");
+        }
     }
 }
