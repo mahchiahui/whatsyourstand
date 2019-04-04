@@ -25,17 +25,18 @@ public class UserDAO {
     public UserDAO () {
     }
 
-    public static boolean insertUser(String password){
+    public static String insertUser(String password){
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
         int userID = 0;
+        String voterUsername = "";
 
         //count number of voters
         try {
             conn = ConnectionManager.getConnection("14819db");
 
-            stmt = conn.prepareStatement("select Count(Distinct userid) from user");
+            stmt = conn.prepareStatement("select Count(Distinct username) from user");
             rs = stmt.executeQuery();
             rs.next();
             userID = rs.getInt(1);
@@ -48,20 +49,21 @@ public class UserDAO {
 
         //create new voterID
         userID++;
+        voterUsername = "voter" + userID;
 
         //insert user into database
-        String sql = "INSERT INTO user (userid, password) VALUES (?,?)";
+        String sql = "INSERT INTO user (username, password) VALUES (?,?)";
 
         try {
             conn = ConnectionManager.getConnection("14819db");
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt (1, userID);
+            stmt.setString (1, voterUsername);
             stmt.setString(2, password);
 
             int result = stmt.executeUpdate();
             if(result == 0){
-                return false;
+                return voterUsername;
             }
         } catch (SQLException se) {
             Logger.getLogger("UserDAO").log(Level.SEVERE, "broke in insertUser, inserting user in", se);
@@ -69,7 +71,7 @@ public class UserDAO {
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return true;
+        return voterUsername;
     }
 
     public static User searchUserById (String id) {

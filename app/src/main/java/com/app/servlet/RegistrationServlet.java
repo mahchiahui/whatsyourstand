@@ -18,8 +18,13 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String repPassword = request.getParameter("repPassword");
         if (TokenDAO.checkToken(token) && password.equals(repPassword)) {
-            boolean insertUserResult = UserDAO.insertUser(password);
-            request.setAttribute("insertUserResult", insertUserResult);
+            String voterUsername = UserDAO.insertUser(password);
+            boolean success = false;
+            if (voterUsername != "") {
+                success = true;
+            }
+            request.setAttribute("userInsertSuccess", success);
+            request.setAttribute("voterUsername",voterUsername);
         }
         RequestDispatcher view = request.getRequestDispatcher("/html/RegistrationSuccess.jsp");
         view.forward(request, response);

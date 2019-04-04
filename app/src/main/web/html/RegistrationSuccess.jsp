@@ -6,8 +6,10 @@
 </head>
 <body>
 <%
-    boolean result = (boolean)request.getAttribute("insertUserResult");
-    if (result) {
+    String voterUsername = (String)request.getAttribute("voterUsername");
+    boolean userInsertSuccess = (boolean)request.getAttribute("userInsertSuccess");
+    if (userInsertSuccess) {
+        out.println("<h1>Your username is " + voterUsername + "</h1>");
         out.println("<h1>Successfully Registered</h1>");
     } else {
         out.println("<h1>Registration failed</h1>");
