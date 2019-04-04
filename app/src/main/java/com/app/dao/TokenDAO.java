@@ -15,13 +15,13 @@ public class TokenDAO {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        int tokenID = 0;
+        int tokenID = 12;
 
         //count number of tokens
         try {
             conn = ConnectionManager.getConnection("14819db");
 
-            stmt = conn.prepareStatement("select Count(Distinct tokenID) from token");
+            stmt = conn.prepareStatement("select Count(Distinct tokenid) from token");
             rs = stmt.executeQuery();
             rs.next();
             tokenID = rs.getInt(1);
@@ -36,7 +36,7 @@ public class TokenDAO {
         tokenID++;
 
         //insert voter into database
-        String sql = "INSERT INTO token (tokenID, token, timestamp) VALUES (?,?,?)";
+        String sql = "INSERT INTO token (tokenid, token, timestamp) VALUES (?,?,?)";
 
         try {
             conn = ConnectionManager.getConnection("14819db");

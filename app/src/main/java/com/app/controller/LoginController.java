@@ -28,7 +28,7 @@ public class LoginController {
         // step1: call searchUserByName
         User user = UserDAO.searchUserByName(username);
 
-        if (user != null && BCrypt.checkpw(pwd, user.getHashpwd())) {
+        if (user != null && BCrypt.checkpw(pwd, user.getHashpwd()) && user.getRole() == role) {
             if (rememberMe) {
                 // generate a long, unique, hard-to-guess key (which is in no way related to the user)
                 // which represents the cookie_id and store this in the DB along with the user_id
