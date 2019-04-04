@@ -201,6 +201,24 @@
         <url-pattern>/voter-myquestions</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>VoterHelpServlet</servlet-name>
+        <servlet-class>com.app.servlet.VoterHelpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VoterHelpServlet</servlet-name>
+        <url-pattern>/voter-help</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VoterSettingServlet</servlet-name>
+        <servlet-class>com.app.servlet.VoterSettingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VoterSettingServlet</servlet-name>
+        <url-pattern>/voter-settings</url-pattern>
+    </servlet-mapping>
+
     <!--   candidate pages  -->
     <servlet>
         <servlet-name>CandidateMyAnswerServlet</servlet-name>
@@ -218,6 +236,15 @@
     <servlet-mapping>
         <servlet-name>CandidateMyProfileServlet</servlet-name>
         <url-pattern>/candidate-myprofile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CandidateHelpServlet</servlet-name>
+        <servlet-class>com.app.servlet.CandidateHelpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CandidateHelpServlet</servlet-name>
+        <url-pattern>/candidate-help</url-pattern>
     </servlet-mapping>
 
 </web-app>
