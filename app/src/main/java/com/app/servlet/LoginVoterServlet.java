@@ -27,7 +27,6 @@ public class LoginVoterServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    response.getWriter().append("Served at: ").append(request.getContextPath());
 
         // Get HttpSession object
         HttpSession session = request.getSession();
@@ -36,11 +35,11 @@ public class LoginVoterServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
 
-        User user = LoginController.login(response, username, password, true);
-
+        User user = LoginController.login(response, username, password, 1, true);
+        System.out.println(user);
         if (user != null && user.getRole() == 1) {  // Suppose a user has successfully logged
             System.out.println("Login succeed");
             // Storing user information in an attribute of Session.
@@ -75,8 +74,10 @@ public class LoginVoterServlet extends HttpServlet {
                 if (cookie != null &&
                     DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
                     User user = UserDAO.searchUserById(cookie.getUserId());
-                    redirect(request, response, user);
-                    return;
+                    if (user.getRole() == 1) {
+                        redirect(request, response, user);
+                        return;
+                    }
                 }
                 // Old local storage needs to be cleared
                 LoginController.clearLoginCookie(request, response);
@@ -103,8 +104,6 @@ public class LoginVoterServlet extends HttpServlet {
     public void redirect (HttpServletRequest request, HttpServletResponse response, User user)
         throws ServletException, IOException {
 
-        if (user.getRole() == 1) {
-            response.sendRedirect(this.getServletContext().getContextPath() + "/voter");
-        }
+        response.sendRedirect(this.getServletContext().getContextPath() + "/voter");
     }
 }

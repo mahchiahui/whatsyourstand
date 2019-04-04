@@ -27,9 +27,9 @@ public class RegistrationServlet extends HttpServlet {
             String hashed_password = BCrypt.hashpw(password, salt);
 
             //insert user
-            String voterUsername = UserDAO.insertUser(hashed_password,1);
+            String voterUsername = UserDAO.insertUser("", hashed_password,1);
             boolean success = false;
-            if (voterUsername != "") {
+            if (! voterUsername.equals("")) {
                 success = true;
             }
             //set return attribute back to user

@@ -34,7 +34,7 @@ public class UserDAO {
      * @param role
      * @return
      */
-    public static String insertUser(String password, int role){
+    public static String insertUser(String username, String password, int role){
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
@@ -59,15 +59,14 @@ public class UserDAO {
 
         //insert user into database
         String sqlUser = "INSERT INTO user (userid, name, hashpwd, role, request_del) VALUES (?,?,?,?,?)";
-        String sqlVoter = "INSERT INTO voter (userid, email, location) VALUES (?,?,?)";
-        Random rand = new Random();
-        String voterName = "voter" + Integer.toString(Math.abs(rand.nextInt()));
+
         try {
             conn = ConnectionManager.getConnection("14819db");
 
+            // Insert a user into User table
             stmt = conn.prepareStatement(sqlUser);
             stmt.setInt (1, userID);
-            stmt.setString(2, voterName);
+            stmt.setString(2, username);
             stmt.setString(3, password);
             stmt.setInt(4, role);
             stmt.setInt(5, 0);
@@ -77,10 +76,37 @@ public class UserDAO {
                 return "";
             }
 
-            stmt = conn.prepareStatement(sqlVoter);
-            stmt.setInt (1, userID);
-            stmt.setString(2, "");
-            stmt.setString(3, "");
+            // Insert a user into 3 different user role table
+            if (role == 1) {
+                String sqlVoter = "INSERT INTO voter (userid, email, location) VALUES (?,?,?)";
+                Random rand = new Random();
+                username = "voter" + Integer.toString(Math.abs(rand.nextInt()));
+                stmt = conn.prepareStatement(sqlVoter);
+                stmt.setInt (1, userID);
+                stmt.setString(2, "");
+                stmt.setString(3, "");
+            }
+            else if (role == 0) {
+                String sqlAdmin = "INSERT INTO admin (userid, level) VALUES (?,?)";
+                stmt = conn.prepareStatement(sqlAdmin);
+                stmt.setInt (1, userID);
+                stmt.setInt (2, 1);  // now it's default 1
+            }
+            else {
+                String sqlCandidate = "INSERT INTO candidate (userid, realname, age, location, " +
+                    "workplace, political_affiliation, political_goal, educationprofile_photo_path) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?)";
+                stmt = conn.prepareStatement(sqlCandidate);
+                stmt.setInt (1, userID);
+                stmt.setString(2, "");
+                stmt.setInt (3, 18);  // now it's default 18
+                stmt.setString(4, "Pittsburgh");
+                stmt.setString(5, "");
+                stmt.setString(6, "");
+                stmt.setString(7, "");
+                stmt.setString(8, "");
+                stmt.setString(9, "");
+            }
 
             result = stmt.executeUpdate();
             if (result == 0) {
@@ -92,7 +118,7 @@ public class UserDAO {
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return voterName;
+        return username;
     }
 
 
@@ -108,9 +134,11 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String username = rs.getString(2);
                 String password = rs.getString(3);
+                int role = Integer.parseInt(rs.getString(4));
+                int del = Integer.parseInt(rs.getString(5));
 
                 if (userid == Integer.parseInt(id)) {
-                    user = new User(userid, username, password);
+                    user = new User(userid, username, password, role, del);
                     break;
                 }
             }
@@ -138,9 +166,11 @@ public class UserDAO {
                 int userid = rs.getInt(1);
                 String username = rs.getString(2);
                 String password = rs.getString(3);
+                int role = Integer.parseInt(rs.getString(4));
+                int del = Integer.parseInt(rs.getString(5));
 
                 if (name.equals(username)) {
-                    user = new User(userid, username, password);
+                    user = new User(userid, username, password, role, del);
                     break;
                 }
 
@@ -199,7 +229,7 @@ public class UserDAO {
      * @param pwd hashed password
      * @return true if insert succeed, false if username exist
      */
-    public static boolean createUser (String username, String pwd, String salt, int role) {
+    public static boolean createUser (String username, String pwd, int role) {
         int curMaxId = 0;
         String userId = null;
         boolean flagSuccess = false;
@@ -256,7 +286,9 @@ public class UserDAO {
             String salt = BCrypt.gensalt(11);
             String hashed = BCrypt.hashpw(pwd, salt);
             System.out.println("hashed pwd: " + hashed);
-            return createUser(username, hashed, salt, role);
+
+//            return createUser(username, hashed, role);
+            return ! insertUser(username, hashed, role).equals("");
         }
         return false;
     }

@@ -36,10 +36,10 @@ public class LoginAdminServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
 
-        User user = LoginController.login(response, username, password, true);
+        User user = LoginController.login(response, username, password, 0, true);
 
         if (user != null && user.getRole() == 0) {  // Suppose a user has successfully logged
             System.out.println("Login succeed");
@@ -75,8 +75,10 @@ public class LoginAdminServlet extends HttpServlet {
                 if (cookie != null &&
                     DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
                     User user = UserDAO.searchUserById(cookie.getUserId());
-                    redirect(request, response, user);
-                    return;
+                    if (user.getRole() == 0) {
+                        redirect(request, response, user);
+                        return;
+                    }
                 }
                 // Old local storage needs to be cleared
                 LoginController.clearLoginCookie(request, response);
@@ -103,8 +105,6 @@ public class LoginAdminServlet extends HttpServlet {
     public void redirect (HttpServletRequest request, HttpServletResponse response, User user)
         throws ServletException, IOException {
 
-        if (user.getRole() == 0) {
-            response.sendRedirect(this.getServletContext().getContextPath() + "/admin");
-        }
+        response.sendRedirect(this.getServletContext().getContextPath() + "/admin");
     }
 }
