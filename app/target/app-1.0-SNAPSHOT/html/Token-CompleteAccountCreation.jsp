@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Create An Account</title>
+  <title>Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,7 +36,7 @@
       
           <ul class="navbar-nav mx-auto">  <!-- top right bottom left-->
 
-<li  style="margin-right: 30px;" > <a href="#" class="btn btn-primary btn-icon-split btn-lg " style="background-color: #5f38a4; border-color: #5f38a4; opacity:.4;" >
+<li  style="margin-right: 30px;" > <a href="login-voter" class="btn btn-primary btn-icon-split btn-lg " style="background-color: #5f38a4; border-color: #5f38a4; opacity:.4;" >
                     <span class="icon text-white-50">
                       <i class="fas fa-flag"></i>
                     </span>
@@ -44,7 +44,7 @@
                   </a>
             </li>
 
-            <li style="margin-right: 30px;"> <a href="login-candidate.html" class="btn btn-primary btn-icon-split btn-lg" style="background-color: #5f38a4; border-color: #5f38a4;">
+            <li style="margin-right: 30px;"> <a href="login-candidate" class="btn btn-primary btn-icon-split btn-lg" style="background-color: #5f38a4; border-color: #5f38a4;">
                     <span class="icon text-white-50">
                       <i class="fas fa-flag"></i>
                     </span>
@@ -52,7 +52,7 @@
                   </a>
             </li>
 
-            <li style="margin-right: 30px;"> <a href="login-admin.html" class="btn btn-primary btn-icon-split btn-lg" style="background-color: #5f38a4; border-color: #5f38a4;">
+            <li style="margin-right: 30px;"> <a href="login-admin" class="btn btn-primary btn-icon-split btn-lg" style="background-color: #5f38a4; border-color: #5f38a4;">
                     <span class="icon text-white-50">
                       <i class="fas fa-flag"></i>
                     </span>
@@ -83,31 +83,51 @@
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">
-                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
         <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
-      </a></h1>Create an account!
+      </a></h1>
+                      <%
+                          boolean userInsertSuccess = (boolean)request.getAttribute("userInsertSuccess");
+                          String voterUsername = (String) request.getAttribute("voterUsername");
+                          if (userInsertSuccess) {
+                              out.println("<h4>Successfully Created an Account.</h4>");
+                              out.println("Your user name is " + voterUsername + ".");
+                          } else {
+                              out.println("<h4>Failed to create an Account.</h4>");
+                              out.println("Please check that you have entered the correct token");
+                          }
+
+                      %>
                   </div>
                   <form class="user">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="token" aria-describedby="Token Help" placeholder="Enter Token">
+                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="ReenterInputPassword" placeholder="Reenter Password">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                      </div>
                     </div>
-                    
                     <a href="index.html" class="btn btn-primary btn-user btn-block">
-                      Create An Account
+                      Login
                     </a>
                   
                     
                   </form>
-                  
+                  <hr>
+                  <div class="text-center">
+                    <a class="small" href="forgot-password.html">Forgot Password?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="register.html">Create an Account!</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -121,8 +141,8 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="html/vendor/jquery/jquery.min.js"></script>
-  <script src="html/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
   <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>

@@ -12,12 +12,12 @@
   <title>Verification</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> 
+  <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!--<link href="vendor/font-awesome.min.css" rel="stylesheet" type="text/css">-->
   <!--<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 -->
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="html/css/sb-admin-2.min.css" rel="stylesheet">
 
 
 </head>
@@ -31,7 +31,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -43,7 +43,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="admin">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -58,7 +58,7 @@
 
       <!-- Nav Item - Accounts Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="admin-accounts.html">
+        <a class="nav-link" href="admin-accounts">
           <i class="fas fa-fw fa-cog"></i>
           <span>Accounts</span>
         </a>
@@ -66,7 +66,7 @@
 
       <!-- Nav Item - Q & A Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="admin-Q&A.html" >
+        <a class="nav-link collapsed" href="admin" >
           <i class="fas fa-fw fa-wrench"></i>
           <span>Question & Answer</span>
         </a>
@@ -74,7 +74,7 @@
 
       <!-- Nav Item - Verification Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" style="opacity: .3;">
+        <a class="nav-link collapsed" href="admin-verification" style="opacity: .3;">
           <i class="fas fa-fw fa-folder"></i>
           <span>Verification</span>
         </a>
@@ -288,8 +288,14 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-  
-            <h1 class="h3 mb-2 text-gray-800">Successfully Verify the Voter(s).</h1>
+          <%
+            boolean tokenResult = (boolean)request.getAttribute("tokenResult");
+            if (tokenResult) {
+              out.println("<h1 class=\"h3 mb-2 text-gray-800\">Successfully Verified the Voter(s).</h1>");
+            } else {
+              out.println("<h1 class=\"h3 mb-2 text-gray-800\">Failed to Verify the Voter(s).</h1>");
+            }
+          %>
 
           <!-- Content Row -->
       
@@ -348,21 +354,21 @@
   </div>
 
    <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="html/vendor/jquery/jquery.min.js"></script>
+  <script src="html/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="html/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="html/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="html/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="html/js/demo/datatables-demo.js"></script>
 
 </body>
 

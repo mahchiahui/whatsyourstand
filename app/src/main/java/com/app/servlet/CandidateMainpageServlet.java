@@ -14,7 +14,7 @@ public class CandidateMainpageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/admin-Q&A.html");
+        RequestDispatcher view = request.getRequestDispatcher("/html/candidate-topQ&A.html");
         view.forward(request, response);
     }
 }

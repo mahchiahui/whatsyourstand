@@ -47,7 +47,7 @@ public class VerificationServlet extends HttpServlet {
         //set up
         boolean insertVoterResult = VerVoterDAO.setVerVoter(pNum, city, locationDocumentPath, email, name);
         request.setAttribute("insertVoterResult", insertVoterResult);
-        RequestDispatcher view = request.getRequestDispatcher("/html/VerificationSent.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("/html/register-infosubmitted.html");
         view.forward(request, response);
     }
 

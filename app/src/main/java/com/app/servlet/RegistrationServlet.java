@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RegistrationServlet", urlPatterns = {"/VoterRegistration"})
+@WebServlet(name = "RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //takes in parameters
@@ -38,13 +38,13 @@ public class RegistrationServlet extends HttpServlet {
         }
 
         //return
-        RequestDispatcher view = request.getRequestDispatcher("/html/RegistrationSuccess.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("/html/Token-CompleteAccountCreation.jsp");
         view.forward(request, response);
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/RegistrationToken.html");
+        RequestDispatcher view = request.getRequestDispatcher("/html/Token-VoterRegistration.html");
         view.forward(request, response);
     }
 }

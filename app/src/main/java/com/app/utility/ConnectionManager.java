@@ -32,15 +32,17 @@ public class ConnectionManager {
             String host = props.getProperty("db.host");
             String port = props.getProperty("db.port");
             String dbName = props.getProperty("db.name");  // name of database
-            dbUser = props.getProperty("db.user");
 
             // grab environment variable to check if we are on production environment
             String username = System.getProperty("os.name");
+            System.out.println(props.getProperty("do.db.password"));
             if (username.equals("Linux")) {
-                // in production environment, use aws.db.password
-                dbPassword = props.getProperty("aws.db.password");
+                // in production environment, use DigitalOcean.db.password
+                dbUser = props.getProperty("do.db.user");
+                dbPassword = props.getProperty("do.db.password");
             } else {
                 // in local environment, use db.password
+                dbUser = props.getProperty("db.user");
                 dbPassword = props.getProperty("db.password");
             }
 
