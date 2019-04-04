@@ -2,6 +2,7 @@ package com.app.servlet;
 
 import com.app.dao.TokenDAO;
 import com.app.dao.UserDAO;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,18 +15,29 @@ import java.io.IOException;
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/VoterRegistration"})
 public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //takes in parameters
         String token = request.getParameter("token");
         String password = request.getParameter("password");
         String repPassword = request.getParameter("repPassword");
+
+        //checks that token is valid and that password and repeated password is equal
         if (TokenDAO.checkToken(token) && password.equals(repPassword)) {
-            String voterUsername = UserDAO.insertUser(password,1);
+            //hash the password
+            String salt = BCrypt.gensalt(12);
+            String hashed_password = BCrypt.hashpw(password, salt);
+
+            //insert user
+            String voterUsername = UserDAO.insertUser(hashed_password,1);
             boolean success = false;
             if (voterUsername != "") {
                 success = true;
             }
+            //set return attribute back to user
             request.setAttribute("userInsertSuccess", success);
             request.setAttribute("voterUsername",voterUsername);
         }
+
+        //return
         RequestDispatcher view = request.getRequestDispatcher("/html/RegistrationSuccess.jsp");
         view.forward(request, response);
 
