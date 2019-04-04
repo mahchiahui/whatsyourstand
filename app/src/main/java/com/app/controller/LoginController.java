@@ -24,7 +24,7 @@ public class LoginController {
      * @param rememberMe
      * @return
      */
-    public static User login (HttpServletResponse response, String username, String pwd, boolean rememberMe) {
+    public static User login (HttpServletResponse response, String username, String pwd, int role, boolean rememberMe) {
         // step1: call searchUserByName
         User user = UserDAO.searchUserByName(username);
 
@@ -60,7 +60,7 @@ public class LoginController {
             oldSession.invalidate();
         }
         clearLoginCookie(request, response);
-        response.sendRedirect(context.getContextPath() + "/login");
+        response.sendRedirect(context.getContextPath() + "/login-voter");
     }
 
 

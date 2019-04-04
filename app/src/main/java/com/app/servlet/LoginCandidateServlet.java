@@ -27,7 +27,6 @@ public class LoginCandidateServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    response.getWriter().append("Served at: ").append(request.getContextPath());
 
         // Get HttpSession object
         HttpSession session = request.getSession();
@@ -36,10 +35,10 @@ public class LoginCandidateServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
 
-        User user = LoginController.login(response, username, password, true);
+        User user = LoginController.login(response, username, password, 2, true);
 
         if (user != null && user.getRole() == 2) {  // Suppose a user has successfully logged
             System.out.println("Login succeed");
@@ -75,8 +74,10 @@ public class LoginCandidateServlet extends HttpServlet {
                 if (cookie != null &&
                     DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
                     User user = UserDAO.searchUserById(cookie.getUserId());
-                    redirect(request, response, user);
-                    return;
+                    if (user.getRole() == 2) {
+                        redirect(request, response, user);
+                        return;
+                    }
                 }
                 // Old local storage needs to be cleared
                 LoginController.clearLoginCookie(request, response);
@@ -103,8 +104,6 @@ public class LoginCandidateServlet extends HttpServlet {
     public void redirect (HttpServletRequest request, HttpServletResponse response, User user)
         throws ServletException, IOException {
 
-        if (user.getRole() == 2) {
-            response.sendRedirect(this.getServletContext().getContextPath() + "/candidate");
-        }
+        response.sendRedirect(this.getServletContext().getContextPath() + "/candidate");
     }
 }
