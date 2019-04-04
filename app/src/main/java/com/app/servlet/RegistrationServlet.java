@@ -18,7 +18,7 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String repPassword = request.getParameter("repPassword");
         if (TokenDAO.checkToken(token) && password.equals(repPassword)) {
-            String voterUsername = UserDAO.insertUser(password);
+            String voterUsername = UserDAO.insertUser(password,1);
             boolean success = false;
             if (voterUsername != "") {
                 success = true;

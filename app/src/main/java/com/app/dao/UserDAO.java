@@ -34,7 +34,7 @@ public class UserDAO {
      * @param role
      * @return
      */
-    public static boolean insertUser(String password, int role){
+    public static String insertUser(String password, int role){
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
@@ -74,7 +74,7 @@ public class UserDAO {
 
             int result = stmt.executeUpdate();
             if (result == 0) {
-                return false;
+                return "";
             }
 
             stmt = conn.prepareStatement(sqlVoter);
@@ -84,7 +84,7 @@ public class UserDAO {
 
             result = stmt.executeUpdate();
             if (result == 0) {
-                return false;
+                return "";
             }
         } catch (SQLException se) {
             Logger.getLogger("UserDAO").log(Level.SEVERE, "broke in insertUser, inserting user in", se);
@@ -92,7 +92,7 @@ public class UserDAO {
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return true;
+        return voterName;
     }
 
 

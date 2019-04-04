@@ -9,14 +9,14 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>My Questions</title>
+  <title>My Answers</title>
 
   <!-- Custom fonts for this template-->
-  <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!--<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 -->
   <!-- Custom styles for this template-->
-  <link href="html/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -55,27 +55,27 @@
         Sections
       </div>
 
-      <!-- Nav Item - My Quetions Menu -->
+      <!-- Nav Item - My Answers Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="#" style="opacity: .3;">
+        <a class="nav-link" href="candidate-myanswers.html" >
           <i class="fas fa-fw fa-folder"></i>
-          <span>My Questions</span>
+          <span>My Answers</span>
         </a>
       </li>
 
       <!-- Nav Item - Q & A  Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="voter-topQ&A.html">
+        <a class="nav-link" href="candidate-topQ&A.html">
           <i class="fas fa-fw fa-paw"></i>
           <span>Top Question & Answer</span>
         </a>
       </li>
 
-      <!-- Nav Item - Setting Menu -->
+      <!-- Nav Item - Profile Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="voter-settings.html" >
+        <a class="nav-link" href="#" style="opacity:.3">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Setting</span>
+          <span>My Profile</span>
         </a>
       </li>
       <!-- Divider -->
@@ -260,7 +260,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Voter 000232200</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Candidate Valerie Luna</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -295,44 +295,87 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">My Questions</h1>
-           
+            <h1 class="h3 mb-0 text-gray-800">Jame Bean</h1><br>
+
+          <p><span>Personas</span>
+           <br>
+           <br>
+
 
     
-          <a class="btn btn-primary dropdown-toggle" href="#" id="TelDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">A New Question 
-            <i class="fas fa-plus"></i>
-          </a>
-           <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="TelDropdown">
-                <h6 class="dropdown-header">
-                 Create a new Question
-                </h6>
-            <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-5">
-                  <form class="user" style="text-align: right" >
-                    <div class="form-group">
-                  <span style="float: left"><b>Title</b><br></span>
-                  <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here"> 
-
-                  <hr>
-                    <br><span style="float: left"><b>Description</b></span>
-                  <textarea rows="4" cols="50">
-                    Please input your Description Here
-                  </textarea>
-                  <br>
-                
-                  <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
-
-                     </div>
-                 </from>
-
-                    
-                  </div>
-            </a>
+         </p>
           </div>
         
-                </div>
+        </div>
             
+          <!-- Content Row -->
 
+          <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-10 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Activity Result</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Views</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">40,000</div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Answers</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">503</div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Content Row -->
  
@@ -458,21 +501,21 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="html/vendor/jquery/jquery.min.js"></script>
-  <script src="html/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="html/js/sb-admin-2.min.js"></script>
+  <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="html/vendor/chart.js/Chart.min.js"></script>
+  <script src="vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="html/js/demo/chart-area-demo.js"></script>
-  <script src="html/js/demo/chart-pie-demo.js"></script>
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
