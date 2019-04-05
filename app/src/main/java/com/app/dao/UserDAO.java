@@ -34,7 +34,7 @@ public class UserDAO {
      * @param role
      * @return
      */
-    public static String insertUser(String username, String password, int role){
+    public static String insertUser(String password, int role){
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
@@ -57,6 +57,10 @@ public class UserDAO {
         //create new voterID
         userID++;
 
+        //create new username
+        Random rand = new Random();
+        String username = "voter" + Math.abs(rand.nextInt());
+
         //insert user into database
         String sqlUser = "INSERT INTO user (userid, name, hashpwd, role, request_del) VALUES (?,?,?,?,?)";
 
@@ -66,8 +70,6 @@ public class UserDAO {
             // Insert a user into 3 different user role table
             if (role == 1) {
                 String sqlVoter = "INSERT INTO voter (userid, email, location) VALUES (?,?,?)";
-                Random rand = new Random();
-                username = "voter" + Integer.toString(Math.abs(rand.nextInt()));
                 stmt = conn.prepareStatement(sqlVoter);
                 stmt.setInt (1, userID);
                 stmt.setString(2, "");
@@ -289,7 +291,7 @@ public class UserDAO {
             System.out.println("hashed pwd: " + hashed);
 
 //            return createUser(username, hashed, role);
-            return ! insertUser(username, hashed, role).equals("");
+            return ! insertUser(hashed, role).equals("");
         }
         return false;
     }
