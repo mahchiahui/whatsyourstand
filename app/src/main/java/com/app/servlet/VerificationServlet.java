@@ -44,8 +44,10 @@ public class VerificationServlet extends HttpServlet {
             part.write(locationDocumentPath);
         }
 
-        //set up
+        //insert information into database
         boolean insertVoterResult = VerVoterDAO.setVerVoter(pNum, city, locationDocumentPath, email, name);
+
+        //sent result back
         request.setAttribute("insertVoterResult", insertVoterResult);
         RequestDispatcher view = request.getRequestDispatcher("/html/register-infosubmitted.html");
         view.forward(request, response);

@@ -21,6 +21,8 @@ public class AdminVerificationServlet extends HttpServlet {
         String voterID = list.get(0);
         int voterIDNum = Integer.parseInt(voterID);
         String path = getServletContext().getRealPath(".");
+
+        //Send token to Q&A database (works on local, but not on digitalocean, which is why it is commented out)
         //boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
         request.setAttribute("tokenResult",true);
         RequestDispatcher view = request.getRequestDispatcher("/html/admin-verificationSuccessful.jsp");
