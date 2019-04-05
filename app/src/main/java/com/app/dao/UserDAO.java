@@ -63,19 +63,6 @@ public class UserDAO {
         try {
             conn = ConnectionManager.getConnection("14819db");
 
-            // Insert a user into User table
-            stmt = conn.prepareStatement(sqlUser);
-            stmt.setInt (1, userID);
-            stmt.setString(2, username);
-            stmt.setString(3, password);
-            stmt.setInt(4, role);
-            stmt.setInt(5, 0);
-
-            int result = stmt.executeUpdate();
-            if (result == 0) {
-                return "";
-            }
-
             // Insert a user into 3 different user role table
             if (role == 1) {
                 String sqlVoter = "INSERT INTO voter (userid, email, location) VALUES (?,?,?)";
@@ -107,6 +94,20 @@ public class UserDAO {
                 stmt.setString(8, "");
                 stmt.setString(9, "");
             }
+
+            int result = stmt.executeUpdate();
+
+            if (result == 0) {
+                return "";
+            }
+
+            // Insert a user into User table
+            stmt = conn.prepareStatement(sqlUser);
+            stmt.setInt (1, userID);
+            stmt.setString(2, username);
+            stmt.setString(3, password);
+            stmt.setInt(4, role);
+            stmt.setInt(5, 0);
 
             result = stmt.executeUpdate();
             if (result == 0) {

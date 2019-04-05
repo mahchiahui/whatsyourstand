@@ -1,6 +1,7 @@
 package com.app.servlet;
 
 import com.app.controller.LoginController;
+import com.app.controller.RedirectController;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
 import com.app.entity.Cookie;
@@ -9,6 +10,7 @@ import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +48,7 @@ public class LoginVoterServlet extends HttpServlet {
             session.setAttribute(Constants.SESSION_USER_KEY, user);
 //            String sessionId = session.getId();
 
-            redirect(request, response, user);
-//            response.sendRedirect(this.getServletContext().getContextPath() + "/testing");
+            RedirectController.redirectToHomePage(request, response, user);
         }
         else {
 //            System.out.println("Login failed");
@@ -58,52 +59,62 @@ public class LoginVoterServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        //read HttpSession.
+        //1) if exist, read the user object within it, role check who you are
+        //   1.1 if you are the role accessing pages belonging to your role, no redirection
+        //   1.2 if you are the role accessing pages not belonging to your role, redirect you to login page
+        //2) if it doesn't exist, but has valid cookie
+        //   same as above
+        //3) if it doesn't exist, and doesn't have valid cookie
+        //  2.1 if you are on login pages, no redirection
+        //  2.2 if you are not on login pages, redirect you to /login-voter
+
         // Get HttpSession object
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+        User loginedInfo = null;
 
-        // Get the User object stored to the session
-        User loginedInfo = (User) session.getAttribute(Constants.SESSION_USER_KEY);
+        boolean isCookieValid = false;
+        String cookieid = LoginController.getCookieId(request);
+        if (cookieid != null) {
+            Cookie cookie = CookieDao.searchCookie(cookieid);
+            String curTime = DateUtil.getCurrentTime();
 
-        // Session does not contain login info, check local storage of cookie
-        if (loginedInfo == null) {
-            String cookieid = LoginController.getCookieId(request);
-            if (cookieid != null) {
-                Cookie cookie = CookieDao.searchCookie(cookieid);
-                String curTime = DateUtil.getCurrentTime();
-                // Cookie is valid and has not expired
-                if (cookie != null &&
-                    DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
-                    User user = UserDAO.searchUserById(cookie.getUserId());
-                    if (user.getRole() == 1) {
-                        redirect(request, response, user);
-                        return;
-                    }
+            // Cookie is valid in db and has not expired
+            if (cookie != null &&
+                DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
+
+                String userid = cookie.getUserId();
+                User user = UserDAO.searchUserById(userid);
+                if (user.getRole() == 1) {
+                    loginedInfo = user;
+                    isCookieValid = true;
                 }
-                // Old local storage needs to be cleared
-                LoginController.clearLoginCookie(request, response);
             }
+        }
 
-            // If not logined, redirect to login page (LoginServlet).
-            RequestDispatcher view = request.getRequestDispatcher("/html/login-voter.html");
-            view.forward(request, response);
+        if (! isCookieValid) {
+            // Old local storage needs to be cleared
+            LoginController.clearLoginCookie(request, response);
         }
-        else {  // if logined, go to main page
-            redirect(request, response, loginedInfo);
+
+        if ((session == null && isCookieValid) || // no session, but has cookie
+            // has session and has login
+            (session != null && (loginedInfo = (User) session.getAttribute(Constants.SESSION_USER_KEY)) != null)) {
+
+            if (session == null) {
+                session = request.getSession();
+                session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
+            }
+            RedirectController.redirectToHomePage(request, response, loginedInfo);
         }
+        else {
+            RedirectController.showFrontEnd(request, response, "/html/login-voter.html");
+        }
+
     }
 
 
-    /**
-     * Redirect to the corresponding user account using logged in info
-     * @param request
-     * @param response
-     * @param user
-     * @throws ServletException
-     * @throws IOException
-     */
-    public void redirect (HttpServletRequest request, HttpServletResponse response, User user)
-        throws ServletException, IOException {
 
-        response.sendRedirect(this.getServletContext().getContextPath() + "/voter");
-    }
+
+
 }
