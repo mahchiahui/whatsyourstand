@@ -92,26 +92,46 @@
       </a></h1>
                     <h1 class="h4 text-gray-900 mb-4">Verify Your Identity</h1>
                   </div>
-                  <a style="margin-bottom: 20px;" href="privacypolicy" class="btn btn-privary btn-block">Please Read our <u style="color:purple;">Privay Policy</u></a>
+                  <a style="margin-bottom: 20px;" href="privacypolicy" class="btn btn-privacy btn-block">Please Read our <u style="color:purple;">Privay Policy</u></a>
                   <form class="user" style="text-align: right" action="VoterVerification" method="post" enctype="multipart/form-data">
+
                     <div class="form-group">
+                        <div style="width:389px;">
                         <label style="margin-right: 5px;">Legal Name</label><input style="margin-bottom: 20px;width: 60%;display: inline-block;" type="text" name="full_name" class="form-control form-control-user" id="name" aria-describedby="Telephone Help" placeholder="Enter Your Full(Legal) Name" required>
-                       
-                       <a class="dropdown-toggle" href="#" id="NameDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon text-purple-50">
-                      <i class="fa fa-question"></i>
-                    </span></a></br>
 
 
-                    
+                          <a class="btn btn-primary dropdown-toggle" type="button" id="legalNamedropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i style="color:white;" class="fa fa-question"></i>
+                          </a>
+                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="LegalNameDropdown">
+                           Why Legal Name?
+                             <h6 class="dropdown-header">Why Legal Name?</h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    Because we want to forbid malicious multiple registrations.</br>
+                    <b>How will we use? </b></br>
+                     We will compare it with the name on your proof document.</br>
+                    <b>When will we delete? </b></br>
+                    After verification or upon request.</br></br>
+                    <b>For more details: Please Read our <u style="color:purple;">Privay Policy</u></b>
+                  </div>
+                </a>
+                          </div>
+                        <div>
+
+
+
+
 
                        <label style="margin-right: 15px;">Email</label><input style="margin-bottom: 20px;width: 60%;display: inline-block;" name="email" type="email" class="form-control form-control-user" id="email" aria-describedby="Email Help" placeholder="Enter Your Email" required>
                        
-                       <a class="dropdown-toggle" href="#" id="EmailDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon text-purple-50">
-                      <i class="fa fa-question"></i>
+                       <a class="btn btn-primary dropdown-toggle" type="button" id="legalNamedropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i style="color:white;" class="fa fa-question"></i>
+                          </a>
                     </span></a></br>
-                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="EmailDropdown">             
 
-                 <h6 class="dropdown-header">
+                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="CityDropdown">
+                              <h6 class="dropdown-header">
                  Why Email?
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -124,56 +144,132 @@
                     <b>For more details: Please Read our <u style="color:purple;">Privay Policy</u></b>  
                   </div>
                 </a>
+
+
+                      </div>
+
+                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="CityDropdown">
+                              <h6 class="dropdown-header">
+                                Why Reenter email
+                        </h6>
+                        <a class="dropdown-item d-flex align-items-center" href="#"></a>
+                        <div class="mr-3">
+                        <b>Why?</b></br>
+                        Becuase email is the only way we can contact you after verification.</br>
+
+                        <b>When will we delete?</b></br>
+                        We will delete the proof document after verifying your identity.</br>
+
+                        <b>How will we store?</b></br>
+                        We will use state of art security technology to store your email.
+                        </br></br>
+
+                        <b>For more details: Please Read our
+                          <u href="privacypolicy.html" style="color:purple;">Privay Policy</u>
+
+                        </b>
+                        </div>
               </div>
 
-                    <label style="margin-right: 3px;">Email Again</label><input name="email" style="margin-bottom: 20px;width: 60%;display: inline-block;" type="email" class="form-control form-control-user" id="reenter-email" aria-describedby="ReEmail Help" placeholder="Reenter your Email" required>
-                       
-                       <a class="dropdown-toggle" href="#" id="ReEmailDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon text-purple-50">
-                      <i class="fa fa-question"></i>
-                    </span></a></br>
+                  <div>
+                      <label style="margin-right: 3px;">Email Again</label><input name="email" style="margin-bottom: 20px;width: 60%;display: inline-block;" type="email" class="form-control form-control-user" id="reenter-email" aria-describedby="ReEmail Help" placeholder="Reenter your Email" required>
+                       <a class="btn btn-primary dropdown-toggle" type="button" id="legalNamedropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i style="color:white;" class="fa fa-question"></i>
+                          </a>
+                          <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="ReenterEmailDropdown">
+                              <h6 class="dropdown-header">
+                                Why Reenter email
+                        </h6>
+                        <a class="dropdown-item d-flex align-items-center" href="#"></a>
+                        <div class="mr-3">
+                        <b>Why?</b></br>
+                        Becuase email is the only way we can contact you after verification.</br>
 
-                
+                        <b>When will we delete?</b></br>
+                        We will delete the proof document after verifying your identity.</br>
+
+                        <b>How will we store?</b></br>
+                        We will use state of art security technology to store your email.
+                        </br></br>
+
+                        <b>For more details: Please Read our
+                          <u href="privacypolicy.html" style="color:purple;">Privay Policy</u>
+
+                        </b>
+                        </div>
+                          </div>
 
 
 
+                  <div>
                       <label style="margin-right: 20px;"> City</label><input style="margin-bottom: 20px;width: 60%;display: inline-block;" type="text" class="form-control form-control-user" id="city" aria-describedby="City Help" name="city" placeholder="Enter Your City" required>
-                       
-                       <a class="dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon text-purple-50">
-                      <i class="fa fa-question"></i>
-                    </span></a></br>
 
-              
+                       <a class="btn btn-primary dropdown-toggle" type="button" id="legalNamedropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i style="color:white;" class="fa fa-question"></i>
+                          </a>
+                          <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="CityDropdown">
+                              <h6 class="dropdown-header">
+                                Why City
+                        </h6>
+                        <a class="dropdown-item d-flex align-items-center" href="#"></a>
+                        <div class="mr-3">
+                        <b>Why?</b></br>
+                        Becuase we want to forbid malicious multiple registrations.</br>
+
+                        <b>When will we delete?</b></br>
+                        We will delete the proof document after verifying your identity.</br>
+
+                        <b>How will we store?</b></br>
+                        We will use state of art security technology to store your document.
+                        </br></br>
+
+                        <b>For more details: Please Read our
+                          <u href="privacypolicy.html" style="color:purple;">Privay Policy</u>
+
+                        </b>
+                        </div>
+                      </div>
+
+                  </div>
 
 
 
+
+
+                  <div>
 
                       <label style="margin-right: 2px;">Proof</label> <input style="margin-bottom: 20px;width: 50%;display: inline-block;" class="form-control form-control-user" id="proof-doc" aria-describedby="Proof Help" placeholder="Upload Your Proof-doc" type="file" name="file_cv" id="file">
 
                       <a class="btn btn-primary btn-circle"><i class="fa fa-upload"></i></a>
                        
-                       <a class="dropdown-toggle" href="#" id="ProofDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon text-purple-50">
-                      <i class="fa fa-question"></i>
-                    </span></a>
-        
-                    
+                       <a class="btn btn-primary dropdown-toggle" type="button" id="legalNamedropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i style="color:white;" class="fa fa-question"></i>
+                          </a>
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="ProofDropdown">
 
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="NameDropdown">             
+                        <h6 class="dropdown-header">
+                                Why Proof?
+                        </h6>
 
-                <h6 class="dropdown-header">
-                 Why Full Name?
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    Becuase we want to forbid malicious multiple registrations</br>
-                    <b>How will we use? </b></br>
-                     We will compare it with your name on Proof Doc(see the form below).</br>
-                    <b>When will we delet? </b></br> 
-                    After verification.</br></br>
-                    <b>For more details: Please Read our <u style="color:purple;">Privay Policy</u></b>  
+                        <div class="mr-3">
+                        <b>Why?</b></br>
+                        Becuase we want to forbid malicious multiple registrations.</br>
+
+                        <b>When will we delete?</b></br>
+                        We will delete the proof document after verifying your identity.</br>
+
+                        <b>How will we store?</b></br>
+                        We will use state of art security technology to store your document.
+                        </br></br>
+
+                        <b>For more details: Please Read our
+                          <u href="privacypolicy.html" style="color:purple;">Privay Policy</u>
+
+                        </b>
+                        </div>
+
                   </div>
-                </a>
-              </div>
-                  
+
                    
            
                 
