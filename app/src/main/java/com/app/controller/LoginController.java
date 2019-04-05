@@ -131,5 +131,31 @@ public class LoginController {
     }
 
 
+    /**
+     *
+     * @param request
+     * @param role
+     * @return
+     */
+    public static boolean checkCookieValid (HttpServletRequest request, int role) {
+        boolean isCookieValid = false;
+        String cookieid = getCookieId(request);
+        if (cookieid != null) {
+            com.app.entity.Cookie cookie = CookieDao.searchCookie(cookieid);
+            String curTime = DateUtil.getCurrentTime();
+
+            // Cookie is valid in db and has not expired
+            if (cookie != null &&
+                DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
+
+                String userid = cookie.getUserId();
+                User user = UserDAO.searchUserById(userid);
+                if (user.getRole() == role) {
+                    isCookieValid = true;
+                }
+            }
+        }
+        return isCookieValid;
+    }
 
 }
