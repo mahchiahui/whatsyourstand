@@ -1,6 +1,6 @@
 package com.app.entity;
 
-public class Candidate extends User {
+public class Candidate extends Rootuser {
 
     private String name;
     private int age;

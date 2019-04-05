@@ -6,7 +6,7 @@ import com.app.controller.VerificationTokenController;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
 import com.app.entity.Cookie;
-import com.app.entity.User;
+import com.app.entity.Rootuser;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @WebServlet(name = "AdminVerificationServlet")
 public class AdminVerificationServlet extends HttpServlet {
@@ -32,8 +31,8 @@ public class AdminVerificationServlet extends HttpServlet {
         String path = getServletContext().getRealPath(".");
 
         //Send token to Q&A database (works on local, but not on digitalocean, which is why it is commented out)
-        //boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
-        request.setAttribute("tokenResult",true);
+        boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
+        request.setAttribute("tokenResult",tokenResult);
         RequestDispatcher view = request.getRequestDispatcher("/html/admin-verificationSuccessful.jsp");
         view.forward(request, response);
 
@@ -53,7 +52,7 @@ public class AdminVerificationServlet extends HttpServlet {
 
         // Get HttpSession object
         HttpSession session = request.getSession(false);
-        User loginedInfo = null;
+        Rootuser loginedInfo = null;
 
         boolean isCookieValid = false;
         String cookieid = LoginController.getCookieId(request);
@@ -66,7 +65,7 @@ public class AdminVerificationServlet extends HttpServlet {
                 DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
 
                 String userid = cookie.getUserId();
-                User user = UserDAO.searchUserById(userid);
+                Rootuser user = UserDAO.searchUserById(userid);
                 if (user.getRole() == 0) {
                     loginedInfo = user;
                     isCookieValid = true;
@@ -81,7 +80,7 @@ public class AdminVerificationServlet extends HttpServlet {
 
         if ((session == null && isCookieValid) || // no session, but has cookie
             // has session and has login
-            (session != null && (loginedInfo = (User) session.getAttribute(Constants.SESSION_USER_KEY)) != null &&
+            (session != null && (loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY)) != null &&
                 (loginedInfo.getRole() == 0))) {
 
             if (session == null) {

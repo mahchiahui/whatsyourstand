@@ -1,6 +1,6 @@
 package com.app.entity;
 
-public class Admin extends User {
+public class Admin extends Rootuser {
 
     private int level;
 

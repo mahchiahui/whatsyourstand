@@ -1,6 +1,6 @@
 package com.app.entity;
 
-public class Voter extends User {
+public class Voter extends Rootuser {
 
 //    private String hashedPhoneNumber;
     private String location;

@@ -1,6 +1,6 @@
 package com.app.entity;
 
-public class User {
+public class Rootuser {
 
     private int userId;
     private String username;
@@ -9,7 +9,7 @@ public class User {
     private int role;  // 0: admin; 1: voter; 2: candidate
     private int requestDel;
 
-    public User(int userId, String username, String pwd) {
+    public Rootuser(int userId, String username, String pwd) {
         this.userId = userId;
         this.username = username;
         this.hashpwd = pwd;
@@ -18,7 +18,7 @@ public class User {
         this.requestDel = 0;
     }
 
-    public User(int userId, String username, String pwd, int role, int req_del) {
+    public Rootuser(int userId, String username, String pwd, int role, int req_del) {
         this.userId = userId;
         this.username = username;
         this.hashpwd = pwd;

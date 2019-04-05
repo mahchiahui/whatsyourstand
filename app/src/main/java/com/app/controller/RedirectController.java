@@ -1,6 +1,6 @@
 package com.app.controller;
 
-import com.app.entity.User;
+import com.app.entity.Rootuser;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,7 +56,7 @@ public class RedirectController {
      * @throws ServletException
      * @throws IOException
      */
-    public static void redirectToHomePage (HttpServletRequest request, HttpServletResponse response, User user)
+    public static void redirectToHomePage (HttpServletRequest request, HttpServletResponse response, Rootuser user)
         throws ServletException, IOException {
 
         int role = user.getRole();

@@ -90,7 +90,7 @@
         <div class="sidebar-brand-text mx-3">What's Your Stand</div>
       </a></h1>
                       <%
-                          boolean userInsertSuccess = (boolean)request.getAttribute("userInsertSuccess");
+                          boolean userInsertSuccess = (boolean) request.getAttribute("userInsertSuccess");
                           String voterUsername = (String) request.getAttribute("voterUsername");
                           if (userInsertSuccess) {
                               out.println("<h4>Successfully Created an Account.</h4>");

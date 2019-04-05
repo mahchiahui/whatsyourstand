@@ -5,7 +5,7 @@ import com.app.controller.RedirectController;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
 import com.app.entity.Cookie;
-import com.app.entity.User;
+import com.app.entity.Rootuser;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
@@ -40,7 +40,7 @@ public class LoginAdminServlet extends HttpServlet {
         System.out.println("username: " + username);
         System.out.println("password: " + password);
 
-        User user = LoginController.login(response, username, password, 0, true);
+        Rootuser user = LoginController.login(response, username, password, 0, true);
 
         if (user != null && user.getRole() == 0) {  // Suppose a user has successfully logged
             System.out.println("Login succeed");
@@ -71,7 +71,7 @@ public class LoginAdminServlet extends HttpServlet {
 
         // Get HttpSession object
         HttpSession session = request.getSession(false);
-        User loginedInfo = null;
+        Rootuser loginedInfo = null;
 
         boolean isCookieValid = false;
         String cookieid = LoginController.getCookieId(request);
@@ -84,7 +84,7 @@ public class LoginAdminServlet extends HttpServlet {
                 DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
 
                 String userid = cookie.getUserId();
-                User user = UserDAO.searchUserById(userid);
+                Rootuser user = UserDAO.searchUserById(userid);
                 if (user.getRole() == 0) {
                     loginedInfo = user;
                     isCookieValid = true;
@@ -99,7 +99,7 @@ public class LoginAdminServlet extends HttpServlet {
 
         if ((session == null && isCookieValid) || // no session, but has cookie
             // has session and has login
-            (session != null && (loginedInfo = (User) session.getAttribute(Constants.SESSION_USER_KEY)) != null)) {
+            (session != null && (loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY)) != null)) {
 
             if (session == null) {
                 session = request.getSession();

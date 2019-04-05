@@ -20,6 +20,9 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String repPassword = request.getParameter("repPassword");
 
+        request.setAttribute("userInsertSuccess", false);
+        request.setAttribute("voterUsername", "");
+
         //checks that token is valid and that password and repeated password is equal
         if (TokenDAO.checkToken(token) && password.equals(repPassword)) {
             //hash the password
@@ -27,16 +30,13 @@ public class RegistrationServlet extends HttpServlet {
             String hashed_password = BCrypt.hashpw(password, salt);
 
             //insert user
-            String voterUsername = UserDAO.insertUser(hashed_password,1);
-            boolean success = false;
+            String voterUsername = UserDAO.insertUser("", hashed_password,1);
             if (! voterUsername.equals("")) {
-                success = true;
+                //set return attribute back to user
+                request.setAttribute("userInsertSuccess", true);
+                request.setAttribute("voterUsername", voterUsername);
             }
-            //set return attribute back to user
-            request.setAttribute("userInsertSuccess", success);
-            request.setAttribute("voterUsername",voterUsername);
         }
-
         //return
         RequestDispatcher view = request.getRequestDispatcher("/html/Token-CompleteAccountCreation.jsp");
         view.forward(request, response);

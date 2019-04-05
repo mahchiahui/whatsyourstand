@@ -2,7 +2,7 @@ package com.app.controller;
 
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
-import com.app.entity.User;
+import com.app.entity.Rootuser;
 import com.app.utility.DateUtil;
 import com.app.utility.TokenGenerator;
 import org.mindrot.jbcrypt.BCrypt;
@@ -24,9 +24,9 @@ public class LoginController {
      * @param rememberMe
      * @return
      */
-    public static User login (HttpServletResponse response, String username, String pwd, int role, boolean rememberMe) {
+    public static Rootuser login (HttpServletResponse response, String username, String pwd, int role, boolean rememberMe) {
         // step1: call searchUserByName
-        User user = UserDAO.searchUserByName(username);
+        Rootuser user = UserDAO.searchUserByName(username);
 
         if (user != null && BCrypt.checkpw(pwd, user.getHashpwd()) && user.getRole() == role) {
             if (rememberMe) {
@@ -149,7 +149,7 @@ public class LoginController {
                 DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
 
                 String userid = cookie.getUserId();
-                User user = UserDAO.searchUserById(userid);
+                Rootuser user = UserDAO.searchUserById(userid);
                 if (user.getRole() == role) {
                     isCookieValid = true;
                 }

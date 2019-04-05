@@ -1,17 +1,6 @@
 package com.app.filter;
 
-import com.app.controller.LoginController;
-import com.app.dao.CookieDao;
-import com.app.dao.UserDAO;
-import com.app.entity.Cookie;
-import com.app.entity.User;
-import com.app.utility.Constants;
-import com.app.utility.DateUtil;
-
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -31,7 +20,7 @@ public class AuthenticationFilter implements Filter {
 
         boolean isCookieValid = false;
         String cookieid = LoginController.getCookieId(request);
-        User user = null;
+        Rootuser user = null;
         if (cookieid != null) {
             Cookie cookie = CookieDao.searchCookie(cookieid);
 

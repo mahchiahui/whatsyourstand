@@ -5,11 +5,10 @@ import com.app.controller.RedirectController;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
 import com.app.entity.Cookie;
-import com.app.entity.User;
+import com.app.entity.Rootuser;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +36,7 @@ public class CandidateMyAnswerServlet extends HttpServlet {
 
         // Get HttpSession object
         HttpSession session = request.getSession(false);
-        User loginedInfo = null;
+        Rootuser loginedInfo = null;
 
         boolean isCookieValid = false;
         String cookieid = LoginController.getCookieId(request);
@@ -50,7 +49,7 @@ public class CandidateMyAnswerServlet extends HttpServlet {
                 DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
 
                 String userid = cookie.getUserId();
-                User user = UserDAO.searchUserById(userid);
+                Rootuser user = UserDAO.searchUserById(userid);
                 if (user.getRole() == 2) {
                     loginedInfo = user;
                     isCookieValid = true;
@@ -65,7 +64,7 @@ public class CandidateMyAnswerServlet extends HttpServlet {
 
         if ((session == null && isCookieValid) || // no session, but has cookie
             // has session and has login
-            (session != null && (loginedInfo = (User) session.getAttribute(Constants.SESSION_USER_KEY)) != null &&
+            (session != null && (loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY)) != null &&
                 (loginedInfo.getRole() == 2))) {
 
             if (session == null) {

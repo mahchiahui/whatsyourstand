@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 04, 2019 at 03:28 AM
+-- Generation Time: Apr 05, 2019 at 09:45 PM
 -- Server version: 5.7.25
 -- PHP Version: 7.3.1
 
@@ -22,8 +22,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `userid` int(11) NOT NULL,
-  `level` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `admin_level` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`userid`, `admin_level`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -41,7 +48,7 @@ CREATE TABLE `candidate` (
   `political_goal` varchar(256) NOT NULL,
   `education` varchar(65) NOT NULL,
   `profile_photo_path` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -53,20 +60,29 @@ CREATE TABLE `cookie` (
   `cookieid` varchar(123) NOT NULL,
   `userid` varchar(123) NOT NULL,
   `timestamp` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `cookie`
+-- Table structure for table `rootuser`
 --
 
-INSERT INTO `cookie` (`cookieid`, `userid`, `timestamp`) VALUES
-('67a01ed83fhdlal09pvft9m4ea', '3', '2019-04-03 23:10:29'),
-('7878245skggb6k066eqok3f4ci', '3', '2019-04-03 22:49:27'),
-('ef3o1abqnpbn0b9nmnfnf61n1b', '5', '2019-03-31 01:55:29'),
-('fsltsl6c0k6nb8vjdd0vd3opsr', '5', '2019-03-31 01:57:18'),
-('klrj38ts79be1bb96b02d54o8q', '5', '2019-04-03 23:08:15'),
-('o8qmqukg1vllc0iferp7pibu1s', '3', '2019-04-03 22:01:26'),
-('uitm76hu5t11m55p5v2sjkshf0', '3', '2019-04-03 22:46:29');
+CREATE TABLE `rootuser` (
+  `userid` int(123) NOT NULL,
+  `username` varchar(256) CHARACTER SET latin1 NOT NULL,
+  `hashpwd` varchar(256) CHARACTER SET latin1 NOT NULL,
+  `role` int(11) NOT NULL,
+  `request_del` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `rootuser`
+--
+
+INSERT INTO `rootuser` (`userid`, `username`, `hashpwd`, `role`, `request_del`) VALUES
+(2, '111', '$2a$11$YL0xDMROw.vJQ6KZDuMoxO8WjS5eaia7fe2pVhXc6q/ZD8/USjkoy', 1, 0),
+(1, '000', '$2a$11$VGBHcm7i.b6zjJmU66vvx.y3ycTJcUcIT8dLz.pBDOjLfvMjtGc2q', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -78,35 +94,7 @@ CREATE TABLE `token` (
   `tokenid` int(123) NOT NULL,
   `token` varchar(256) NOT NULL,
   `timestamp` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `token`
---
-
-INSERT INTO `token` (`tokenid`, `token`, `timestamp`) VALUES
-(1, 'token1', '2019-03-29 10:15:17');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `userid` int(123) NOT NULL,
-  `name` varchar(256) NOT NULL,
-  `hashpwd` varchar(256) NOT NULL,
-  `role` int(11) NOT NULL,
-  `request_del` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`userid`, `name`, `hashpwd`, `role`, `request_del`) VALUES
-(3, '111', '$2a$11$FtamEgXLyINfXR69Z.M9DOQ.BRuAjIFJlbczu8dWn72AmlAZdXjHm', 0, 0);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -116,13 +104,32 @@ INSERT INTO `user` (`userid`, `name`, `hashpwd`, `role`, `request_del`) VALUES
 
 CREATE TABLE `voter` (
   `userid` int(11) NOT NULL,
-  `email` varchar(65) NOT NULL,
-  `location` varchar(65) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `location` varchar(256) NOT NULL,
+  `email` varchar(256) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `voter`
+--
+
+INSERT INTO `voter` (`userid`, `location`, `email`) VALUES
+(2, '', '');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`userid`);
+
+--
+-- Indexes for table `candidate`
+--
+ALTER TABLE `candidate`
+  ADD PRIMARY KEY (`userid`);
 
 --
 -- Indexes for table `cookie`
@@ -131,13 +138,19 @@ ALTER TABLE `cookie`
   ADD PRIMARY KEY (`cookieid`);
 
 --
+-- Indexes for table `rootuser`
+--
+ALTER TABLE `rootuser`
+  ADD PRIMARY KEY (`userid`);
+
+--
 -- Indexes for table `token`
 --
 ALTER TABLE `token`
   ADD PRIMARY KEY (`tokenid`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `voter`
 --
-ALTER TABLE `user`
+ALTER TABLE `voter`
   ADD PRIMARY KEY (`userid`);
