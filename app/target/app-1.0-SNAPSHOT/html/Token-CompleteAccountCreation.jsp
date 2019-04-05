@@ -87,7 +87,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
+        <div class="sidebar-brand-text mx-3">What's Your Stand</div>
       </a></h1>
                       <%
                           boolean userInsertSuccess = (boolean)request.getAttribute("userInsertSuccess");
