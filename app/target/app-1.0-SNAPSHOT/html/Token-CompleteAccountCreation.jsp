@@ -104,10 +104,10 @@
                   </div>
                   <form class="user"  method="post" action="login-voter">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter username here...">
+                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter username here..." name="username">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -139,8 +139,8 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="html/vendor/jquery/jquery.min.js"></script>
+  <script src="html/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
   <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>

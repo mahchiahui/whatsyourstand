@@ -21,7 +21,7 @@ public class TokenDAO {
         try {
             conn = ConnectionManager.getConnection("14819db");
 
-            stmt = conn.prepareStatement("select Count(Distinct tokenid) from token");
+            stmt = conn.prepareStatement("select COUNT(DISTINCT tokenid) from token");
             rs = stmt.executeQuery();
             rs.next();
             tokenID = rs.getInt(1);
@@ -36,7 +36,7 @@ public class TokenDAO {
         tokenID++;
 
         //insert voter into database
-        String sql = "INSERT INTO token (tokenid, token, timestamp) VALUES (?,?,?)";
+        String sql = "INSERT INTO token (tokenid, token, time_stamp) VALUES (?,?,?)";
 
         try {
             conn = ConnectionManager.getConnection("14819db");

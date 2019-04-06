@@ -6,20 +6,14 @@ import java.security.SecureRandom;
 
 public class TokenGenerator {
 
-    /**
-     * creates a token with 130 random bits put into string of base 32
-     * @return
-     */
-    public static String generateToken () {
-        SecureRandom rand;
-        String token;
-        try {
-            rand = SecureRandom.getInstanceStrong();
-            token = new BigInteger(130,rand).toString(32);
 
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Failed to instantiate random number generator", e);
+    public static String getAlphaNumeric(int len) {
+        char[] ch = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+        char[] c = new char[len];
+        SecureRandom random = new SecureRandom();
+        for (int i = 0; i < len; i++) {
+            c[i] = ch[random.nextInt(ch.length)];
         }
-        return token;
+        return new String(c);
     }
 }

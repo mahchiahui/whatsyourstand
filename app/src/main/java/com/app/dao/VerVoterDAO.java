@@ -21,7 +21,7 @@ public class VerVoterDAO {
         try {
             conn = ConnectionManager.getConnection("verification");
 
-            stmt = conn.prepareStatement("select Count(Distinct voterID) from voter");
+            stmt = conn.prepareStatement("select COUNT(DISTINCT voterID) from voter");
             rs = stmt.executeQuery();
             rs.next();
             voterID = rs.getInt(1);

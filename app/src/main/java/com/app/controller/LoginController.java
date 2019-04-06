@@ -32,7 +32,7 @@ public class LoginController {
             if (rememberMe) {
                 // generate a long, unique, hard-to-guess key (which is in no way related to the user)
                 // which represents the cookie_id and store this in the DB along with the user_id
-                String cookieId = TokenGenerator.generateToken();
+                String cookieId = TokenGenerator.getAlphaNumeric(32);
                 String curTime = DateUtil.getCurrentTime();
                 // locally, cookie is stored as {name: "whatsyourstand", value: cookieid}
                 addCookie(response, "whatsyourstand", cookieId, Integer.MAX_VALUE);

@@ -2,6 +2,7 @@ package com.app.controller;
 import com.app.dao.TokenDAO;
 import com.app.utility.AsymmetricCryptography;
 import com.app.utility.GenerateKeys;
+import com.app.utility.TokenGenerator;
 
 import javax.crypto.NoSuchPaddingException;
 import java.io.File;
@@ -14,7 +15,7 @@ public class VerificationTokenController {
     public static boolean verifiedUser(int voterID, String path) {
 
         //generate token
-        String token = generateToken();
+        String token = TokenGenerator.getAlphaNumeric(32);
         String fakeToken = "" + voterID;
 
         // generate time stamp
@@ -37,20 +38,6 @@ public class VerificationTokenController {
             System.err.println(e.getMessage());
         }
         return false;
-    }
-
-    //creates a token with 130 random bits put into string of base 32
-    public static String generateToken(){
-        SecureRandom rand;
-        String token;
-        try {
-            rand = SecureRandom.getInstanceStrong();
-            token = new BigInteger(130,rand).toString(32);
-
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Failed to instantiate random number generator", e);
-        }
-        return token;
     }
 
 

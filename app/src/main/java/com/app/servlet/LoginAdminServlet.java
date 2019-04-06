@@ -52,7 +52,7 @@ public class LoginAdminServlet extends HttpServlet {
         }
         else {
 //            System.out.println("Login failed");
-            RequestDispatcher view = request.getRequestDispatcher("/html/login-admin.html");
+            RequestDispatcher view = request.getRequestDispatcher("/html/login-fail.html");
             view.forward(request, response);
         }
     }

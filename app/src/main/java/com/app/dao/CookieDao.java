@@ -27,16 +27,15 @@ public class CookieDao {
      * @param timestamp
      */
     public static void insertCookie (String cookieId, String userId, String timestamp) {
-//        boolean flagSuccess = false;
 
         try {
             conn = ConnectionManager.getConnection("14819db");
-            String sqlInsert = "INSERT INTO cookie (cookieid, userid, timestamp) VALUES ('"
+            String sqlInsert = "INSERT INTO cookie (cookieid, userid, time_stamp) VALUES ('"
                 + cookieId + "', '" + userId + "', '" + timestamp + "')";
             System.out.println("sqlInsert: " + sqlInsert);
             stmt = conn.prepareStatement(sqlInsert);
             stmt.executeUpdate();
-//            flagSuccess = true;
+
         }
         catch (SQLException se) {
 //            Logger.getLogger("CookieDAO").log(Priority.ERROR, null, se);
@@ -75,7 +74,6 @@ public class CookieDao {
             }
         }
         catch (SQLException se) {
-//            Logger.getLogger("CookieDAO").log(Priority.ERROR, null, se);
             Logger.getLogger("CookieDAO").log(Level.SEVERE, se.getMessage(), se);  // use java.util.Logger for this
         }
         finally {

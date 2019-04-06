@@ -1,14 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 05, 2019 at 09:45 PM
--- Server version: 5.7.25
--- PHP Version: 7.3.1
+-- Generation Time: Apr 06, 2019 at 03:48 AM
+-- Server version: 5.7.25-0ubuntu0.18.04.2-log
+-- PHP Version: 7.2.15-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `14819db`
@@ -23,14 +29,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `userid` int(11) NOT NULL,
   `admin_level` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`userid`, `admin_level`) VALUES
-(1, 1);
+(5, 1);
 
 -- --------------------------------------------------------
 
@@ -39,16 +45,16 @@ INSERT INTO `admin` (`userid`, `admin_level`) VALUES
 --
 
 CREATE TABLE `candidate` (
-  `userid` int(11) NOT NULL,
-  `realname` varchar(65) NOT NULL,
-  `age` int(11) NOT NULL,
-  `location` varchar(65) NOT NULL,
-  `workplace` varchar(65) NOT NULL,
-  `political_affiliation` varchar(65) NOT NULL,
+  `userid` int(100) NOT NULL,
+  `realname` varchar(256) NOT NULL,
+  `age` int(100) NOT NULL,
+  `location` varchar(256) NOT NULL,
+  `workplace` varchar(256) NOT NULL,
+  `political_affiliation` varchar(256) NOT NULL,
   `political_goal` varchar(256) NOT NULL,
-  `education` varchar(65) NOT NULL,
+  `education` varchar(256) NOT NULL,
   `profile_photo_path` varchar(256) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -57,10 +63,26 @@ CREATE TABLE `candidate` (
 --
 
 CREATE TABLE `cookie` (
-  `cookieid` varchar(123) NOT NULL,
-  `userid` varchar(123) NOT NULL,
-  `timestamp` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `cookieid` varchar(100) NOT NULL,
+  `userid` varchar(100) NOT NULL,
+  `time_stamp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cookie`
+--
+
+INSERT INTO `cookie` (`cookieid`, `userid`, `time_stamp`) VALUES
+('1123', '1', '2019-04-05 18:53:06'),
+('123', '1', '2019-04-05 18:53:06'),
+('8GF5GHWC3sJxx21HYUYo9f4VrkOgiOwv', '6', '2019-04-06 03:40:39'),
+('CQcRWybWIsRYN6Amu1p14Blo996iKZ6h', '6', '2019-04-06 03:45:25'),
+('e6oCtUvvShXwA3LxHVLXZtMVMZo61C0L', '1', '2019-04-06 03:43:01'),
+('EFZ6ThxgTRHWP9nPkaKvbXZy0OUv8TcK', '1', '2019-04-06 03:39:31'),
+('fWNsy9QAYNXBDUDHW32C9yaPz2SLjrxX', '6', '2019-04-06 03:41:29'),
+('lAVBDxXKV7nWoQlo7S9c4tUf5RyVFr9j', '1', '2019-04-06 03:45:34'),
+('Nr9oREHpcnDwuNv43PtMkPF5ZtltP9u8', '3', '2019-04-06 03:45:13'),
+('YKdKsHc3G3Sc8jgLgjI5YP3L8ORLFY82', '3', '2019-04-06 03:46:24');
 
 -- --------------------------------------------------------
 
@@ -69,20 +91,41 @@ CREATE TABLE `cookie` (
 --
 
 CREATE TABLE `rootuser` (
-  `userid` int(123) NOT NULL,
-  `username` varchar(256) CHARACTER SET latin1 NOT NULL,
-  `hashpwd` varchar(256) CHARACTER SET latin1 NOT NULL,
-  `role` int(11) NOT NULL,
-  `request_del` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `userid` int(100) NOT NULL,
+  `username` varchar(300) NOT NULL,
+  `hashpwd` varchar(300) NOT NULL,
+  `role` int(100) NOT NULL,
+  `request_del` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rootuser`
 --
 
 INSERT INTO `rootuser` (`userid`, `username`, `hashpwd`, `role`, `request_del`) VALUES
-(2, '111', '$2a$11$YL0xDMROw.vJQ6KZDuMoxO8WjS5eaia7fe2pVhXc6q/ZD8/USjkoy', 1, 0),
-(1, '000', '$2a$11$VGBHcm7i.b6zjJmU66vvx.y3ycTJcUcIT8dLz.pBDOjLfvMjtGc2q', 0, 0);
+(1, 'admin', '$2a$12$qQMb1Cr6gwW9WcAk2n9XRuIS/fFPy8w7ezkJy3RorAWAsNYFfm8du', 0, 0),
+(3, 'voter', '$2a$12$LorRTCT9pjr6sHYKLCO/H.tEguKG1dd79EojicHaHLzMJzyLRqg1W', 1, 0),
+(6, 'candidate', '$2a$12$1tajeqpxcvasfvQ2ZUX3YuM.15Lmomho4Usb0iwMBzTjdxRAuM3WW', 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test`
+--
+
+CREATE TABLE `test` (
+  `testValue` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `test`
+--
+
+INSERT INTO `test` (`testValue`) VALUES
+('works'),
+('works'),
+('works'),
+('works');
 
 -- --------------------------------------------------------
 
@@ -91,10 +134,18 @@ INSERT INTO `rootuser` (`userid`, `username`, `hashpwd`, `role`, `request_del`) 
 --
 
 CREATE TABLE `token` (
-  `tokenid` int(123) NOT NULL,
-  `token` varchar(256) NOT NULL,
-  `timestamp` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `tokenid` int(100) NOT NULL,
+  `token` varchar(300) NOT NULL,
+  `time_stamp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `token`
+--
+
+INSERT INTO `token` (`tokenid`, `token`, `time_stamp`) VALUES
+(1, '1234', '2019-04-05 20:00:00'),
+(2, '1234', '2019-04-06 03:39:36');
 
 -- --------------------------------------------------------
 
@@ -103,17 +154,20 @@ CREATE TABLE `token` (
 --
 
 CREATE TABLE `voter` (
-  `userid` int(11) NOT NULL,
-  `location` varchar(256) NOT NULL,
-  `email` varchar(256) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `userid` int(100) NOT NULL,
+  `location` varchar(300) NOT NULL,
+  `email` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `voter`
 --
 
 INSERT INTO `voter` (`userid`, `location`, `email`) VALUES
-(2, '', '');
+(2, '', ''),
+(3, '', ''),
+(4, '', ''),
+(6, '', '');
 
 --
 -- Indexes for dumped tables
@@ -154,3 +208,7 @@ ALTER TABLE `token`
 --
 ALTER TABLE `voter`
   ADD PRIMARY KEY (`userid`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
