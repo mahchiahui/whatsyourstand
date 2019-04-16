@@ -1,21 +1,22 @@
 package com.app.dao;
 
 import com.app.entity.Cookie;
+import com.app.servlet.HomeServlet;
 import com.app.utility.ConnectionManager;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CookieDao {
 
     private static Connection conn = null;
     private static ResultSet rs = null;
     private static PreparedStatement stmt = null;
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CookieDao.class);
 
     public CookieDao() {
     }
@@ -38,8 +39,7 @@ public class CookieDao {
 
         }
         catch (SQLException se) {
-//            Logger.getLogger("CookieDAO").log(Priority.ERROR, null, se);
-            Logger.getLogger("CookieDAO").log(Level.SEVERE, se.getMessage(), se);  // use java.util.Logger for this
+            logger.error("sql exception in insert cookie",se);
         }
         finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -74,7 +74,7 @@ public class CookieDao {
             }
         }
         catch (SQLException se) {
-            Logger.getLogger("CookieDAO").log(Level.SEVERE, se.getMessage(), se);  // use java.util.Logger for this
+            logger.error("sql exception in search cookie",se);
         }
         finally {
             ConnectionManager.close(conn, stmt, rs);

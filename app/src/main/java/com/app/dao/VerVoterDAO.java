@@ -2,15 +2,16 @@ package com.app.dao;
 
 import com.app.entity.VerVoter;
 import com.app.utility.ConnectionManager;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class VerVoterDAO {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(VerVoterDAO.class);
+
     public static boolean setVerVoter(String hashedPN, String city, String locationDocumentPath, String email, String name){
         Connection conn = null;
         ResultSet rs = null;
@@ -26,7 +27,7 @@ public class VerVoterDAO {
             rs.next();
             voterID = rs.getInt(1);
         } catch (SQLException se) {
-            Logger.getLogger("VerVoterDAO").log(Level.SEVERE, "broke in setVerVoter, counting voter sql", se);
+            logger.error("sql exception in setVerVoter, counting voter sql",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -54,7 +55,7 @@ public class VerVoterDAO {
                 return false;
             }
         } catch (SQLException se) {
-            Logger.getLogger("VerVoterDAO").log(Level.SEVERE, "broke in setVerVoter, inserting voter in", se);
+            logger.error("sql exception in setVerVoter, inserting voter in to db",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);

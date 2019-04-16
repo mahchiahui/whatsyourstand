@@ -2,15 +2,16 @@ package com.app.dao;
 
 import com.app.utility.ConnectionManager;
 import com.app.utility.DateUtil;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TokenDAO {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(TokenDAO.class);
+
     public static boolean insertToken(String token, String timestamp){
         Connection conn = null;
         ResultSet rs = null;
@@ -26,7 +27,7 @@ public class TokenDAO {
             rs.next();
             tokenID = rs.getInt(1);
         } catch (SQLException se) {
-            Logger.getLogger("TokenDAO").log(Level.SEVERE, "broke in insertToken, counting token sql", se);
+            logger.error("sql exception in insertToken, counting tokens",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -51,7 +52,7 @@ public class TokenDAO {
                 return false;
             }
         } catch (SQLException se) {
-            Logger.getLogger("TokenDAO").log(Level.SEVERE, "broke in insertToken, inserting token into 14819db", se);
+            logger.error("sql exception in insertToken, inserting token into 14819db",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -83,7 +84,7 @@ public class TokenDAO {
                 //refer to java api for more methods
             }
         } catch (SQLException se) {
-            Logger.getLogger("TokenDAO").log(Level.SEVERE, "broke in checkToken, retrieving token from 14819db", se);
+            logger.error("sql exception in checkToken, retrieving token from 14819db",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);

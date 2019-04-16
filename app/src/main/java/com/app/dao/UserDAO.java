@@ -5,6 +5,7 @@ import com.app.utility.ConnectionManager;
 //import org.apache.log4j.Logger;
 //import org.apache.log4j.Priority;
 import org.mindrot.jbcrypt.BCrypt;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,14 +14,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserDAO {
 
     private static Connection conn = null;
     private static ResultSet rs = null;
     private static PreparedStatement stmt = null;
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
     public UserDAO () {
     }
@@ -47,7 +47,7 @@ public class UserDAO {
             rs.next();
             userID = rs.getInt(1);
         } catch (SQLException se) {
-            Logger.getLogger("UserDAO").log(Level.SEVERE, "broke in insertUser, counting user sql", se);
+            logger.error("sql exception in insertUser, counting user sql",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -99,8 +99,7 @@ public class UserDAO {
             }
 
         } catch (SQLException se) {
-            Logger.getLogger("UserDAO").log(Level.SEVERE,
-                "broke in insertUser, inserting user in separate role table", se);
+            logger.error("sql exception in insertUser, inserting user in separate role table",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -125,9 +124,7 @@ public class UserDAO {
             }
         }
         catch (SQLException se) {
-            Logger.getLogger("UserDAO").log(Level.SEVERE,
-                "broke in insertUser, inserting user in rootuser table", se);
-
+            logger.error("sql exception in insertUser, inserting user in rootuser table",se);
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
@@ -157,8 +154,7 @@ public class UserDAO {
             }
         }
         catch (SQLException se) {
-//            Logger.getLogger("UserDAO").log(Priority.ERROR, null, se);
-            Logger.getLogger("UserDAO").log(Level.SEVERE, "error in searchUserById", se);
+            logger.error("sql exception in searchUserById",se);
         }
         finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -190,8 +186,7 @@ public class UserDAO {
             }
         }
         catch (SQLException se) {
-//            Logger.getLogger("UserDAO").log(Priority.ERROR, null, se);
-            Logger.getLogger("UserDAO").log(Level.SEVERE, "error in searchUserByName", se);
+            logger.error("sql exception in error in searchUserByName",se);
         }
         finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -226,8 +221,7 @@ public class UserDAO {
             }
         }
         catch (SQLException se) {
-//            Logger.getLogger("UserDAO").log(Priority.ERROR, null, se);
-            Logger.getLogger("UserDAO").log(Level.SEVERE, null, se);  // use java.util.Logger for this
+            logger.error("sql exception in error in searchUsersByDel",se);
         }
         finally {
             ConnectionManager.close(conn, stmt, rs);
