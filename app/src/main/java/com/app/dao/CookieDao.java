@@ -33,7 +33,7 @@ public class CookieDao {
             conn = ConnectionManager.getConnection("14819db");
             String sqlInsert = "INSERT INTO cookie (cookieid, userid, time_stamp) VALUES ('"
                 + cookieId + "', '" + userId + "', '" + timestamp + "')";
-            System.out.println("sqlInsert: " + sqlInsert);
+            logger.info("sqlInsert: " + sqlInsert);
             stmt = conn.prepareStatement(sqlInsert);
             stmt.executeUpdate();
 
@@ -65,7 +65,7 @@ public class CookieDao {
             while (rs.next()) {
                 String cookieid = rs.getString(1);
                 String userid = rs.getString(2);
-                String timestamp = df.format(rs.getTimestamp("timestamp"));
+                String timestamp = df.format(rs.getTimestamp("time_stamp"));
 
                 if (cookieId.equals(cookieid)) {
                     cookie = new Cookie(cookieid, userid, timestamp);

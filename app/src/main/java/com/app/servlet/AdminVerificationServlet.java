@@ -24,13 +24,21 @@ import java.util.Arrays;
 @WebServlet(name = "AdminVerificationServlet")
 public class AdminVerificationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        /**
+         * takes the array of accounts that the admin has approved
+         * convert it to an Arraylist
+         * get the voterID
+         */
         String[] accounts = request.getParameterValues("account_selection");
         ArrayList<String> list = new ArrayList(Arrays.asList(accounts));
         String voterID = list.get(0);
         int voterIDNum = Integer.parseInt(voterID);
         String path = getServletContext().getRealPath(".");
 
-        //Send token to Q&A database (works on local, but not on digitalocean, which is why it is commented out)
+        /**
+         * sends token to Q&A database
+         */
         boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
         request.setAttribute("tokenResult",tokenResult);
         RequestDispatcher view = request.getRequestDispatcher("/html/admin-verificationSuccessful.jsp");

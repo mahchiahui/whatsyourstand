@@ -4,6 +4,7 @@ import com.app.dao.TokenDAO;
 import com.app.utility.AsymmetricCryptography;
 import com.app.utility.GenerateKeys;
 import jdk.nashorn.internal.parser.Token;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.NoSuchPaddingException;
 import java.io.File;
@@ -14,7 +15,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 public class ActualTokenController {
-
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ActualTokenController.class);
     private static String publicKeyPath = "";
     private static String privateKeyPath = "";
     public static boolean receiveEncryptedMessage(String encrypted_msg) {
@@ -32,9 +33,9 @@ public class ActualTokenController {
             //insert token to database
             return TokenDAO.insertToken(token, timestamp);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            System.err.println(e.getMessage());
+            logger.error("broke in receiveEncryptedMessage",e);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error("broke in receiveEncryptedMessage",e);
         }
         return false;
 
@@ -56,9 +57,9 @@ public class ActualTokenController {
                 gk.writeToFile(publicKeyPath, gk.getPublicKey().getEncoded());
                 gk.writeToFile(privateKeyPath, gk.getPrivateKey().getEncoded());
             } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-                System.err.println(e.getMessage());
+                logger.error("broke in getPublicKey",e);
             } catch (IOException e) {
-                System.err.println(e.getMessage());
+                logger.error("broke in getPublicKey",e);
             }
         }
 
@@ -67,9 +68,9 @@ public class ActualTokenController {
             AsymmetricCryptography ac = new AsymmetricCryptography();
             pubKey = ac.getPublic(publicKeyPath);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            System.err.println(e.getMessage());
+            logger.error("broke in getPublicKey",e);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error("broke in getPublicKey",e);
         }
         return pubKey;
     }

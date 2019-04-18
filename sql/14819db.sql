@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 06, 2019 at 03:48 AM
+-- Generation Time: Apr 17, 2019 at 09:17 PM
 -- Server version: 5.7.25-0ubuntu0.18.04.2-log
 -- PHP Version: 7.2.15-0ubuntu0.18.04.2
 
@@ -76,12 +76,19 @@ INSERT INTO `cookie` (`cookieid`, `userid`, `time_stamp`) VALUES
 ('1123', '1', '2019-04-05 18:53:06'),
 ('123', '1', '2019-04-05 18:53:06'),
 ('8GF5GHWC3sJxx21HYUYo9f4VrkOgiOwv', '6', '2019-04-06 03:40:39'),
+('BhKNZqyaBH7SkZzdl3XXqfVx7PTlBvmx', '1', '2019-04-08 17:53:11'),
 ('CQcRWybWIsRYN6Amu1p14Blo996iKZ6h', '6', '2019-04-06 03:45:25'),
+('dSzzd7rlerJMxwN0l6s2rGnhCblwLgag', '6', '2019-04-08 17:54:45'),
 ('e6oCtUvvShXwA3LxHVLXZtMVMZo61C0L', '1', '2019-04-06 03:43:01'),
+('E8CbklkDDurbyjgvuY8G0ohuG4NzSJRV', '3', '2019-04-06 03:54:44'),
 ('EFZ6ThxgTRHWP9nPkaKvbXZy0OUv8TcK', '1', '2019-04-06 03:39:31'),
+('fLwWQBTXSO7PERLsfqxfdueGYU0gaCa5', '1', '2019-04-06 03:55:05'),
 ('fWNsy9QAYNXBDUDHW32C9yaPz2SLjrxX', '6', '2019-04-06 03:41:29'),
+('g0tcos7ZLef0DwS0tTwhRAxTj2lDsdfu', '3', '2019-04-08 17:30:58'),
+('io1nOZd4g8rIHOdFvt72isoJBvOYPvWU', '1', '2019-04-06 05:04:44'),
 ('lAVBDxXKV7nWoQlo7S9c4tUf5RyVFr9j', '1', '2019-04-06 03:45:34'),
 ('Nr9oREHpcnDwuNv43PtMkPF5ZtltP9u8', '3', '2019-04-06 03:45:13'),
+('xgRR7op3ArQseC8eyGNi3nXzk2V6syjy', '6', '2019-04-06 03:54:57'),
 ('YKdKsHc3G3Sc8jgLgjI5YP3L8ORLFY82', '3', '2019-04-06 03:46:24');
 
 -- --------------------------------------------------------
@@ -145,7 +152,8 @@ CREATE TABLE `token` (
 
 INSERT INTO `token` (`tokenid`, `token`, `time_stamp`) VALUES
 (1, '1234', '2019-04-05 20:00:00'),
-(2, '1234', '2019-04-06 03:39:36');
+(2, '1234', '2019-04-06 03:39:36'),
+(3, '1234', '2019-04-08 17:53:56');
 
 -- --------------------------------------------------------
 

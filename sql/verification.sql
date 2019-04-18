@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 06, 2019 at 03:48 AM
+-- Generation Time: Apr 17, 2019 at 09:18 PM
 -- Server version: 5.7.25-0ubuntu0.18.04.2-log
 -- PHP Version: 7.2.15-0ubuntu0.18.04.2
 
@@ -51,7 +51,8 @@ INSERT INTO `voter` (`voterID`, `name`, `hashedPN`, `city`, `locationDocumentPat
 (9, 'Chia Hui Mah 123', '4129036789', 'Pittsburgh', '/opt/tomcat/webapps/ROOT/data/ChiaHuiMah123Doc.pdf', 'mahchiahui@hotmail.sg'),
 (10, 'Mah Chia Hui', '4129036789', 'Singapore', '/opt/tomcat/webapps/app-1.0-SNAPSHOT/data/MahChiaHuiDoc.pdf', 'chuah68@gmail.com'),
 (11, 'Chia Hui Mah 123123', '4129036789', 'Pittsburgh', '/opt/tomcat/webapps/app-1.0-SNAPSHOT/data/ChiaHuiMah123123Doc.pdf', 'mahchiahui@hotmail.sg'),
-(12, 'Chia Hui Mah', '4129036789', 'Pittsburgh', '/opt/tomcat/webapps/app-1.0-SNAPSHOT/data/ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg');
+(12, 'Chia Hui Mah', '4129036789', 'Pittsburgh', '/opt/tomcat/webapps/app-1.0-SNAPSHOT/data/ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
+(13, 'fe', '4129036789', 'few e', '/opt/tomcat/webapps/ROOT/data/feDoc.pdf', 'fdwe@andrew.cmu.edu');
 
 --
 -- Indexes for dumped tables

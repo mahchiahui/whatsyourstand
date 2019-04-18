@@ -88,15 +88,23 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
+        <div class="sidebar-brand-text mx-3">What's Your Stand</div>
       </a></h1>
                     <h1 class="h4 text-gray-900 mb-4">Verify Your Telephone Number</h1>
                   </div>
+                    <%
+                       if(request.getAttribute("failedVerification")!=null){
+                            boolean failedVerification = (boolean)request.getAttribute("failedVerification");
+                            if(failedVerification){
+                                out.println("<p style=\"text-align: center; color: red;\">Wrong Token Entered</p>");
+                            }
+                        }
+                    %>
                    <a style="margin-bottom: 20px;" href="privacypolicy" class="btn btn-privary btn-block">Please Read our <u style="color:purple;">Privay Policy</u></a>
                   <form class="user" style="text-align: center" method="post" action="VerifyPhoneNum">
                     <div class="form-group">
                       <div>
-                      <input style="margin-bottom: 20px;width: 70%;display:inline-block;" type="text" class="form-control form-control-user" id="verification-code" aria-describedby="Telephone Help" placeholder="Enter the code you received"> 
+                      <input style="margin-bottom: 20px;width: 70%;display:inline-block;" type="number" class="form-control form-control-user" id="verificationCode" name="verificationCode" aria-describedby="Telephone Help" placeholder="Enter the code you received" required>
                        <a href="#" class="btn btn-primary" style="width: 25%;">Resend</a>
                      </div>
                     </div>
