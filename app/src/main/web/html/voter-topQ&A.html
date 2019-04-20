@@ -308,23 +308,21 @@
                 </h6>
             <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-5">
-                  <form class="user" style="text-align: right" >
-                    <div class="form-group">
-                  <span style="float: left"><b>Title</b><br></span>
-                  <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here"> 
 
-                  <hr>
-                    <br><span style="float: left"><b>Description</b></span>
-                  <textarea rows="4" cols="50">
-                    Please input your Description Here
-                  </textarea>
-                  <br>
-                
-                  <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
+                    <form class="question" style="text-align: right" method="post" action="question">
+                      <div class="form-group">
+                        <span style="float: left"><b>Title</b><br></span>
+                        <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here" name="title">
 
-                     </div>
-                 </form>
+                        <hr>
+                        <br><span style="float: left"><b>Description</b></span>
+                        <!-- ??? -->
+                        <textarea rows="4" cols="50" name="description">Please input your Description Here</textarea>
+                        <br>
 
+                        <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
+                      </div>
+                    </form>
                     
                   </div>
             </a>
@@ -337,34 +335,18 @@
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-10 col-md-10 mb-4">
+              <!-- ******* PRIMARY Q & A CARD ******* -->
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><span>Jan 24, 2019</span> 
 
-                        
-
-
-                    
-
-
-
-                        
                         <a  href="#"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="far fa-heart">7</i>  </span></a>
                         <a  href="#"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="fas fa-exclamation-circle"></i>  </span></a>
 
-                        
-
-
-
-
-
-
-
-                          <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
-                         <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
-
+                        <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
+                        <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
                         
                       </div>
 
@@ -372,58 +354,52 @@
                         Why Facebook doesn't disclose the 3rd-parties it shares data with?
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#DesPages" aria-expanded="true" aria-controls="DesPages" style="color:grey!important;float:right">More
           
-        </a>
-         <div id="DesPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <hr>
-           <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: 3px">
-            <h6 class="collapse-header">  <span>Description
-           
-          </span> </h6>
-              <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="mr-2 d-none d-lg-inline text-gray-600 small"> I feel like I have no control over my data.</span><br>
-              
-          </div>
-           
-          </div>
+                        </a>
+                        <div id="DesPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <hr>
+                            <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: 3px">
+                            <h6 class="collapse-header">  <span>Description
 
-        </div>
+                            </span> </h6>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="mr-2 d-none d-lg-inline text-gray-600 small"> I feel like I have no control over my data.</span><br>
+                                </div>
+
+                            </div>
+                        </div>
 
                       <hr>
                       Candidate(s) Answer(s)
                       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages" style="background-color:grey!important;float:right">
-          
-        </a>
+                      </a>
       
 
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <hr>
-          <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: 3px">
-            <h6 class="collapse-header">  
-                <img class="img-profile rounded-circle" src="img/profile-pic.jpg">Tom</h6>
-             <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="mr-2 d-none d-lg-inline text-gray-600 small">Allegheny County</span><br>
-              <span>
-            Sorry I willl look into it. 
-          </span>
-          </div>
-            <br>
-            <span style="float: left; margin-top: 3em;">
-            
-            <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-up"></i></span>
-              <span class="text">15</span>
-            </a>
-            <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-down"></i></span>
-              <span class="text">1</span>
-            </a>
-            <a class="btn btn-primary btn-icon-split" href="#" > <span class="icon text-white-50" s><i class="fas fa-folder-plus"></i></span>
-              <span class="text">Follow</span>
-            </a>
-            <span style="float: right" class="mr-2 d-none d-lg-inline text-gray-600 small">Jan 27, 2019</span>
-                        
-           
-                         
-          </span>
-                  
-                </div>
-<hr>
+                      <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <hr>
+                        <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: 3px">
+                          <h6 class="collapse-header">
+                              <img class="img-profile rounded-circle" src="img/profile-pic.jpg">Tom</h6>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="mr-2 d-none d-lg-inline text-gray-600 small">Allegheny County</span><br>
+                            <span>
+                          Sorry I willl look into it.
+                        </span>
+                        </div>
+                          <br>
+                          <span style="float: left; margin-top: 3em;">
+
+                          <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-up"></i></span>
+                            <span class="text">15</span>
+                          </a>
+                          <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-down"></i></span>
+                            <span class="text">1</span>
+                          </a>
+                          <a class="btn btn-primary btn-icon-split" href="#" > <span class="icon text-white-50" s><i class="fas fa-folder-plus"></i></span>
+                            <span class="text">Follow</span>
+                          </a>
+                          <span style="float: right" class="mr-2 d-none d-lg-inline text-gray-600 small">Jan 27, 2019</span>
+                          </span>
+
+                        </div>
+              <hr>
 <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: 3px">
             <h6 class="collapse-header">  
                 <img class="img-profile rounded-circle" src="img/profile-pic.jpg">Jerry</h6>
@@ -457,6 +433,7 @@
         </div>   
                       </div>
                     </div>
+              <!-- End of Q&A CARD -->
                     
                   </div>
                 </div>

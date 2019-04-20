@@ -1,5 +1,6 @@
 package com.app.dao;
 
+import com.app.entity.Candidate;
 import com.app.entity.Rootuser;
 import com.app.utility.ConnectionManager;
 //import org.apache.log4j.Logger;
@@ -17,13 +18,7 @@ import java.util.Random;
 
 public class UserDAO {
 
-    private static Connection conn = null;
-    private static ResultSet rs = null;
-    private static PreparedStatement stmt = null;
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserDAO.class);
-
-    public UserDAO () {
-    }
 
 
     /**
@@ -79,7 +74,7 @@ public class UserDAO {
             }
             else {
                 String sqlCandidate = "INSERT INTO candidate (userid, realname, age, location, " +
-                    "workplace, political_affiliation, political_goal, educationprofile_photo_path) " +
+                    "workplace, political_affiliation, political_goal, education, profile_photo_path) " +
                     "VALUES (?,?,?,?,?,?,?,?,?)";
                 stmt = conn.prepareStatement(sqlCandidate);
                 stmt.setInt (1, userID);
@@ -132,7 +127,15 @@ public class UserDAO {
     }
 
 
+    /**
+     * search for existing user by userid
+     * @param id user id
+     * @return User object if db query return existing user, null if user does not exist
+     */
     public static Rootuser searchUserById (String id) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
         Rootuser user = null;
 
         try {
@@ -163,7 +166,15 @@ public class UserDAO {
     }
 
 
+    /**
+     * search for existing user by username
+     * @param name username
+     * @return User object if db query return existing user, null if user does not exist
+     */
     public static Rootuser searchUserByName (String name) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
         Rootuser user = null;
 
         try {
@@ -196,10 +207,44 @@ public class UserDAO {
 
 
     /**
+     * Search candidate user table given userid
+     * @param userid userid in Rootuser table
+     * @return an object of Candidate class
+     */
+    public static Candidate searchCandidateById (int userid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Candidate user = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM candidate WHERE userid=\""
+                + userid + "\"");
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                user = extractCandidateFromRS(rs);
+            }
+        }
+        catch (SQLException se) {
+            logger.error("sql exception in searchCandidateById",se);
+        }
+        finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return user;
+    }
+
+
+
+    /**
      * Search for all user records requesting account deletion
      * @return
      */
     public static List<Rootuser> searchUsersByDel () {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
         List<Rootuser> users = new ArrayList<>();
 
         try {
@@ -230,8 +275,11 @@ public class UserDAO {
     }
 
 
+    /**
+     * Update an existing user record in db
+     * @return
+     */
     public static boolean updateUser () {
-
         return false;
     }
 
@@ -245,6 +293,15 @@ public class UserDAO {
     public static void changePassword (String username, String oldPassword, String newPassword, String confirmNewPassword) {
 
     }
+
+
+    /**
+     *
+     * @param username
+     * @param pwd
+     * @param role
+     * @return
+     */
     public static boolean registration (String username, String pwd, int role) {
         // search for existing Rootuser By Name first
         Rootuser user = searchUserByName(username);
@@ -258,5 +315,27 @@ public class UserDAO {
             return ! insertUser(username, hashed, role).equals("");
         }
         return false;
+    }
+
+
+    /**
+     * Transform result set into Candidate object
+     * @param rs
+     * @return
+     */
+    public static Candidate extractCandidateFromRS (ResultSet rs) throws SQLException {
+        Candidate candidate = new Candidate();
+
+        candidate.setUserId(rs.getInt("userid"));
+        candidate.setRealname(rs.getString("realname"));
+        candidate.setAge(rs.getInt("age"));
+        candidate.setLocation(rs.getString("location"));
+        candidate.setWorkplace(rs.getString("workplace"));
+        candidate.setPoliticalAffiliation(rs.getString("political_affiliation"));
+        candidate.setPoliticalGoal(rs.getString("political_goal"));
+        candidate.setEducation(rs.getString("education"));
+        candidate.setProfilePhotoPath(rs.getString("profile_photo_path"));
+
+        return candidate;
     }
 }

@@ -1,3 +1,7 @@
+<%@ page import="com.app.entity.Question" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.app.entity.Answer" %>
+<%@ page import="com.app.entity.Candidate" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +13,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>My Questions</title>
+  <title>Q & A</title>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,7 +37,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
+        <div class="sidebar-brand-text mx-3">What's Your Stand</div>
       </a>
 
       <!-- Divider -->
@@ -55,17 +59,17 @@
         Sections
       </div>
 
-      <!-- Nav Item - My Quetions Menu -->
+      <!-- Nav Item - My Questions Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="voter-myquestions" style="opacity: .3;">
+        <a class="nav-link" href="voter-myquestions" >
           <i class="fas fa-fw fa-folder"></i>
           <span>My Questions</span>
         </a>
       </li>
 
-      <!-- Nav Item - Q & A  Menu -->
+      <!-- Nav Item - Q & A Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="voter">
+        <a class="nav-link" href="voter" style="opacity: .3;">
           <i class="fas fa-fw fa-paw"></i>
           <span>Top Question & Answer</span>
         </a>
@@ -73,7 +77,7 @@
 
       <!-- Nav Item - Setting Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="voter-settings" >
+        <a class="nav-link collapsed" href="voter-settings" >
           <i class="fas fa-fw fa-cog"></i>
           <span>Setting</span>
         </a>
@@ -295,10 +299,10 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">My Questions</h1>
-           
+            <h1 class="h3 mb-0 text-gray-800">Top Questions </h1>
 
-    
+            
+              
           <a class="btn btn-primary dropdown-toggle" href="#" id="TelDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">A New Question 
             <i class="fas fa-plus"></i>
           </a>
@@ -308,101 +312,115 @@
                 </h6>
             <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-5">
-                  <form class="user" style="text-align: right" >
-                    <div class="form-group">
-                  <span style="float: left"><b>Title</b><br></span>
-                  <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here"> 
 
-                  <hr>
-                    <br><span style="float: left"><b>Description</b></span>
-                  <textarea rows="4" cols="50">
-                    Please input your Description Here
-                  </textarea>
-                  <br>
-                
-                  <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
+                    <form class="question" style="text-align: right" method="post" action="question">
+                      <div class="form-group">
+                        <span style="float: left"><b>Title</b><br></span>
+                        <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here" name="title">
 
-                     </div>
-                 </form>
+                        <hr>
+                        <br><span style="float: left"><b>Description</b></span>
+                        <!-- ??? -->
+                        <textarea rows="4" cols="50" name="description">Please input your Description Here</textarea>
+                        <br>
 
+                        <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
+                      </div>
+                    </form>
                     
                   </div>
             </a>
           </div>
         
                 </div>
-            
-
-
           <!-- Content Row -->
  
-            <div class="row">
+                <div class="row">
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-10 col-md-10 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><span>Jan 24, 2019</span> 
+                  <!-- Earnings (Monthly) Card Example -->
+                  <div class="col-xl-10 col-md-10 mb-4">
+                    <!-- ******* PRIMARY Q&A CARD ******* -->
+                    <!-- jsp loaded Q&A CARD -->
+                    <%
+                      List<Question> questionList = (List<Question>) request.getAttribute("question_list");
+                      List<List<Answer>> answersList = (List<List<Answer>>) request.getAttribute("answer_list_of_list");
+                      List<List<Candidate>> candidateList = (List<List<Candidate>>) request.getAttribute("candidate_list_of_list");
 
-                        
+                      if (questionList != null && questionList.size() != 0) {
+                          for (int i = 0; i < questionList.size(); i++) {
+                              Question question = questionList.get(i);
+                              out.println("<div class=\"card border-left-primary shadow h-100 py-2\">\n" +
+                                  "<div class=\"card-body\">\n" +
+                                  "<div class=\"row no-gutters align-items-center\">\n" +
+                                  "<div class=\"col mr-2\">\n" +
+
+                                  // Question
+                                  "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\"><span>" +
+                                  question.getLastModifiedTime() + "</span> \n" +
+                                  "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"far fa-heart\">" +
+                                  question.getLikes() + "</i>  </span></a>\n" +
+                                  "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
+                                  "<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-down\">" +
+                                  question.getDownvote() + "</i></span></a>\n" +
+                                  "<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-up\">" +
+                                  question.getUpvote() + "</i></span></a>\n" +
+                                  "</div>\n" +
+                                  "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">\n" +
+                                  question.getTitle() +
+                                  "<a class=\"nav-link collapsed\" href=\"#\" data-toggle=\"collapse\" data-target=\"#DesPages\" aria-expanded=\"true\" aria-controls=\"DesPages\" style=\"color:grey!important;float:right\">More</a>\n" +
+                                  "<div id=\"DesPages\" class=\"collapse\" aria-labelledby=\"headingPages\" data-parent=\"#accordionSidebar\">\n" +
+                                  " <hr>\n" +
+                                  "<div class=\"bg-white py-2 collapse-inner rounded\" style=\"margin-bottom: 3px\">\n" +
+                                  "<h6 class=\"collapse-header\">  <span>Description</span> </h6>\n" +
+                                  "<div class=\"h5 mb-0 font-weight-bold text-gray-800\"><span class=\"mr-2 d-none d-lg-inline text-gray-600 small\">" +
+                                  question.getDescription() + " </span><br>\n" +
+                                  "</div>\n" +
+                                  "</div>\n" +
+                                  "</div>\n" +
+                                  "<hr> Candidate(s) Answer(s)\n" +
+                                  "<a class=\"nav-link collapsed\" href=\"#\" data-toggle=\"collapse\" data-target=\"#collapsePages\" aria-expanded=\"true\" aria-controls=\"collapsePages\" style=\"background-color:grey!important;float:right\">\n" +
+                                  "</a>\n" +
+                                  "<div id=\"collapsePages\" class=\"collapse\" aria-labelledby=\"headingPages\" data-parent=\"#accordionSidebar\">\n" +
+                                  "<hr>\n");
+
+                                  // Answers
+                                  for (int j = 0; j < answersList.get(i).size(); j++) {
+                                      Answer answer = answersList.get(i).get(j);
+                                      Candidate candidate = candidateList.get(i).get(j);
+
+                                      out.println("<div class=\"bg-white py-2 collapse-inner rounded\" style=\"margin-bottom: 3px\">\n" +
+                                            "<h6 class=\"collapse-header\">\n" +
+                                            "<img class=\"img-profile rounded-circle\" src=\"img/profile-pic.jpg\">" +
+                                            candidate.getRealname() +
+                                            "</h6>\n" +
+                                            "<div class=\"h5 mb-0 font-weight-bold text-gray-800\"><span class=\"mr-2 d-none d-lg-inline text-gray-600 small\">" +
+                                            candidate.getLocation() + "</span><br>\n" +
+                                            "<span>\n" + answer.getContent() + "</span>\n" +
+                                            "</div>\n" +
+                                            "<br>\n" +
+                                            "<span style=\"float: left; margin-top: 3em;\">\n" +
+                                            "<a class=\"btn btn-primary btn-icon-split\" href=\"#\" style=\"margin-right: 2em;\"> <span class=\"icon text-white-50\" s><i class=\"far fa-thumbs-up\"></i></span>\n" +
+                                            "<span class=\"text\">" + answer.getUpvote() + "</span></a>\n" +
+                                            "<a class=\"btn btn-primary btn-icon-split\" href=\"#\" style=\"margin-right: 2em;\"> <span class=\"icon text-white-50\" s><i class=\"far fa-thumbs-down\"></i></span>\n" +
+                                            "<span class=\"text\">" + answer.getDownvote() + "</span></a>\n" +
+                                              // link to the candidate's FB page
+                                            "<a class=\"btn btn-primary btn-icon-split\" href=\"#\" > <span class=\"icon text-white-50\" s><i class=\"fas fa-folder-plus\"></i></span>\n" +
+                                            "<span class=\"text\">Follow</span></a>\n" +
+                                            "<span style=\"float: right\" class=\"mr-2 d-none d-lg-inline text-gray-600 small\">" +
+                                            answer.getLastModifiedTime() + "</span></span></div>\n");
+                                      if (j != answersList.get(i).size() - 1) {
+                                          out.println("<hr>\n");
+                                      }
+                                  }
+
+                              out.println("</div></div></div></div></div></div>");
+
+                        }
+                      }
+
+                    %>
 
 
-                    
-
-
-
-                        <a  href="#" > <span style="float: right"><i style="float: right" class="fa fa-edit"></i></span></a>
-                        <a  href="#" > <span style="float: right"><i style="margin-right:1em;float: right" class="fas fa-trash-alt"></i></span></a>
-                        <a  href="#"> 
-                         <span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="far fa-heart">7</i>  </span></a>
-                          <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
-                         <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
-
-                        
-                      </div>
-
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        Why Facebook doesn't disclose the 3rd-parties it shares data with?
-                      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages" style="background-color:grey!important;float:right">
-          
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <hr>
-          <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: 3px">
-            <h6 class="collapse-header">  
-                <img class="img-profile rounded-circle" src="img/profile-pic.jpg">Tom</h6>
-             <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="mr-2 d-none d-lg-inline text-gray-600 small">Allegheny County</span><br>
-              <span>
-            Sorry I willl look into it. 
-          </span>
-          </div>
-            <br>
-            <span style="float: left; margin-top: 3em;">
-            
-            <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-up"></i></span>
-              <span class="text">15</span>
-            </a>
-            <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-down"></i></span>
-              <span class="text">1</span>
-            </a>
-            <a class="btn btn-primary btn-icon-split" href="#" > <span class="icon text-white-50" s><i class="fas fa-folder-plus"></i></span>
-              <span class="text">Follow</span>
-            </a>
-                        
-           
-                         
-          </span>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>   
-                      </div>
-                    </div>
-                    
                   </div>
                 </div>
               </div>
