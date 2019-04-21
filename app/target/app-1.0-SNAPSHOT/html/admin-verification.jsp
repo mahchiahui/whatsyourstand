@@ -1,3 +1,5 @@
+<%@ page import="com.app.entity.VerVoter" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +37,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
+        <div class="sidebar-brand-text mx-3">What's Your Stand</div>
       </a>
 
       <!-- Divider -->
@@ -289,7 +291,7 @@
 
           <!-- Page Heading -->
   
-            <h1 class="h3 mb-2 text-gray-800">Verification Request test 6</h1>
+            <h1 class="h3 mb-2 text-gray-800">Verification Request</h1>
 
           <!-- Content Row -->
           <form action="admin-verification" method="post">
@@ -316,72 +318,37 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th><input type="checkbox" name="account_selection" value="1234"/>&nbsp;</th>
+                      <th></th>
                       <th>Name</th>
                       <th>Email</th>
                       <th>City</th>
                       <th>Proof Document</th>
-                      <th>Deactive Request</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th><input type="checkbox" name="account_selection" value="1234"/>&nbsp;</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>City</th>
-                      <th>Proof Document</th>
-                      <th>Deactive Request</th>
-                      
-                    </tr>
-                  </tfoot>
                   <tbody>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection" value="1234"/>&nbsp;</td>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection" value="1234"/>&nbsp;</td>
-                      <td>Garrett Winters</td>
-                      <td>Accountant</td>
-                      <td>Tokyo</td>
-                      <td>63</td>
-                      <td>2011/07/25</td>
-                     
-                    </tr>
-                    <tr>
-                       <td><input type="checkbox" name="account_selection" value="1234"/>&nbsp;</td>
-                      <td>Ashton Cox</td>
-                      <td>Junior Technical Author</td>
-                      <td>San Francisco</td>
-                      <td>66</td>
-                      <td>2009/01/12</td>
-                      
-                    </tr>
-                    <tr>
-                       <td><input type="checkbox" name="account_selection" value="1234"/>&nbsp;</td>
-                      <td>Cedric Kelly</td>
-                      <td>Senior Javascript Developer</td>
-                      <td>Edinburgh</td>
-                      <td>22</td>
-                      <td>2012/03/29</td>
-                     
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection" value="1234"/>&nbsp;</td>
-                      <td>Airi Satou</td>
-                      <td>Accountant</td>
-                      <td>Tokyo</td>
-                      <td>33</td>
-                      <td>2008/11/28</td>
-                   
-                    </tr>
-                    
+                  <%
+                    if(request.getAttribute("allVerVoter")!=null){
+                      ArrayList<VerVoter> allVerVoter = (ArrayList)request.getAttribute("allVerVoter");
+                      for(VerVoter voter: allVerVoter) {
+                        out.println("<tr>");
+                        out.println("<td><input type=\"checkbox\" name=\"account_selection\" value=\"" + voter.getVoterID() + "\"/>&nbsp;</td>");
+                        out.println("<td>" + voter.getName() + "</td>");
+                        out.println("<td>" + voter.getEmail() + "</td>");
+                        out.println("<td>" + voter.getCity() + "</td>");
+                        String documentPath = voter.getLocationDocument();
+                        int locationOfDocumentName = documentPath.lastIndexOf("/");
+                        int locationOfDocumentName2 = documentPath.lastIndexOf("\\");
+                        String documentName;
+                        if (locationOfDocumentName != -1){
+                          documentName = documentPath.substring(locationOfDocumentName+1);
+                        } else {
+                          documentName = documentPath.substring(locationOfDocumentName2+1);
+                        }
+                        out.println("<td><a href=\"data/" + documentName + "\">" + documentName + "</a></td>");
+                        out.println("</tr>");
+                      }
+                    }
+                  %>
                   </tbody>
                 </table>
 
