@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 17, 2019 at 09:18 PM
--- Server version: 5.7.25-0ubuntu0.18.04.2-log
--- PHP Version: 7.2.15-0ubuntu0.18.04.2
+-- Host: 127.0.0.1:3306
+-- Generation Time: Apr 21, 2019 at 03:28 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,16 +25,41 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `phonenumtoken`
+--
+
+DROP TABLE IF EXISTS `phonenumtoken`;
+CREATE TABLE IF NOT EXISTS `phonenumtoken` (
+  `token` int(100) NOT NULL,
+  PRIMARY KEY (`token`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `phonenumtoken`
+--
+
+INSERT INTO `phonenumtoken` (`token`) VALUES
+(103348),
+(174331),
+(246622),
+(755858),
+(945669);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `voter`
 --
 
-CREATE TABLE `voter` (
+DROP TABLE IF EXISTS `voter`;
+CREATE TABLE IF NOT EXISTS `voter` (
   `voterID` int(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `hashedPN` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
   `locationDocumentPath` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`voterID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -40,9 +67,6 @@ CREATE TABLE `voter` (
 --
 
 INSERT INTO `voter` (`voterID`, `name`, `hashedPN`, `city`, `locationDocumentPath`, `email`) VALUES
-(1, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
-(2, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
-(3, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
 (4, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
 (5, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
 (6, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
@@ -52,17 +76,10 @@ INSERT INTO `voter` (`voterID`, `name`, `hashedPN`, `city`, `locationDocumentPat
 (10, 'Mah Chia Hui', '4129036789', 'Singapore', '/opt/tomcat/webapps/app-1.0-SNAPSHOT/data/MahChiaHuiDoc.pdf', 'chuah68@gmail.com'),
 (11, 'Chia Hui Mah 123123', '4129036789', 'Pittsburgh', '/opt/tomcat/webapps/app-1.0-SNAPSHOT/data/ChiaHuiMah123123Doc.pdf', 'mahchiahui@hotmail.sg'),
 (12, 'Chia Hui Mah', '4129036789', 'Pittsburgh', '/opt/tomcat/webapps/app-1.0-SNAPSHOT/data/ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
-(13, 'fe', '4129036789', 'few e', '/opt/tomcat/webapps/ROOT/data/feDoc.pdf', 'fdwe@andrew.cmu.edu');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `voter`
---
-ALTER TABLE `voter`
-  ADD PRIMARY KEY (`voterID`);
+(13, 'fe', '4129036789', 'few e', '/opt/tomcat/webapps/ROOT/data/feDoc.pdf', 'fdwe@andrew.cmu.edu'),
+(14, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg'),
+(15, 'Chia Hui Mah', '4129036789', 'Pittsburgh', 'C:\\Users\\mahch\\Desktop\\whatsyourstand\\app\\target\\app-1.0-SNAPSHOT\\data\\ChiaHuiMahDoc.pdf', 'mahchiahui@hotmail.sg');
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
