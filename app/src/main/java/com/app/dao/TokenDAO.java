@@ -22,7 +22,7 @@ public class TokenDAO {
         try {
             conn = ConnectionManager.getConnection("14819db");
 
-            stmt = conn.prepareStatement("select COUNT(DISTINCT tokenid) from token");
+            stmt = conn.prepareStatement("select IFNULL(MAX(tokenid),0) from token");
             rs = stmt.executeQuery();
             rs.next();
             tokenID = rs.getInt(1);

@@ -5,8 +5,10 @@ import com.app.controller.RedirectController;
 import com.app.controller.VerificationTokenController;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
+import com.app.dao.VerVoterDAO;
 import com.app.entity.Cookie;
 import com.app.entity.Rootuser;
+import com.app.entity.VerVoter;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
@@ -18,8 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static com.app.dao.VerVoterDAO.getAllVerVoter;
 
 @WebServlet(name = "AdminVerificationServlet")
 public class AdminVerificationServlet extends HttpServlet {
@@ -32,15 +37,18 @@ public class AdminVerificationServlet extends HttpServlet {
          */
         String[] accounts = request.getParameterValues("account_selection");
         ArrayList<String> list = new ArrayList(Arrays.asList(accounts));
-        String voterID = list.get(0);
-        int voterIDNum = Integer.parseInt(voterID);
-        String path = getServletContext().getRealPath(".");
-
-        /**
-         * sends token to Q&A database
-         */
-        boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
-        request.setAttribute("tokenResult",tokenResult);
+        for(String voterID: list){
+            int voterIDNum = Integer.parseInt(voterID);
+            String path = getServletContext().getRealPath(".");
+            /**
+             * sends token to Q&A database
+             */
+            boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
+            if(tokenResult){
+                VerVoterDAO.deleteVerVoter(list);
+            }
+            request.setAttribute("tokenResult",tokenResult);
+        }
         RequestDispatcher view = request.getRequestDispatcher("/html/admin-verificationSuccessful.jsp");
         view.forward(request, response);
 
@@ -95,7 +103,9 @@ public class AdminVerificationServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            RedirectController.showFrontEnd(request, response, "/html/admin-verification.html");
+            ArrayList<VerVoter> allVerVoter = VerVoterDAO.getAllVerVoter();
+            request.setAttribute("allVerVoter",allVerVoter);
+            RedirectController.showFrontEnd(request, response, "/html/admin-verification.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);

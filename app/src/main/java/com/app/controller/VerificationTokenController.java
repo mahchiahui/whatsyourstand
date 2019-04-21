@@ -22,17 +22,16 @@ public class VerificationTokenController {
 
         //generate token
         String token = TokenGenerator.getAlphaNumeric(32);
-        String fakeToken = "" + voterID;
 
         //send token to user
-        String message = "Dear Voter, \n\n This is the token create your account: " + fakeToken;
+        String message = "Dear Voter, \n\n This is the token create your account: " + token;
         SendEmailTLS.sendEmail(message,"whatsyourstandtest@gmail.com");
 
         // generate time stamp
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         //create plaintext
-        String plaintext = "token:" + fakeToken + " timestamp:" + timestamp.toString();
+        String plaintext = "token:" + token + " timestamp:" + timestamp.toString();
 
         //simulate getting a public key from the Q&A server
         PublicKey qnaPubKey = ActualTokenController.getPublicKey(path);
