@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.app.entity.Answer" %>
 <%@ page import="com.app.entity.Candidate" %>
+<%@ page import="com.app.entity.Status" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -346,6 +347,7 @@
               <!-- jsp loaded Q&A CARD -->
               <%
                 List<Question> questionList = (List<Question>) request.getAttribute("question_list");
+                List<Status> statusList = (List<Status>) request.getAttribute("status_list");
                 List<List<Answer>> answersList = (List<List<Answer>>) request.getAttribute("answer_list_of_list");
                 List<List<Candidate>> candidateList = (List<List<Candidate>>) request.getAttribute("candidate_list_of_list");
 
@@ -360,8 +362,8 @@
                             // Question
                             "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\"><span>" +
                             question.getLastModifiedTime() + "</span> \n" +
-                            "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"far fa-heart\">" +
-                            question.getLikes() + "</i>  </span></a>\n" +
+//                            "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"far fa-heart\">" +
+//                            question.getLikes() + "</i>  </span></a>\n" +
                             "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
                             "<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-down\">" +
                             question.getDownvote() + "</i></span></a>\n" +

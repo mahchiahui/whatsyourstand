@@ -80,7 +80,7 @@ public class VoterMainpageServlet extends HttpServlet {
 
             List<List<Answer>> answersList = new ArrayList<>();
             List<List<Candidate>> candidatesList = new ArrayList<>();
-            List<Question> questions = QuestionDAO.readTopQuestionList(15);
+            List<Question> questions = QuestionDAO.readTopQuestionList();
 
             for (Question question : questions) {
                 List<Answer> answers = AnswerDAO.readAnswerList(question);

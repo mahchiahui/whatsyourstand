@@ -1,6 +1,7 @@
 package com.app.servlet;
 
 import com.app.controller.LoginController;
+import com.app.controller.QuestionController;
 import com.app.controller.RedirectController;
 import com.app.dao.AnswerDAO;
 import com.app.dao.CookieDao;
@@ -76,11 +77,14 @@ public class VoterMyQuestionServlet extends HttpServlet {
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
 
+            List<Question> questions = QuestionDAO.readQuestionList(loginedInfo);
+            List<Status> statuses = new ArrayList<>();
             List<List<Answer>> answersList = new ArrayList<>();
             List<List<Candidate>> candidatesList = new ArrayList<>();
-            List<Question> questions = QuestionDAO.readQuestionList(loginedInfo);
 
             for (Question question : questions) {
+                statuses.add(QuestionController.showStatus(question.getQuestionId(), loginedInfo.getUserId()));
+
                 List<Answer> answers = AnswerDAO.readAnswerList(question);
                 answersList.add(answers);
 
@@ -92,6 +96,7 @@ public class VoterMyQuestionServlet extends HttpServlet {
             }
 
             request.setAttribute("question_list", questions);
+            request.setAttribute("status_list", statuses);
             request.setAttribute("answer_list_of_list", answersList);
             request.setAttribute("candidate_list_of_list", candidatesList);
 

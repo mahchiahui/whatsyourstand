@@ -241,4 +241,13 @@
         <url-pattern>/question</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LikeServlet</servlet-name>
+        <servlet-class>com.app.servlet.LikeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LikeServlet</servlet-name>
+        <url-pattern>/s</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -52,7 +52,7 @@ public class QuestionDAO {
             conn = ConnectionManager.getConnection("14819db");
 
             String sql = "INSERT INTO question (questionid, userid, title, description, created_time, " +
-                "last_mod_time, location, num_answer, upvote, downvote, likes, problematic) " +
+                "last_mod_time, location, num_answer, upvote, downvote, problematic) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
             stmt.setInt (1, questionID);
@@ -66,7 +66,6 @@ public class QuestionDAO {
             stmt.setInt(9, 0);
             stmt.setInt(10, 0);
             stmt.setInt(11, 0);
-            stmt.setInt(12, 0);
 
             stmt.executeUpdate();  // int result =
 
@@ -99,9 +98,7 @@ public class QuestionDAO {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Question question = extractQuestionFromRS(rs);
-                if (question.getUserId() == userID) {
-                    questions.add(question);
-                }
+                questions.add(question);
             }
 
         } catch (SQLException se) {
@@ -119,17 +116,17 @@ public class QuestionDAO {
      * Obtain questions with the most number of
      * @return
      */
-    public static List<Question> readTopQuestionList (int threshold) {
+    public static List<Question> readTopQuestionList () {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
         List<Question> questions = new ArrayList<>();
-        int cnt = 0;
+//        int cnt = 0;
 
         try {
             conn = ConnectionManager.getConnection("14819db");
-            stmt = conn.prepareStatement("SELECT * FROM question ORDER BY likes DESC limit ?");
-            stmt.setInt(1, threshold);
+            stmt = conn.prepareStatement("SELECT * FROM question ORDER BY (upvote - downvote) DESC");
+//            stmt.setInt(1, threshold);
             rs = stmt.executeQuery();
             while (rs.next()) {
 //                if (cnt >= threshold) {
@@ -137,11 +134,11 @@ public class QuestionDAO {
 //                }
                 Question question = extractQuestionFromRS(rs);
                 questions.add(question);
-                cnt++;
+//                cnt++;
             }
 
         } catch (SQLException se) {
-            logger.error("sql exception in readQuestionList",se);
+            logger.error("sql exception in readTopQuestionList",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -170,7 +167,7 @@ public class QuestionDAO {
              */
 
             String sql = "UPDATE question SET title=?, description=?, last_mod_time=?, location=?" +
-                "num_answer=?, upvote=?, downvote=?, likes=?, problematic=? WHERE questionid=?";
+                "num_answer=?, upvote=?, downvote=?, problematic=? WHERE questionid=?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString (1, question.getTitle());
@@ -180,9 +177,8 @@ public class QuestionDAO {
             stmt.setInt(5, question.getNumberOfAnswer());
             stmt.setInt(6, question.getUpvote());
             stmt.setInt(7, question.getDownvote());
-            stmt.setInt(8, question.getLikes());
-            stmt.setInt(9, question.isFlagProblematic());
-            stmt.setInt(10, question.getQuestionId());
+            stmt.setInt(8, question.isFlagProblematic());
+            stmt.setInt(9, question.getQuestionId());
 
             int result = stmt.executeUpdate();  // 0 or 1
             if (result == 1) {
@@ -276,7 +272,6 @@ public class QuestionDAO {
         question.setNumberOfAnswer(rs.getInt("num_answer"));
         question.setUpvote(rs.getInt("upvote"));
         question.setDownvote(rs.getInt("downvote"));
-        question.setLikes(rs.getInt("likes"));
         question.setFlagProblematic(rs.getInt("problematic"));
 
         return question;

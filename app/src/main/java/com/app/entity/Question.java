@@ -13,7 +13,6 @@ public class Question {
     private int numberOfAnswer;
     private int upvote;
     private int downvote;
-    private int likes;
 
     private int flagProblematic;
 
@@ -29,7 +28,6 @@ public class Question {
         this.numberOfAnswer = 0;
         this.upvote = 0;
         this.downvote = 0;
-        this.likes = 0;
         this.flagProblematic = 0;
     }
 
@@ -45,7 +43,6 @@ public class Question {
         this.numberOfAnswer = 0;
         this.upvote = 0;
         this.downvote = 0;
-        this.likes = 0;
         this.flagProblematic = 0;
     }
 
@@ -127,14 +124,6 @@ public class Question {
 
     public void setDownvote(int downvote) {
         this.downvote = downvote;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
     public int isFlagProblematic() {
