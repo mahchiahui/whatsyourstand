@@ -17,6 +17,10 @@
   <!-- Custom styles for this template-->
   <link href="html/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom stepper css -->
+    <link href="html/css/stepper.css" rel="stylesheet">
+
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -77,8 +81,8 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-              <div class="col-lg-6">
+              <!--<div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
+              <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
 
@@ -90,13 +94,39 @@
         </div>
         <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
       </a></h1>
+                      <div class="md-stepper-horizontal orange">
+                          <div class="md-step active">
+                              <div class="md-step-circle"><span>1</span></div>
+                              <div class="md-step-title">Input Tel</div>
+                              <div class="md-step-bar-left"></div>
+                              <div class="md-step-bar-right"></div>
+                          </div>
+                          <div class="md-step active">
+                              <div class="md-step-circle"><span>2</span></div>
+                              <div class="md-step-title">Verify Tel</div>
+                              <div class="md-step-bar-left"></div>
+                              <div class="md-step-bar-right"></div>
+                          </div>
+                          <div class="md-step active">
+                              <div class="md-step-circle"><span>3</span></div>
+                              <div class="md-step-title">Verification Info</div>
+                              <div class="md-step-bar-left"></div>
+                              <div class="md-step-bar-right"></div>
+                          </div>
+                          <div class="md-step">
+                              <div class="md-step-circle"><span>4</span></div>
+                              <div class="md-step-title">Done</div>
+                              <div class="md-step-bar-left"></div>
+                              <div class="md-step-bar-right"></div>
+                          </div>
+                      </div>
                     <h1 class="h4 text-gray-900 mb-4">Verify Your Identity</h1>
                   </div>
-                  <a style="margin-bottom: 20px;" href="privacypolicy" class="btn btn-privacy btn-block">Please Read our <u style="color:purple;">Privay Policy</u></a>
-                  <form class="user" style="text-align: right" action="VoterVerification" method="post" enctype="multipart/form-data">
+                  <a style="margin-bottom: 20px;" href="privacypolicy" class="btn btn-privacy btn-block">Please Read our <u style="color:purple;">Privacy Policy</u></a>
+                  <form class="user"  action="VoterVerification" method="post" enctype="multipart/form-data">
 
                     <div class="form-group">
-                        <div style="width:389px;">
+                        <div style="align:left;">
                         <label style="margin-right: 5px;">Legal Name</label><input style="margin-bottom: 20px;width: 60%;display: inline-block;" type="text" name="full_name" class="form-control form-control-user" id="name" aria-describedby="Telephone Help" placeholder="Enter Your Full(Legal) Name" required>
 
 
@@ -303,7 +333,7 @@
   <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="html/js/sb-admin-2.min.js"></script>
+  <!--<script src="html/js/sb-admin-2.min.js"></script> -->
 
 </body>
 
