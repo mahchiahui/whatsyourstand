@@ -230,6 +230,15 @@
         <url-pattern>/candidate-help</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CandidateDeleteAnswerServlet</servlet-name>
+        <servlet-class>com.app.servlet.CandidateDeleteAnswerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CandidateDeleteAnswerServlet</servlet-name>
+        <url-pattern>/deleteCandidateAnswer</url-pattern>
+    </servlet-mapping>
+
 
     <!-- question -->
     <servlet>
