@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.app.entity.Voter" %>
+<%@ page import="com.app.entity.Candidate" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -292,14 +295,13 @@
           </div>
 
           <!-- Content Row -->
- <!-- Voter Accounts -->
- <h3 class="m-0 font-weight-bold text-primary">Voter Accounts</h3>
-          <div class="card shadow mb-4">
+          <form action="adminDeleteVoterAccount" method="post">
+             <!-- Voter Accounts -->
+             <h3 class="m-0 font-weight-bold text-primary">Voter Accounts</h3>
+            <div class="card shadow mb-4">
             <div class="card-header py-3">
               
-               <a class="btn btn-primary btn-icon-split" href="#" style="margin-right:3em;">
-                
-                <span class="text">Delete Account</span></a>
+               <input class="btn btn-primary" type="submit" value="Delete Account" style="margin-right:3em;">
               
                 </div>
            
@@ -310,65 +312,37 @@
             <div class="card-body">
 
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="VoterAccountTable" width="100%" cellspacing="0">
 
                   <thead>
                     <tr>
-                      <th><input type="checkbox" name="account_selection"/>&nbsp;</th>
-                      <th>Username</th>
-                      <th>Last Login</th>
-                      <th>Location</th>
-                      <th>Registration Date</th>
-                      <th>Deactive Request</th>
-                      
+                      <th></th>
+                      <th>userid</th>
+                      <th>username</th>
+                      <th>location</th>
+                      <th>email</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                     <th><input type="checkbox" name="account_selection"/>&nbsp;</th>
-                       <th>Username</th>
-                      <th>Last Login</th>
-                      <th>Location</th>
-                      <th>Registration Date</th>
-                      <th>Deactive Request</th>
-                    </tr>
-                  </tfoot>
                   <tbody>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection"/>&nbsp;</td>
-                      <td>Jerry</td>
-                      <td>2011/04/25</td>
-                      <td>Pittsburgh</td>
-                      <td>2010/04/25</td>
-                      <td>No</td>
-                      
-                                          
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection"/>&nbsp;</td>
-                      <td>Jerry1</td>
-                      <td>2011/04/25</td>
-                      <td>Pittsburgh</td>
-                      <td>2010/04/25</td>
-                      <td>No</td>
-                      
-                                          
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection"/>&nbsp;</td>
-                      <td>Jerry2</td>
-                      <td>2011/04/25</td>
-                      <td>Pittsburgh</td>
-                      <td>2010/04/25</td>
-                      <td>No</td>
-                      
-                                          
-                    </tr>
+                  <%
+                    ArrayList<Voter> voters = (ArrayList<Voter>)request.getAttribute("voters");
+                    for(Voter voter: voters){
+                      out.println("<tr>");
+                      out.println("<td><input type=\"checkbox\" name=\"voter_selection\" value=\"" + voter.getUserId() + "\"/>&nbsp;</td>");
+                      out.println("<td>" + voter.getUserId() + "</td>");
+                      out.println("<td>" + voter.getUsername() + "</td>");
+                      out.println("<td>" + voter.getLocation() + "</td>");
+                      out.println("<td>" + voter.getEmail() + "</td>");
+                      out.println("</tr>");
+                    }
+                  %>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
+            </form>
+
 
          
 
@@ -377,79 +351,52 @@
       
             <!-- Candidate Account -->
             <h3 class="m-0 font-weight-bold text-primary">Candidate Accounts</h3>
+          <form action="adminDeleteCandidateAccount" method="post">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-             
-              <a class="btn btn-primary btn-icon-split" href="#" >
-              
-                <span class="text">Delete Account</span>
-              <a class="btn btn-primary btn-icon-split" href="#" style="float:right ">
-                
-                <span class="text">Create Account</span>
-              </a> 
+              <input class="btn btn-primary" type="submit" value="Delete Account" />
             </div>
             <div class="card-body">
 
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="CandidateAccountTable" width="100%" cellspacing="0">
                    <thead>
                     <tr>
-                      <th><input type="checkbox" name="account_selection"/>&nbsp;</th>
-                      <th>Username</th>
-                      <th>Last Login</th>
+                      <th></th>
+                      <th>User ID</th>
+                      <th>Name</th>
+                      <th>Age</th>
                       <th>Location</th>
-                      <th>Registration Date</th>
-                      <th>Deactive Request</th>
-                      
+                      <th>Workplace</th>
+                      <th>Political Affiliation</th>
+                      <th>Political Goal</th>
+                      <th>Education</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                     <th><input type="checkbox" name="account_selection"/>&nbsp;</th>
-                       <th>Username</th>
-                      <th>Last Login</th>
-                      <th>Location</th>
-                      <th>Registration Date</th>
-                      <th>Deactive Request</th>
-                    </tr>
-                  </tfoot>
                   <tbody>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection"/>&nbsp;</td>
-                      <td>Tom</td>
-                      <td>2011/04/25</td>
-                      <td>Pittsburgh</td>
-                      <td>2010/04/25</td>
-                      <td>No</td>
-                      
-                                          
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection"/>&nbsp;</td>
-                      <td>Tom1</td>
-                      <td>2011/04/25</td>
-                      <td>Pittsburgh</td>
-                      <td>2010/04/25</td>
-                      <td>No</td>
-                      
-                                          
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="account_selection"/>&nbsp;</td>
-                      <td>Tom2</td>
-                      <td>2011/04/25</td>
-                      <td>Pittsburgh</td>
-                      <td>2010/04/25</td>
-                      <td>No</td>
-                      
-                                          
-                    </tr>
+                    <%
+                      ArrayList<Candidate> candidates = (ArrayList<Candidate>)request.getAttribute("candidates");
+                      for(Candidate candidate: candidates){
+                        out.println("<tr>");
+                        out.println("<td><input type=\"checkbox\" name=\"candidate_selection\" value=\"" + candidate.getUserId() + "\"/>&nbsp;</td>");
+                        out.println("<td>" + candidate.getUserId() + "</td>");
+                        out.println("<td>" + candidate.getRealname() + "</td>");
+                        out.println("<td>" + candidate.getAge() + "</td>");
+                        out.println("<td>" + candidate.getLocation() + "</td>");
+                        out.println("<td>" + candidate.getWorkplace() + "</td>");
+                        out.println("<td>" + candidate.getPoliticalAffiliation() + "</td>");
+                        out.println("<td>" + candidate.getPoliticalGoal()+ "</td>");
+                        out.println("<td>" + candidate.getEducation() + "</td>");
+                        out.println("</tr>");
+                      }
+                    %>
                   </tbody>
                 
                 </table>
               </div>
             </div>
           </div>
+          </form>
 
             <!-- Area Table -->
 <!--            <div class="col-xl-10 col-lg-7">

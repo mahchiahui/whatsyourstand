@@ -401,8 +401,8 @@
                               "<span style=\"float: right\" class=\"mr-2 d-none d-lg-inline text-gray-600 small\">" +
                               answer.getLastModifiedTime() + "</span></span></div>\n");
                       if(userID.equals(""+candidate.getUserId())){
-                        out.println("<a href=\"deleteCandidateAnswer?answerID=" + answer.getAnswerId() + "\">delete</a>");
-                        out.println("<a href=\"editCandidateAnswer?answerID=" + answer.getAnswerId() + "\">edit</a>");
+                        out.println("<a class=\"btn btn-primary\" href=\"deleteCandidateAnswer?answerID=" + answer.getAnswerId() + "\">delete</a>");
+                        out.println("<a class=\"btn btn-primary\" href=\"editCandidateAnswer?answerID=" + answer.getAnswerId() + "\">edit</a>");
                       }
                       if (j != answersList.get(i).size() - 1) {
                         out.println("<hr>\n");

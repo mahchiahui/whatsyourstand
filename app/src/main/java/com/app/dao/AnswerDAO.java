@@ -52,6 +52,10 @@ public class AnswerDAO {
         }
     }
 
+    /**
+     * creates new answer ID
+     * @return new answer ID
+     */
     public static int createNewAnswerID () {
         Connection conn = null;
         ResultSet rs = null;
@@ -76,6 +80,57 @@ public class AnswerDAO {
         answerID++;
 
         return answerID;
+    }
+
+    public static Answer getAnswer (String answerID) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Answer answer = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM answer WHERE answerid=?");
+            stmt.setInt(1, Integer.parseInt(answerID));
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                answer = extractAnswerFromRS(rs);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in readAnswerList",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return answer;
+    }
+
+    public static ArrayList<Answer> getAllAnswers (int userID) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ArrayList<Answer> answers = new ArrayList<>();
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM answer WHERE userid=?");
+            stmt.setInt(1, userID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Answer answer = extractAnswerFromRS(rs);
+                answers.add(answer);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in readAnswerList",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return answers;
     }
 
 

@@ -2,6 +2,7 @@ package com.app.dao;
 
 import com.app.entity.Candidate;
 import com.app.entity.Rootuser;
+import com.app.entity.Voter;
 import com.app.utility.ConnectionManager;
 //import org.apache.log4j.Logger;
 //import org.apache.log4j.Priority;
@@ -274,6 +275,175 @@ public class UserDAO {
         return users;
     }
 
+    /**
+     * retrieve all voters
+     * @return list of voters
+     */
+    public static ArrayList<Voter> getAllVoters(){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ArrayList<Voter> voters = new ArrayList<>();
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN voter ON rootuser.userid = voter.userid WHERE rootuser.role = 1");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt(1);
+                String username = rs.getString(2);
+                String location = rs.getString(7);
+                String email = rs.getString(8);
+                Voter voter = new Voter(userid, username, location, email);
+                voters.add(voter);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return voters;
+    }
+
+    /**
+     * retrieve all candidates
+     * @return list of candidates
+     */
+    public static ArrayList<Candidate> getAllCandidates(){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ArrayList<Candidate> candidates = new ArrayList<>();
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN candidate ON rootuser.userid = candidate.userid WHERE rootuser.role = 2");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt("userid");
+                String realname = rs.getString("realname");
+                int age = rs.getInt("age");
+                String location = rs.getString("location");
+                String workplace = rs.getString("workplace");
+                String political_affiliation = rs.getString("political_affiliation");
+                String political_goal = rs.getString("political_goal");
+                String education = rs.getString("education");
+                Candidate candidate = new Candidate(userid,realname,age,location,workplace,political_affiliation,political_goal,education);
+                candidates.add(candidate);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return candidates;
+    }
+
+    /**
+     * delete voter from the rootuser and voter table
+     * @param userid
+     * @return success of sql operation
+     */
+    public static boolean deleteVoter (int userid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        boolean result1 = false;
+        boolean result12 = false;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM voter WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult == 1) {
+                result1 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteVoter", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM rootuser WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult2 = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult2 == 1) {
+                result12 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteVoter", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return result1 && result12;
+    }
+
+    /**
+     * delete candidate from database
+     * @param userid
+     * @return result of sql operation
+     */
+    public static boolean deleteCandidate (int userid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        boolean result1 = false;
+        boolean result12 = false;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM candidate WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult == 1) {
+                result1 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteCandidate", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM rootuser WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult2 = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult2 == 1) {
+                result12 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteCandidate", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return result1 && result12;
+    }
 
     /**
      * Update an existing user record in db
@@ -338,4 +508,6 @@ public class UserDAO {
 
         return candidate;
     }
+
+
 }

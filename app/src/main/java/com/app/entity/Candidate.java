@@ -10,8 +10,6 @@ public class Candidate {
     private String politicalAffiliation;
     private String politicalGoal;
     private String education;
-//    private int totalUpvote;
-//    private int totalDownvote;
     private String profilePhotoPath;
 
     public Candidate () {
@@ -37,8 +35,6 @@ public class Candidate {
         this.politicalAffiliation = politicalAffiliation;
         this.politicalGoal = politicalGoal;
         this.education = education;
-//        this.totalUpvote = 0;
-//        this.totalDownvote = 0;
         this.profilePhotoPath = "/" + String.valueOf(userId);
     }
 
@@ -105,22 +101,6 @@ public class Candidate {
     public void setEducation(String education) {
         this.education = education;
     }
-
-//    public int getTotalUpvote() {
-//        return totalUpvote;
-//    }
-
-//    public void setTotalUpvote(int totalUpvote) {
-//        this.totalUpvote = totalUpvote;
-//    }
-
-//    public int getTotalDownvote() {
-//        return totalDownvote;
-//    }
-
-//    public void setTotalDownvote(int totalDownvote) {
-//        this.totalDownvote = totalDownvote;
-//    }
 
     public String getProfilePhotoPath() {
         return profilePhotoPath;

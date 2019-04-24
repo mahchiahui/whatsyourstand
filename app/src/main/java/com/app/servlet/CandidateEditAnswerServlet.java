@@ -18,12 +18,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Date;
 
-@WebServlet(name = "CandidateMyAnswerServlet")
-public class CandidateMyAnswerServlet extends HttpServlet {
+@WebServlet(name = "CandidateEditAnswerServlet")
+public class CandidateEditAnswerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String answerContent = request.getParameter("answerContent");
+        String answerID = request.getParameter("answerID");
+        Answer answer = AnswerDAO.getAnswer(answerID);
 
+        //generate new timestamp
+        Date date= new Date();
+        Timestamp ts = new Timestamp(date.getTime());
+
+        answer.setLastModifiedTime(ts.toString());
+        answer.setContent(answerContent);
+
+        AnswerDAO.updateAnswer(answer);
+        response.sendRedirect(request.getContextPath() + "/candidate");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,7 +62,7 @@ public class CandidateMyAnswerServlet extends HttpServlet {
 
             // Cookie is valid in db and has not expired
             if (cookie != null &&
-                DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
+                    DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
 
                 String userid = cookie.getUserId();
                 Rootuser user = UserDAO.searchUserById(userid);
@@ -66,21 +79,22 @@ public class CandidateMyAnswerServlet extends HttpServlet {
         }
 
         if ((session == null && isCookieValid) || // no session, but has cookie
-            // has session and has login
-            (session != null && (loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY)) != null &&
-                (loginedInfo.getRole() == 2))) {
+                // has session and has login
+                (session != null && (loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY)) != null &&
+                        (loginedInfo.getRole() == 2))) {
 
             if (session == null) {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            ArrayList<Answer> answers = AnswerDAO.getAllAnswers(loginedInfo.getUserId());
-            request.setAttribute("answers",answers);
-            RedirectController.showFrontEnd(request, response, "/html/candidate-myanswers.jsp");
-        }
-        else {
-            RedirectController.redirectToLoginPage(request, response);
+            System.out.println(loginedInfo.getRole());
         }
 
+        //getAnswerID
+        String answerID = request.getParameter("answerID");
+        Answer answer = AnswerDAO.getAnswer(answerID);
+
+        request.setAttribute("candidateAnswer", answer);
+        RedirectController.showFrontEnd(request, response, "/html/candidate-update-answer.jsp");
     }
 }

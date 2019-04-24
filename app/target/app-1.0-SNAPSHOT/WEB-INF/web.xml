@@ -166,6 +166,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AdminDeleteVoterAccServlet</servlet-name>
+        <servlet-class>com.app.servlet.AdminDeleteVoterAccServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDeleteVoterAccServlet</servlet-name>
+        <url-pattern>/adminDeleteVoterAccount</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminDeleteCandidateAccServlet</servlet-name>
+        <servlet-class>com.app.servlet.AdminDeleteCandidateAccServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDeleteCandidateAccServlet</servlet-name>
+        <url-pattern>/adminDeleteCandidateAccount</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AdminVerificationServlet</servlet-name>
         <servlet-class>com.app.servlet.AdminVerificationServlet</servlet-class>
     </servlet>
@@ -237,6 +255,15 @@
     <servlet-mapping>
         <servlet-name>CandidateDeleteAnswerServlet</servlet-name>
         <url-pattern>/deleteCandidateAnswer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CandidateEditAnswerServlet</servlet-name>
+        <servlet-class>com.app.servlet.CandidateEditAnswerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CandidateEditAnswerServlet</servlet-name>
+        <url-pattern>/editCandidateAnswer</url-pattern>
     </servlet-mapping>
 
 

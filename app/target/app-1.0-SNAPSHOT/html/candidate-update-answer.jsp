@@ -1,3 +1,4 @@
+<%@ page import="com.app.entity.Answer" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>My Answers</title>
+  <title>My Settings</title>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -29,7 +30,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -41,7 +42,7 @@
 
       <!-- Nav Item - Privacy Policy -->
       <li class="nav-item active">
-        <a class="nav-link" href="privacypolicy">
+        <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Privacy Policy</span></a>
       </li>
@@ -55,9 +56,9 @@
         Sections
       </div>
 
-      <!-- Nav Item - My Answers Menu -->
+      <!-- Nav Item - My Quetions Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candidate-myanswers" style="opacity: .3;">
+        <a class="nav-link" href="candiate-myanswers.html" >
           <i class="fas fa-fw fa-folder"></i>
           <span>My Answers</span>
         </a>
@@ -65,17 +66,17 @@
 
       <!-- Nav Item - Q & A  Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candidate">
+        <a class="nav-link" href="candiate-topQ&A.html">
           <i class="fas fa-fw fa-paw"></i>
           <span>Top Question & Answer</span>
         </a>
       </li>
 
-      <!-- Nav Item - My Profile Menu -->
+      <!-- Nav Item - Setting Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candidate-myprofile" >
+        <a class="nav-link" href="#" style="opacity: .3;">
           <i class="fas fa-fw fa-cog"></i>
-          <span>My Profile</span>
+          <span>Setting</span>
         </a>
       </li>
       <!-- Divider -->
@@ -83,7 +84,7 @@
 
       <li class="nav-item active">
          
-        <a class="nav-link" href="candidate-help">
+        <a class="nav-link" href="help.html">
           <i class="fas fa-fw fa-question-circle"></i>
           <span>Help</span></a>
       </li>
@@ -260,7 +261,7 @@
             <!-- Nav Item - Rootuser Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Candidate Valerie Luna</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Voter 000232200</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - Rootuser Information -->
@@ -295,122 +296,28 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">My Answers</h1>
-           
-
-    
-         
-           <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="TelDropdown">
-                <h6 class="dropdown-header">
-                 Create a new Question
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-5">
-                  <form class="user" style="text-align: right" >
-                    <div class="form-group">
-                  <span style="float: left"><b>Title</b><br></span>
-                  <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here"> 
-
-                  <hr>
-                    <br><span style="float: left"><b>Description</b></span>
-                  <textarea rows="4" cols="50">
-                    Please input your Description Here
-                  </textarea>
-                  <br>
-                
-                  <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
-
-                     </div>
-                 </form>
-
-                    
-                  </div>
-                </a>
+            <h1 class="h3 mb-0 text-gray-800">Update Answers</h1>
           </div>
-        
-                </div>
             
 
 
           <!-- Content Row -->
  
             <div class="row">
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-10 col-md-10 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><span>Jan 24, 2019</span> 
-
-                        
-
-
-                    
-
-
-
-                       
-                         <span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="far fa-heart">7</i>  </span></a>
-                          <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
-                         <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
-
-                        
-                      </div>
-
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        Why Facebook doesn't disclose the 3rd-parties it shares data with?
-                      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages" style="background-color:grey!important;float:right">
-          
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <hr>
-          <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: 3px">
-            <h6 class="collapse-header">  
-                <img class="img-profile rounded-circle" src="img/profile-pic.jpg">Tom</h6>
-             <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="mr-2 d-none d-lg-inline text-gray-600 small">Allegheny County</span><br>
-              <span>
-            Sorry I willl look into it. 
-          </span>
-          </div>
-            <br>
-            <span style="float: left; margin-top: 3em;">
-            
-            <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-up"></i></span>
-              <span class="text">15</span>
-            </a>
-            <a class="btn btn-primary btn-icon-split" href="#" style="margin-right: 2em;"> <span class="icon text-white-50" s><i class="far fa-thumbs-down"></i></span>
-              <span class="text">1</span>
-            </a>
-            <a class="btn btn-primary btn-icon-split" href="#" > <span class="icon text-white-50" s><i class="fas fa-folder-plus"></i></span>
-              <span class="text">Follow</span>
-            </a>
-             <a  href="#" > <span style="float: right"><i style="float: right" class="fa fa-edit"></i></span></a>
-             <a  href="#" > <span style="float: right"><i style="float: right" class="fa fa-edit"></i></span></a>
-                        <a  href="#" > <span style="float: right"><i style="margin-right:1em;float: right" class="fas fa-trash-alt"></i></span></a>
-              <a  href="#"> </a>
-                        
-           
-                         
-          </span>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>   
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-              </div>
+              <form method="post" action="editCandidateAnswer">
+                <%
+                  Answer answer = (Answer)request.getAttribute("candidateAnswer");
+                  out.println("<div class=\"form-group\">");
+                  out.println("<input type=\"text\" class=\"form-control form-control-user\" value=\"" + answer.getContent() + "\" name=\"answerContent\">");
+                  out.println("</div>");
+                  out.println("<input type=\"text\" style=\"display: none\" value=\"" + answer.getAnswerId() + "\" name=\"answerID\">");
+                %>
+                <input class="btn btn-primary btn-user btn-block" type="submit" value="update">
+              </form>
             </div>
 
-          </div>
-          <!-- end of firstrow -->
 
+         
         </div>
         <!-- /.container-fluid -->
 
@@ -459,7 +366,7 @@
 
   <!-- Bootstrap core JavaScript-->
   <script src="html/vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="html/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
   <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -467,12 +374,18 @@
   <!-- Custom scripts for all pages-->
   <script src="html/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="html/vendor/chart.js/Chart.min.js"></script>
+  <!-- Page level plugins --> 
 
   <!-- Page level custom scripts -->
-  <script src="html/js/demo/chart-area-demo.js"></script>
-  <script src="html/js/demo/chart-pie-demo.js"></script>
+
+  <link href="html/vendor/bootstrap/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="html/vendor/bootstrap/bootstrap-toggle.min.js"></script>
+  <script>
+  $(function() {
+    $('#toggle-one').bootstrapToggle();
+  })
+</script>
+
 
 </body>
 
