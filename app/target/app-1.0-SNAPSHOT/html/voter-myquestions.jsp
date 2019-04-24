@@ -346,6 +346,7 @@
               <!-- ******* PRIMARY Q&A CARD ******* -->
               <!-- jsp loaded Q&A CARD -->
               <%
+                String userID = (String) request.getAttribute("userID");
                 List<Question> questionList = (List<Question>) request.getAttribute("question_list");
                 List<Status> statusList = (List<Status>) request.getAttribute("status_list");
                 List<List<Answer>> answersList = (List<List<Answer>>) request.getAttribute("answer_list_of_list");
@@ -381,17 +382,25 @@
                             "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\" id=\"question-" +
                             question.getQuestionId() + "\"><span>" +
                             question.getLastModifiedTime() + "</span> \n" +
-                            "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"report\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
+                            "<a  href=\"report?questionid=" +
+                            question.getQuestionId() + "&lasturl=voter" +
+                            "\" class=\"report\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
                             "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"downvote\"> <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"" +
                             statusDownvote + "\">" +
                             question.getDownvote() + "</i></span></a>\n" +
                             "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"upvote\"> <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"" +
                             statusUpvote + "\">" +
-                            question.getUpvote() + "</i></span></a>\n" +
-                            "<a  href=\"question-update?questionid=" +
-                            question.getQuestionId() + "\" class=\"update\"> <span style=\"margin-right:1em;float: right\"><i class=\"far fa-edit\"></i></span></a>\n" +
+                            question.getUpvote() + "</i></span></a>\n");
+                    if (userID.equals(String.valueOf(question.getUserId()))) {
+                        out.println("<a  href=\"question-update?questionid=" +
+                            question.getQuestionId() + "&action=update&lasturl=voter" +
+                              "\" class=\"update\"> <span style=\"margin-right:1em;float: right\"><i class=\"far fa-edit\"></i></span></a>\n");
+                        out.println("<a  href=\"question-update?questionid=" +
+                            question.getQuestionId() + "&action=delete&lasturl=voter" +
+                              "\" class=\"delete\"> <span style=\"margin-right:1em;float: right\"><i class=\"fas fa-trash-alt\"></i></span></a>\n");
+                    }
 
-                            "</div>\n" +
+                    out.println("</div>\n" +
                             "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">\n" +
                             question.getTitle() +
                             "<a class=\"nav-link collapsed\" href=\"#\" data-toggle=\"collapse\" data-target=\"#DesPages\" aria-expanded=\"true\" aria-controls=\"DesPages\" style=\"color:grey!important;float:right\">More</a>\n" +

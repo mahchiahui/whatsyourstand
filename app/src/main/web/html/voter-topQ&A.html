@@ -344,34 +344,13 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="question-3"><span>Jan 24, 2019</span>
 
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="TelDropdown">
-                          <h6 class="dropdown-header">
-                            Report an issue
-                          </h6>
-                          <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-5">
-
-                              <form class="question" style="text-align: right" method="post" action="question">
-                                <div class="form-group">
-                                  <span style="float: left"><b>Reason</b></span>
-                                  <!-- ??? -->
-                                  <textarea rows="4" cols="50" placeholder="Enter your concerns here." name="content"></textarea>
-                                  <br>
-
-                                  <input type="submit" class="btn btn-primary btn-user btn-block" value="submit report">
-                                </div>
-                              </form>
-
-                            </div>
-                          </a>
-                        </div>
-
                         <a  href="#" onclick="makeRequestQuestion(this)" class="report"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="fas fa-exclamation-circle"></i>  </span></a>
 
                         <a  href="#" onclick="makeRequestQuestion(this)" class="downvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
                         <a  href="#" onclick="makeRequestQuestion(this)" class="upvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
 
-                        <a  href="question-update?questionid=3" class="update"> <span style="margin-right:1em;float: right"><i class="far fa-edit"></i></span></a>
+                        <a  href="question-update?questionid=3&action=update" class="update"> <span style="margin-right:1em;float: right"><i class="far fa-edit"></i></span></a>
+                        <a  href="question-update?questionid=3&action=delete&lasturl=voter" class="delete"> <span style="margin-right:1em;float: right"><i class="fas fa-trash-alt"></i></span></a>
 
                       </div>
 

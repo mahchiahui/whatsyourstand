@@ -53,7 +53,7 @@ public class QuestionDAO {
 
             String sql = "INSERT INTO question (questionid, userid, title, description, created_time, " +
                 "last_mod_time, location, num_answer, upvote, downvote, problematic) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
             stmt.setInt (1, questionID);
             stmt.setInt (2, userID);

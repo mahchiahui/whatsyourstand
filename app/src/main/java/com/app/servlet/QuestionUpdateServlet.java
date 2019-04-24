@@ -15,11 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Handle question update and delete,
+ * need to keep track of the original page so that it could redirect back to the original page
+ */
 //@WebServlet(name = "QuestionUpdateServlet")
 public class QuestionUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String questionId = (String) session.getAttribute(Constants.ATTRIBUTE_QUESTION_KEY);
+        String lastURL = request.getParameter("lasturl");
 
         String title = request.getParameter("title");
         String description = request.getParameter("description");
@@ -35,7 +40,8 @@ public class QuestionUpdateServlet extends HttpServlet {
         question.setLastModifiedTime(curTime);
 
         if (QuestionDAO.updateQuestion(question)) {
-            response.sendRedirect(request.getServletContext().getContextPath() + "/voter-myquestions");
+            response.sendRedirect(request.getServletContext().getContextPath() + "/" + lastURL);
+            // "/voter-myquestions"
 //            RedirectController.showFrontEnd(request, response, "/html/voter-myquestions.jsp");
         }
         else {
@@ -47,10 +53,19 @@ public class QuestionUpdateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String questionid = request.getParameter("questionid");
+        String action = request.getParameter("action");
         HttpSession session = request.getSession();
         session.setAttribute(Constants.ATTRIBUTE_QUESTION_KEY, questionid);
 
-        System.out.println(questionid);
-        RedirectController.showFrontEnd(request, response, "/html/voter-updatequestion.html");
+//        System.out.println(questionid);
+        if (action.equals("update")) {
+            RedirectController.showFrontEnd(request, response, "/html/voter-updatequestion.html");
+        }
+        else if (action.equals("delete")) {
+            QuestionDAO.deleteQuestion(Integer.parseInt(questionid));
+
+            String lastURL = request.getParameter("lasturl");
+            response.sendRedirect(request.getServletContext().getContextPath() + "/" + lastURL);
+        }
     }
 }

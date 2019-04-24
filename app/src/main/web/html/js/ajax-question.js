@@ -37,6 +37,14 @@ function makeRequestQuestion(ele) {
     var formData = "questionid=" + questionId + "&action=" + className;
     console.log(className);
 
+    if (className == "upvote") {
+        xmlHttpRequest.onreadystatechange = markUpvote(xmlHttpRequest, id);
+    }
+    else if (className == "downvote") {
+        xmlHttpRequest.onreadystatechange = markDownvote(xmlHttpRequest, id);
+    }
+
+    /*
     switch (className) {
         case "report":
             xmlHttpRequest.onreadystatechange = report(xmlHttpRequest, id);
@@ -48,6 +56,7 @@ function makeRequestQuestion(ele) {
             xmlHttpRequest.onreadystatechange = markDownvote(xmlHttpRequest, id);
             break;
     }
+    */
 
     xmlHttpRequest.open("POST", "voter", true);
     xmlHttpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");

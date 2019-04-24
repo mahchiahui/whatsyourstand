@@ -97,7 +97,13 @@ public class VoterMainpageServlet extends HttpServlet {
             }
             System.out.println(loginedInfo.getUserId());
 
-
+            /*
+             * get all the questions
+             * get the answers for the questions
+             * get the upvote and downvote status for the questions
+             * get the candidates for the questions
+             * sends it all back to the jsp
+             */
             List<List<Answer>> answersList = new ArrayList<>();
             List<List<Candidate>> candidatesList = new ArrayList<>();
             List<Question> questions = QuestionDAO.readTopQuestionList();
@@ -120,9 +126,11 @@ public class VoterMainpageServlet extends HttpServlet {
             request.setAttribute("status_list", statuses);
             request.setAttribute("answer_list_of_list", answersList);
             request.setAttribute("candidate_list_of_list", candidatesList);
+            String userID = String.valueOf(loginedInfo.getUserId());
+            request.setAttribute("userID", userID);
 
-             RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.html");
-//            RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.jsp");
+//             RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.html");
+            RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);

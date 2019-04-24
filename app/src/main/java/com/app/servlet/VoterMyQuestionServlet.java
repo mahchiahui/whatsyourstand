@@ -77,6 +77,13 @@ public class VoterMyQuestionServlet extends HttpServlet {
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
 
+            /*
+             * get all the questions
+             * get the answers for the questions
+             * get the upvote and downvote status for the questions
+             * get the candidates for the questions
+             * sends it all back to the jsp
+             */
             List<Question> questions = QuestionDAO.readQuestionList(loginedInfo);
             List<Status> statuses = new ArrayList<>();
             List<List<Answer>> answersList = new ArrayList<>();
@@ -99,7 +106,8 @@ public class VoterMyQuestionServlet extends HttpServlet {
             request.setAttribute("status_list", statuses);
             request.setAttribute("answer_list_of_list", answersList);
             request.setAttribute("candidate_list_of_list", candidatesList);
-
+            String userID = String.valueOf(loginedInfo.getUserId());
+            request.setAttribute("userID", userID);
 
             RedirectController.showFrontEnd(request, response, "/html/voter-myquestions.jsp");
         }
