@@ -50,7 +50,7 @@ public class AnswerDAO {
                 "last_mod_time, upvote, downvote) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt (1, answer.getAnswerId());
+            stmt.setInt (1, answerID);
             stmt.setInt (2, answer.getQuestionId());
             stmt.setInt(3, answer.getUserId());
             stmt.setString(4, answer.getContent());

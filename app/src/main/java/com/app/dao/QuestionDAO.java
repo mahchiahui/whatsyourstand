@@ -166,7 +166,7 @@ public class QuestionDAO {
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
              */
 
-            String sql = "UPDATE question SET title=?, description=?, last_mod_time=?, location=?" +
+            String sql = "UPDATE question SET title=?, description=?, last_mod_time=?, location=?, " +
                 "num_answer=?, upvote=?, downvote=?, problematic=? WHERE questionid=?";
 
             stmt = conn.prepareStatement(sql);

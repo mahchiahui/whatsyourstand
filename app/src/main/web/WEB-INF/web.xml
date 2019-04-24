@@ -242,12 +242,21 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>LikeServlet</servlet-name>
-        <servlet-class>com.app.servlet.LikeServlet</servlet-class>
+        <servlet-name>QuestionUpdateServlet</servlet-name>
+        <servlet-class>com.app.servlet.QuestionUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LikeServlet</servlet-name>
-        <url-pattern>/s</url-pattern>
+        <servlet-name>QuestionUpdateServlet</servlet-name>
+        <url-pattern>/question-update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>com.app.servlet.ReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/report</url-pattern>
     </servlet-mapping>
 
 </web-app>
