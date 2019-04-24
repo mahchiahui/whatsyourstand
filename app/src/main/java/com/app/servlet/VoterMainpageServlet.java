@@ -1,11 +1,9 @@
 package com.app.servlet;
 
 import com.app.controller.LoginController;
+import com.app.controller.QuestionController;
 import com.app.controller.RedirectController;
-import com.app.dao.AnswerDAO;
-import com.app.dao.CookieDao;
-import com.app.dao.QuestionDAO;
-import com.app.dao.UserDAO;
+import com.app.dao.*;
 import com.app.entity.*;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
@@ -23,7 +21,29 @@ import java.util.List;
 //@WebServlet(name = "VoterMainpageServlet")
 public class VoterMainpageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
 
+        HttpSession session = request.getSession();
+        Rootuser loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY);
+
+        String questionId = request.getParameter("questionid");
+        String action = request.getParameter("action");
+        switch (action) {
+            case "report":
+                Report report = new Report();
+                report.setQuestionId(Integer.parseInt(questionId));
+                report.setUserId(loginedInfo.getUserId());
+                report.setContent("Report Content: Spam");  // how to get this value from pop up window
+                ReportDAO.createReport(report);
+                break;
+            case "upvote":
+                QuestionController.setUpvote(Integer.parseInt(questionId), loginedInfo.getUserId());
+                break;
+            case "downvote":
+                QuestionController.setDownvote(Integer.parseInt(questionId), loginedInfo.getUserId());
+                break;
+        }
+//        response.getWriter().write(id); // "Hello World!"
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,8 +101,11 @@ public class VoterMainpageServlet extends HttpServlet {
             List<List<Answer>> answersList = new ArrayList<>();
             List<List<Candidate>> candidatesList = new ArrayList<>();
             List<Question> questions = QuestionDAO.readTopQuestionList();
+            List<Status> statuses = new ArrayList<>();
 
             for (Question question : questions) {
+                statuses.add(QuestionController.showStatus(question.getQuestionId(), loginedInfo.getUserId()));
+
                 List<Answer> answers = AnswerDAO.readAnswerList(question);
                 answersList.add(answers);
 
@@ -94,11 +117,12 @@ public class VoterMainpageServlet extends HttpServlet {
             }
 
             request.setAttribute("question_list", questions);
+            request.setAttribute("status_list", statuses);
             request.setAttribute("answer_list_of_list", answersList);
             request.setAttribute("candidate_list_of_list", candidatesList);
 
-            // RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.html");
-            RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.jsp");
+             RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.html");
+//            RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);

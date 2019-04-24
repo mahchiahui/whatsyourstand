@@ -10,6 +10,8 @@
   <meta name="author" content="">
 
   <title>Q & A</title>
+  <!-- ajax call for question -->
+  <script type="text/javascript" language="javascript" src="html/js/ajax-question.js"></script>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -340,13 +342,10 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><span>Jan 24, 2019</span> 
-
-                        <a  href="#"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="far fa-heart">7</i>  </span></a>
-                        <a  href="#"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="fas fa-exclamation-circle"></i>  </span></a>
-
-                        <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
-                        <a  href="#" > <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="11111"><span>Jan 24, 2019</span>
+                        <a  href="#" onclick="makeRequest(this)" class="report"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="fas fa-exclamation-circle"></i>  </span></a>
+                        <a  href="#" onclick="makeRequest(this)" class="downvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
+                        <a  href="#" onclick="makeRequest(this)" class="upvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
                         
                       </div>
 

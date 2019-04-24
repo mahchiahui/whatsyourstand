@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.app.entity.Answer" %>
 <%@ page import="com.app.entity.Candidate" %>
+<%@ page import="com.app.entity.Status" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +15,9 @@
   <meta name="author" content="">
 
   <title>Q & A</title>
+
+  <!-- ajax call for question -->
+  <script type="text/javascript" language="javascript" src="html/js/ajax-question.js"></script>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -343,13 +347,14 @@
                     <!-- jsp loaded Q&A CARD -->
                     <%
                       List<Question> questionList = (List<Question>) request.getAttribute("question_list");
+                      List<Status> statusList = (List<Status>) request.getAttribute("status_list");
                       List<List<Answer>> answersList = (List<List<Answer>>) request.getAttribute("answer_list_of_list");
                       List<List<Candidate>> candidateList = (List<List<Candidate>>) request.getAttribute("candidate_list_of_list");
 
                       if (questionList != null && questionList.size() != 0) {
                           for (int i = 0; i < questionList.size(); i++) {
                               Question question = questionList.get(i);
-                              out.println("<div class=\"card border-left-primary shadow h-100 py-2\">\n" +
+                              out.println("<div class=\"col-xl-10 col-md-10 mb-4\">"+"<div class=\"card border-left-primary shadow h-100 py-2\">\n" +
                                   "<div class=\"card-body\">\n" +
                                   "<div class=\"row no-gutters align-items-center\">\n" +
                                   "<div class=\"col mr-2\">\n" +
@@ -390,7 +395,7 @@
 
                                       out.println("<div class=\"bg-white py-2 collapse-inner rounded\" style=\"margin-bottom: 3px\">\n" +
                                             "<h6 class=\"collapse-header\">\n" +
-                                            "<img class=\"img-profile rounded-circle\" src=\"img/profile-pic.jpg\">" +
+                                            "<img class=\"img-profile rounded-circle\" src=\"html/img/profile-pic.jpg\">" +
                                             candidate.getRealname() +
                                             "</h6>\n" +
                                             "<div class=\"h5 mb-0 font-weight-bold text-gray-800\"><span class=\"mr-2 d-none d-lg-inline text-gray-600 small\">" +
@@ -398,7 +403,7 @@
                                             "<span>\n" + answer.getContent() + "</span>\n" +
                                             "</div>\n" +
                                             "<br>\n" +
-                                            "<span style=\"float: left; margin-top: 3em;\">\n" +
+                                            "<span>\n" +
                                             "<a class=\"btn btn-primary btn-icon-split\" href=\"#\" style=\"margin-right: 2em;\"> <span class=\"icon text-white-50\" s><i class=\"far fa-thumbs-up\"></i></span>\n" +
                                             "<span class=\"text\">" + answer.getUpvote() + "</span></a>\n" +
                                             "<a class=\"btn btn-primary btn-icon-split\" href=\"#\" style=\"margin-right: 2em;\"> <span class=\"icon text-white-50\" s><i class=\"far fa-thumbs-down\"></i></span>\n" +
@@ -413,7 +418,7 @@
                                       }
                                   }
 
-                              out.println("</div></div></div></div></div></div>");
+                              out.println("</div></div></div></div></div></div></div>");
 
                         }
                       }
