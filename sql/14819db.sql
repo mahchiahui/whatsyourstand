@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 21, 2019 at 03:23 PM
+-- Generation Time: Apr 24, 2019 at 06:11 PM
 -- Server version: 5.7.25
 -- PHP Version: 7.3.1
 
@@ -49,14 +49,6 @@ CREATE TABLE `answer` (
   `downvote` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `answer`
---
-
-INSERT INTO `answer` (`answerid`, `questionid`, `userid`, `content`, `created_time`, `last_mod_time`, `upvote`, `downvote`) VALUES
-(1, 3, 4, 'answer1', '2019-04-20 07:00:00', '2019-04-20 08:00:00', 1, 1),
-(2, 3, 5, 'answer2', '2019-04-20 09:00:00', '2019-04-20 10:00:00', 2, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -95,13 +87,6 @@ CREATE TABLE `cookie` (
   `time_stamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `cookie`
---
-
-INSERT INTO `cookie` (`cookieid`, `userid`, `time_stamp`) VALUES
-('9PIc2pJ08TnwfL4F2TmUrBHSovsawkj6', '3', '2019-04-20 14:10:10');
-
 -- --------------------------------------------------------
 
 --
@@ -127,10 +112,7 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`questionid`, `userid`, `title`, `description`, `created_time`, `last_mod_time`, `location`, `num_answer`, `upvote`, `downvote`, `problematic`) VALUES
-(1, 0, '1', '1', '2019-04-19 09:00:00', '2019-04-19 10:00:00', 'pitt', 0, 0, 0, 1),
-(2, 0, '1', '1', '2019-04-19 11:45:50', '2019-04-19 11:45:50', 'Pittsburgh', 0, 0, 0, 0),
-(3, 3, 'title1', 'des1', '2019-04-19 13:46:18', '2019-04-19 13:46:18', 'Pittsburgh', 2, 2, 1, 0),
-(4, 3, 'title2', 'des2', '2019-04-20 09:56:01', '2019-04-20 09:56:01', 'Pittsburgh', 0, 0, 0, 0);
+(1, 3, 'ere', 'werew', '2019-04-24 14:05:25', '2019-04-24 14:05:25', 'Pittsburgh', 0, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -186,7 +168,7 @@ CREATE TABLE `status` (
 --
 
 INSERT INTO `status` (`questionid`, `userid`, `status_type`) VALUES
-(3, 3, 1);
+(1, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -244,7 +226,7 @@ CREATE TABLE `voter` (
 --
 
 INSERT INTO `voter` (`userid`, `location`, `email`) VALUES
-(3, '', '');
+(3, 'Pittsburgh', 'bellayululan@gmail.com');
 
 --
 -- Indexes for dumped tables
