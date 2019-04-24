@@ -24,7 +24,7 @@ public class QuestionUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String questionId = (String) session.getAttribute(Constants.ATTRIBUTE_QUESTION_KEY);
-        String lastURL = request.getParameter("lasturl");
+        String lastURL = (String) session.getAttribute(Constants.CALLBACK_URL_KEY);
 
         String title = request.getParameter("title");
         String description = request.getParameter("description");
@@ -54,8 +54,11 @@ public class QuestionUpdateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String questionid = request.getParameter("questionid");
         String action = request.getParameter("action");
+        String lastURL = request.getParameter("lasturl");
+
         HttpSession session = request.getSession();
         session.setAttribute(Constants.ATTRIBUTE_QUESTION_KEY, questionid);
+        session.setAttribute(Constants.CALLBACK_URL_KEY, lastURL);
 
 //        System.out.println(questionid);
         if (action.equals("update")) {
@@ -63,8 +66,6 @@ public class QuestionUpdateServlet extends HttpServlet {
         }
         else if (action.equals("delete")) {
             QuestionDAO.deleteQuestion(Integer.parseInt(questionid));
-
-            String lastURL = request.getParameter("lasturl");
             response.sendRedirect(request.getServletContext().getContextPath() + "/" + lastURL);
         }
     }

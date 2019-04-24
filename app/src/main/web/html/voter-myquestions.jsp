@@ -16,6 +16,9 @@
 
   <title>My Questions</title>
 
+  <!-- ajax call for question -->
+  <script type="text/javascript" language="javascript" src="html/js/ajax-question.js"></script>
+
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!--<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -38,7 +41,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
+        <div class="sidebar-brand-text mx-3">What's Your Stand</div>
       </a>
 
       <!-- Divider -->
@@ -314,20 +317,21 @@
             <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-5">
 
-                    <form class="question" style="text-align: right" method="post" action="question">
-                      <div class="form-group">
-                        <span style="float: left"><b>Title</b><br></span>
-                        <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here" name="title">
+                      <form class="question" style="text-align: right" method="post" action="question">
+                          <div class="form-group">
+                              <span style="float: left"><b>Title</b><br></span>
+                              <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here" name="title">
 
-                        <hr>
-                        <br><span style="float: left"><b>Description</b></span>
-                        <!-- ??? -->
-                        <textarea rows="4" cols="50" name="description">Please input your Description Here</textarea>
-                        <br>
-                
-                        <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
-                      </div>
-                    </form>
+                              <hr>
+                              <br><span style="float: left"><b>Description</b></span>
+                              <!-- ??? -->
+                              <textarea rows="4" cols="50" name="description" placeholder="Please input your description Here."></textarea>
+                              <br>
+                              <input type="hidden" name="lasturl" value="voter-myquestions"/>
+
+                              <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
+                          </div>
+                      </form>
 
                   </div>
             </a>
@@ -378,12 +382,12 @@
                             "<div class=\"row no-gutters align-items-center\">\n" +
                             "<div class=\"col mr-2\">\n" +
 
-                            // Question
+                    // Question
                             "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\" id=\"question-" +
                             question.getQuestionId() + "\"><span>" +
                             question.getLastModifiedTime() + "</span> \n" +
                             "<a  href=\"report?questionid=" +
-                            question.getQuestionId() + "&lasturl=voter" +
+                            question.getQuestionId() + "&lasturl=voter-myquestions" +
                             "\" class=\"report\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
                             "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"downvote\"> <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"" +
                             statusDownvote + "\">" +
@@ -393,11 +397,11 @@
                             question.getUpvote() + "</i></span></a>\n");
                     if (userID.equals(String.valueOf(question.getUserId()))) {
                         out.println("<a  href=\"question-update?questionid=" +
-                            question.getQuestionId() + "&action=update&lasturl=voter" +
-                              "\" class=\"update\"> <span style=\"margin-right:1em;float: right\"><i class=\"far fa-edit\"></i></span></a>\n");
+                            question.getQuestionId() + "&action=update&lasturl=voter-myquestions" +
+                            "\" class=\"update\"> <span style=\"margin-right:1em;float: right\"><i class=\"far fa-edit\"></i></span></a>\n");
                         out.println("<a  href=\"question-update?questionid=" +
-                            question.getQuestionId() + "&action=delete&lasturl=voter" +
-                              "\" class=\"delete\"> <span style=\"margin-right:1em;float: right\"><i class=\"fas fa-trash-alt\"></i></span></a>\n");
+                            question.getQuestionId() + "&action=delete&lasturl=voter-myquestions" +
+                            "\" class=\"delete\"> <span style=\"margin-right:1em;float: right\"><i class=\"fas fa-trash-alt\"></i></span></a>\n");
                     }
 
                     out.println("</div>\n" +
