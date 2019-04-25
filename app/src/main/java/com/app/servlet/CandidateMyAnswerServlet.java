@@ -6,6 +6,7 @@ import com.app.dao.AnswerDAO;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
 import com.app.entity.Answer;
+import com.app.entity.Candidate;
 import com.app.entity.Cookie;
 import com.app.entity.Rootuser;
 import com.app.utility.Constants;
@@ -76,6 +77,9 @@ public class CandidateMyAnswerServlet extends HttpServlet {
             }
             ArrayList<Answer> answers = AnswerDAO.getAllAnswers(loginedInfo.getUserId());
             request.setAttribute("answers",answers);
+
+            Candidate candidate = UserDAO.getCandidate(loginedInfo.getUserId());
+            request.setAttribute("candidate",candidate);
             RedirectController.showFrontEnd(request, response, "/html/candidate-myanswers.jsp");
         }
         else {

@@ -1,5 +1,4 @@
-<%@ page import="com.app.entity.Answer" %>
-<%@ page import="com.app.entity.Candidate" %>
+<%@ page import="com.app.entity.Voter" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>My Settings</title>
+  <title>Help</title>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -31,7 +30,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -59,15 +58,15 @@
 
       <!-- Nav Item - My Quetions Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candidate-myanswers" >
+        <a class="nav-link" href="voter-myquestions" >
           <i class="fas fa-fw fa-folder"></i>
-          <span>My Answers</span>
+          <span>My Questions</span>
         </a>
       </li>
 
       <!-- Nav Item - Q & A  Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candidate">
+        <a class="nav-link" href="voter">
           <i class="fas fa-fw fa-paw"></i>
           <span>Top Question & Answer</span>
         </a>
@@ -78,14 +77,15 @@
 
       <li class="nav-item active">
          
-        <a class="nav-link" href="candidate-help">
+        <a class="nav-link" href="voter-help" style="opacity: .4">
           <i class="fas fa-fw fa-question-circle"></i>
           <span>Help</span></a>
       </li>
 
+     
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
-
 
     </ul>
     <!-- End of Sidebar -->
@@ -105,7 +105,6 @@
           </button>
 
 
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -114,9 +113,9 @@
             <!-- Nav Item - Rootuser Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%Candidate candidateInfo = (Candidate)request.getAttribute("candidate");%>
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Candidate <%out.println(candidateInfo.getRealname());%></span>
-                <img class="img-profile rounded-circle" src="<%out.println(candidateInfo.getProfilePhotoPath());%>">
+                <%Voter voter = (Voter)request.getAttribute("voter");%>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%out.println(voter.getUsername());%></span>
+                <img class="img-profile rounded-circle" src="html/img/profile-pic.jpg">
               </a>
               <!-- Dropdown - Rootuser Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -137,28 +136,49 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Update Answers</h1>
-          </div>
-            
+            <h1 class="h3 mb-0 text-gray-800">Help</h1>
+           </div>
 
 
           <!-- Content Row -->
- 
-            <div class="row">
-              <form method="post" action="editCandidateAnswer">
-                <%
-                  Answer answer = (Answer)request.getAttribute("candidateAnswer");
-                  out.println("<div class=\"form-group\">");
-                  out.println("<input type=\"text\" class=\"form-control form-control-user\" value=\"" + answer.getContent() + "\" name=\"answerContent\">");
-                  out.println("</div>");
-                  out.println("<input type=\"text\" style=\"display: none\" value=\"" + answer.getAnswerId() + "\" name=\"answerID\">");
-                %>
-                <input class="btn btn-primary btn-user btn-block" type="submit" value="update">
-              </form>
+
+           
+           
+           <div class="row">
+              <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-2">Need Help?</h1>
+                    <p class="mb-4">Please call us: 111-333-2222</p>
+                  </div>
+                    <p class="mb-4">We get it, stuff happens. Just enter your email address below and we'll contact you later!</p>
+                  </div>
+                  <form class="user">
+                    <div class="form-group">
+                      <p class="mb-4"><u>Please Note:</u> By inputting your email below, you have <b>agreed</b> that we can use your email address to contact you and answer your question(s).</p>
+                      <label>Your Contact Email:</label>
+                      <input type="email" class="form-control form-control-user" id="contactEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <label>confirm Your Email:</label>
+                      <input type="email" class="form-control form-control-user" id="contactEmailAgain" aria-describedby="emailHelp" placeholder="Enter Email Address Again...">
+
+                      <label>Questions:</label>
+                      <input type="text" class="form-control form-control-user" id="question" placeholder="Please input your question here...">
+
+                    </div>
+                    <a href="#" class="btn btn-primary btn-user btn-block">
+                      Submit Question
+                    </a>
+                  </form>
+                </div>
+              </div>
             </div>
+ 
+            
 
+          </div>
+          <!-- end of firstrow -->
 
-         
         </div>
         <!-- /.container-fluid -->
 
@@ -215,18 +235,12 @@
   <!-- Custom scripts for all pages-->
   <script src="html/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins --> 
+  <!-- Page level plugins -->
+  <script src="html/vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-
-  <link href="html/vendor/bootstrap/bootstrap-toggle.min.css" rel="stylesheet">
-  <script src="html/vendor/bootstrap/bootstrap-toggle.min.js"></script>
-  <script>
-  $(function() {
-    $('#toggle-one').bootstrapToggle();
-  })
-</script>
-
+  <script src="html/js/demo/chart-area-demo.js"></script>
+  <script src="html/js/demo/chart-pie-demo.js"></script>
 
 </body>
 

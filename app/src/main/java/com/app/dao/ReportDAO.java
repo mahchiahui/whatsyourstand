@@ -62,7 +62,7 @@ public class ReportDAO {
         //count number of report
         try {
             conn = ConnectionManager.getConnection("14819db");
-            stmt = conn.prepareStatement("select COUNT(DISTINCT reportid) from report");
+            stmt = conn.prepareStatement("select IFNULL(MAX(reportid),0) from report");
             rs = stmt.executeQuery();
             rs.next();
             reportID = rs.getInt(1);

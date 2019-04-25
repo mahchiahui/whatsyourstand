@@ -2,7 +2,10 @@ package com.app.servlet;
 
 import com.app.controller.RedirectController;
 import com.app.dao.QuestionDAO;
+import com.app.dao.UserDAO;
 import com.app.entity.Question;
+import com.app.entity.Rootuser;
+import com.app.entity.Voter;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
@@ -59,10 +62,13 @@ public class QuestionUpdateServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute(Constants.ATTRIBUTE_QUESTION_KEY, questionid);
         session.setAttribute(Constants.CALLBACK_URL_KEY, lastURL);
+        Rootuser loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY);
+        Voter voter = UserDAO.getVoter(loginedInfo.getUserId());
+        request.setAttribute("voter", voter);
 
 //        System.out.println(questionid);
         if (action.equals("update")) {
-            RedirectController.showFrontEnd(request, response, "/html/voter-updatequestion.html");
+            RedirectController.showFrontEnd(request, response, "/html/voter-updatequestion.jsp");
         }
         else if (action.equals("delete")) {
             QuestionDAO.deleteQuestion(Integer.parseInt(questionid));

@@ -29,7 +29,7 @@ public class AnswerDAO {
         // count number of questions
         try {
             conn = ConnectionManager.getConnection("14819db");
-            stmt = conn.prepareStatement("select COUNT(DISTINCT answerid) from answer");
+            stmt = conn.prepareStatement("select IFNULL(MAX(answerid),0) from answer");
             rs = stmt.executeQuery();
             rs.next();
             answerID = rs.getInt(1);

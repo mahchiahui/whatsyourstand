@@ -1,5 +1,4 @@
-<%@ page import="com.app.entity.Answer" %>
-<%@ page import="com.app.entity.Candidate" %>
+<%@ page import="com.app.entity.Voter" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +10,9 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>My Settings</title>
+  <title>Q & A</title>
+  <!-- ajax call for question -->
+  <script type="text/javascript" language="javascript" src="html/js/ajax-question.js"></script>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -31,7 +32,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -57,31 +58,33 @@
         Sections
       </div>
 
-      <!-- Nav Item - My Quetions Menu -->
+      <!-- Nav Item - My Questions Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candidate-myanswers" >
+        <a class="nav-link" href="voter-myquestions" >
           <i class="fas fa-fw fa-folder"></i>
-          <span>My Answers</span>
+          <span>My Questions</span>
         </a>
       </li>
 
-      <!-- Nav Item - Q & A  Menu -->
+      <!-- Nav Item - Q & A Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candidate">
+        <a class="nav-link" href="voter">
           <i class="fas fa-fw fa-paw"></i>
           <span>Top Question & Answer</span>
         </a>
       </li>
 
       <!-- Divider -->
-         <hr class="sidebar-divider my-0">
+      <hr class="sidebar-divider my-0">
 
       <li class="nav-item active">
          
-        <a class="nav-link" href="candidate-help">
+        <a class="nav-link" href="voter-help">
           <i class="fas fa-fw fa-question-circle"></i>
           <span>Help</span></a>
       </li>
+
+     
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -104,8 +107,6 @@
             <i class="fa fa-bars"></i>
           </button>
 
-
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -114,9 +115,9 @@
             <!-- Nav Item - Rootuser Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%Candidate candidateInfo = (Candidate)request.getAttribute("candidate");%>
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Candidate <%out.println(candidateInfo.getRealname());%></span>
-                <img class="img-profile rounded-circle" src="<%out.println(candidateInfo.getProfilePhotoPath());%>">
+                <%Voter voter = (Voter)request.getAttribute("voter");%>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%out.println(voter.getUsername());%></span>
+                <img class="img-profile rounded-circle" src="html/img/profile-pic.jpg">
               </a>
               <!-- Dropdown - Rootuser Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -137,28 +138,30 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Update Answers</h1>
+            <h1 class="h3 mb-0 text-gray-800">Update Questions </h1>
           </div>
-            
-
 
           <!-- Content Row -->
- 
             <div class="row">
-              <form method="post" action="editCandidateAnswer">
-                <%
-                  Answer answer = (Answer)request.getAttribute("candidateAnswer");
-                  out.println("<div class=\"form-group\">");
-                  out.println("<input type=\"text\" class=\"form-control form-control-user\" value=\"" + answer.getContent() + "\" name=\"answerContent\">");
-                  out.println("</div>");
-                  out.println("<input type=\"text\" style=\"display: none\" value=\"" + answer.getAnswerId() + "\" name=\"answerID\">");
-                %>
+              <form class="question" method="post" action="question-update">
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user" placeholder="New title" name="title">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user" placeholder="New description" name="description">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user" placeholder="New location" name="location">
+                </div>
                 <input class="btn btn-primary btn-user btn-block" type="submit" value="update">
+
               </form>
-            </div>
 
 
-         
+
+          </div>
+          <!-- end of firstrow -->
+
         </div>
         <!-- /.container-fluid -->
 
@@ -215,18 +218,12 @@
   <!-- Custom scripts for all pages-->
   <script src="html/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins --> 
+  <!-- Page level plugins -->
+  <script src="html/vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-
-  <link href="html/vendor/bootstrap/bootstrap-toggle.min.css" rel="stylesheet">
-  <script src="html/vendor/bootstrap/bootstrap-toggle.min.js"></script>
-  <script>
-  $(function() {
-    $('#toggle-one').bootstrapToggle();
-  })
-</script>
-
+  <script src="html/js/demo/chart-area-demo.js"></script>
+  <script src="html/js/demo/chart-pie-demo.js"></script>
 
 </body>
 

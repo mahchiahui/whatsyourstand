@@ -38,7 +38,7 @@ public class UserDAO {
         //count number of voters
         try {
             conn = ConnectionManager.getConnection("14819db");
-            stmt = conn.prepareStatement("select COUNT(DISTINCT userid) from rootuser");
+            stmt = conn.prepareStatement("select IFNULL(MAX(userid),0) from rootuser");
             rs = stmt.executeQuery();
             rs.next();
             userID = rs.getInt(1);
@@ -309,6 +309,40 @@ public class UserDAO {
     }
 
     /**
+     * returns the voter with that userid
+     * @param searchThisUserID
+     * @return Voter
+     */
+    public static Voter getVoter(int searchThisUserID){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Voter voter = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN voter ON rootuser.userid = voter.userid WHERE rootuser.role = 1 and rootuser.userid = ?");
+            stmt.setInt(1,searchThisUserID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt(1);
+                String username = rs.getString(2);
+                String location = rs.getString(7);
+                String email = rs.getString(8);
+                voter = new Voter(userid, username, location, email);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return voter;
+    }
+
+    /**
      * retrieve all candidates
      * @return list of candidates
      */
@@ -331,7 +365,8 @@ public class UserDAO {
                 String political_affiliation = rs.getString("political_affiliation");
                 String political_goal = rs.getString("political_goal");
                 String education = rs.getString("education");
-                Candidate candidate = new Candidate(userid,realname,age,location,workplace,political_affiliation,political_goal,education);
+                String profilePhoto = rs.getString("profile_photo_path");
+                Candidate candidate = new Candidate(userid,realname,age,location,workplace,political_affiliation,political_goal,education,profilePhoto);
                 candidates.add(candidate);
             }
 
@@ -343,6 +378,45 @@ public class UserDAO {
         }
 
         return candidates;
+    }
+
+    /**
+     * get one candidate with the userid
+     * @param userID
+     * @return candidate
+     */
+    public static Candidate getCandidate(int userID){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Candidate candidate = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN candidate ON rootuser.userid = candidate.userid WHERE rootuser.role = 2 and candidate.userid = ?");
+            stmt.setInt(1,userID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt("userid");
+                String realname = rs.getString("realname");
+                int age = rs.getInt("age");
+                String location = rs.getString("location");
+                String workplace = rs.getString("workplace");
+                String political_affiliation = rs.getString("political_affiliation");
+                String political_goal = rs.getString("political_goal");
+                String education = rs.getString("education");
+                String profilePhoto = rs.getString("profile_photo_path");
+                candidate = new Candidate(userid,realname,age,location,workplace,political_affiliation,political_goal,education,profilePhoto);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return candidate;
     }
 
     /**

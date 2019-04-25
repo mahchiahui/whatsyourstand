@@ -2,8 +2,10 @@ package com.app.servlet;
 
 import com.app.controller.RedirectController;
 import com.app.dao.ReportDAO;
+import com.app.dao.UserDAO;
 import com.app.entity.Report;
 import com.app.entity.Rootuser;
+import com.app.entity.Voter;
 import com.app.utility.Constants;
 
 import javax.servlet.ServletException;
@@ -37,7 +39,12 @@ public class ReportServlet extends HttpServlet {
         session.setAttribute(Constants.ATTRIBUTE_QUESTION_KEY, questionid);
         session.setAttribute(Constants.CALLBACK_URL_KEY, lastURL);
 
+        Rootuser loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY);
+        Voter voter = UserDAO.getVoter(loginedInfo.getUserId());
+        request.setAttribute("voter", voter);
+
+
         System.out.println(questionid);
-        RedirectController.showFrontEnd(request, response, "/html/voter-report.html");
+        RedirectController.showFrontEnd(request, response, "/html/voter-report.jsp");
     }
 }

@@ -25,7 +25,7 @@ public class Candidate {
     }
 
     public Candidate (int userId, String realname, int age, String location,
-                      String workplace, String politicalAffiliation, String politicalGoal, String education) {
+                      String workplace, String politicalAffiliation, String politicalGoal, String education, String profilePhotoPath) {
 
         this.userId = userId;
         this.realname = realname;
@@ -35,7 +35,7 @@ public class Candidate {
         this.politicalAffiliation = politicalAffiliation;
         this.politicalGoal = politicalGoal;
         this.education = education;
-        this.profilePhotoPath = "/" + String.valueOf(userId);
+        this.profilePhotoPath = profilePhotoPath;
     }
 
     public int getUserId() {

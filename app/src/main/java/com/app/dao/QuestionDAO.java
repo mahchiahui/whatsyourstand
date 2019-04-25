@@ -34,7 +34,7 @@ public class QuestionDAO {
         // count number of questions
         try {
             conn = ConnectionManager.getConnection("14819db");
-            stmt = conn.prepareStatement("SELECT COUNT(DISTINCT questionid) FROM question");
+            stmt = conn.prepareStatement("SELECT IFNULL(MAX(questionid),0) FROM question");
             rs = stmt.executeQuery();
             rs.next();
             questionID = rs.getInt(1);

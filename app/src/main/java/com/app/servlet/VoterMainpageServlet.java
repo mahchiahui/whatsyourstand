@@ -129,7 +129,8 @@ public class VoterMainpageServlet extends HttpServlet {
             String userID = String.valueOf(loginedInfo.getUserId());
             request.setAttribute("userID", userID);
 
-//             RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.html");
+            Voter voter = UserDAO.getVoter(loginedInfo.getUserId());
+            request.setAttribute("voter", voter);
             RedirectController.showFrontEnd(request, response, "/html/voter-topQ&A.jsp");
         }
         else {

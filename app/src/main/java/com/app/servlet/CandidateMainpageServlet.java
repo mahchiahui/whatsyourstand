@@ -11,6 +11,7 @@ import com.app.entity.*;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -134,7 +135,9 @@ public class CandidateMainpageServlet extends HttpServlet {
             request.setAttribute("answer_list_of_list", answersList);
             request.setAttribute("candidate_list_of_list", candidatesList);
             String userID = "" + loginedInfo.getUserId();
+            Candidate candidate = UserDAO.getCandidate(loginedInfo.getUserId());
             request.setAttribute("userID",userID);
+            request.setAttribute("candidate",candidate);
 
             RedirectController.showFrontEnd(request, response, "/html/candidate-topQ&A.jsp");
         }
