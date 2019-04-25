@@ -97,7 +97,7 @@
                               out.println("Your user name is " + voterUsername + ".");
                           } else {
                               out.println("<h4>Failed to create an Account.</h4>");
-                              out.println("Please check that you have entered the correct token");
+                              out.println("Please check that your token has not expired. If it is, please request for a new one by emailing whatsyourstand@gmail.com");
                           }
 
                       %>

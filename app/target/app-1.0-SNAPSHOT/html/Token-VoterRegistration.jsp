@@ -91,8 +91,9 @@
                     </a></h1><h4>Create a password</h4>
                   </div>
                   <form class="user" method="post" action="TokenRegistration">
-                    <div class="form-group">
-                      <input type="text" name="token" class="form-control form-control-user" id="token" aria-describedby="Token Help" placeholder="Enter Token">
+                    <div class="form-group" style="display: none">
+                        <%String token = (String)request.getAttribute("token");%>
+                      <input type="text" name="token" value="<%out.println(token);%>" style="display: none" placeholder="Enter Token">
                     </div>
                     <div class="form-group">
                       <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">

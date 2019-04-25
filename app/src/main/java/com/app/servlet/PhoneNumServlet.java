@@ -24,7 +24,7 @@ public class PhoneNumServlet extends HttpServlet {
         String token = getRandomNumberString();
         PhoneNumTokenDAO.insertPhoneNumToken(token);
         String message = "Dear Voter, \n\n This is the token the verify your phone number: " + token;
-        SendEmailTLS.sendEmail(message,"whatsyourstandtest@gmail.com");
+        SendEmailTLS.sendEmail(message,"Phone Number Verification","whatsyourstandtest@gmail.com");
         RequestDispatcher view = request.getRequestDispatcher("/html/register-code.jsp");
         view.forward(request, response);
     }

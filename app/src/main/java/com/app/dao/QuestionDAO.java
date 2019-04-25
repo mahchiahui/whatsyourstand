@@ -1,6 +1,7 @@
 package com.app.dao;
 
 import com.app.entity.Question;
+import com.app.entity.ReportedQuestion;
 import com.app.entity.Rootuser;
 import com.app.utility.ConnectionManager;
 import org.slf4j.LoggerFactory;
@@ -252,6 +253,103 @@ public class QuestionDAO {
         return false;
     }
 
+    /**
+     * Delete a reportedQuestion given the question id
+     * @param questionID : question's id
+     */
+    public static boolean deleteReportedQuestion (int questionID) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM report WHERE questionid=" + questionID;
+            stmt = conn.prepareStatement(sql);
+
+            int result = stmt.executeUpdate();  // 0 or 1
+            if (result == 1) {
+                return true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteQuestion", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return false;
+    }
+
+    /**
+     * get all reported question from the database
+     * @return a list of reported questions
+     */
+    public static ArrayList<ReportedQuestion> getAllReportedQuestion() {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ArrayList<ReportedQuestion> reportedQuestions = new ArrayList<>();
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "SELECT question.questionid,title,description,content FROM question LEFT JOIN report ON question.questionid = report.questionid where content is not null";
+            stmt = conn.prepareStatement(sql);
+
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int questionID = rs.getInt("questionid");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String reportedIssue = rs.getString("content");
+                ReportedQuestion reportedQuestion = new ReportedQuestion(questionID,title,description,reportedIssue);
+                reportedQuestions.add(reportedQuestion);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteQuestion", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return reportedQuestions;
+    }
+
+    /**
+     * get all reported question from the database
+     * @return a list of reported questions
+     */
+    public static ReportedQuestion getReportedQuestion(int questionid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ReportedQuestion reportedQuestion = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "SELECT question.questionid,title,description,content FROM question LEFT JOIN report ON question.questionid = report.questionid where content is not null and question.questionid="+questionid;
+            stmt = conn.prepareStatement(sql);
+
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int questionID = rs.getInt("questionid");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String reportedIssue = rs.getString("content");
+                reportedQuestion = new ReportedQuestion(questionID,title,description,reportedIssue);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getReportedQuestion", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return reportedQuestion;
+    }
 
     /**
      * Transform result set into Question object

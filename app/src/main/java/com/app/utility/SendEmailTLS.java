@@ -16,7 +16,7 @@ public class SendEmailTLS {
      * @param emailContent
      * @param toEmailAddr
      */
-    public static void sendEmail(String emailContent, String toEmailAddr) {
+    public static void sendEmail(String emailContent, String subject, String toEmailAddr) {
         final String username = "whatsyourstandeps@gmail.com";
         final String password = "whatsyourstand1993";
 
@@ -41,7 +41,7 @@ public class SendEmailTLS {
                     Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAddr)
             );
-            message.setSubject("Registration");
+            message.setSubject(subject);
             message.setText(emailContent);
 
             Transport.send(message);

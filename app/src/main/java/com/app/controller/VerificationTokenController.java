@@ -24,8 +24,10 @@ public class VerificationTokenController {
         String token = TokenGenerator.getAlphaNumeric(32);
 
         //send token to user
-        String message = "Dear Voter, \n\n This is the token create your account: " + token;
-        SendEmailTLS.sendEmail(message,"whatsyourstandtest@gmail.com");
+        String message = "Dear Voter, \n\nThis is the token create your account: " + token + ".\n";
+        message += "Please go to https://whatsyourstand.club/TokenRegistration?token=" + token + " to create a password for your account";
+        message += "\n\nRegards\nWhatsYourStand";
+        SendEmailTLS.sendEmail(message,"registration","whatsyourstandtest@gmail.com");
 
         // generate time stamp
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());

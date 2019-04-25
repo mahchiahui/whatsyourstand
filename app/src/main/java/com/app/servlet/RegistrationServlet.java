@@ -44,7 +44,9 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/Token-VoterRegistration.html");
+        String token = request.getParameter("token");
+        request.setAttribute("token",token);
+        RequestDispatcher view = request.getRequestDispatcher("/html/Token-VoterRegistration.jsp");
         view.forward(request, response);
     }
 }

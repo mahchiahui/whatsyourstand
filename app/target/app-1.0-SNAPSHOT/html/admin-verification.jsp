@@ -1,4 +1,5 @@
 <%@ page import="com.app.entity.VerVoter" %>
+<%@ page import="com.app.entity.VerVoter" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -299,10 +300,10 @@
           <div class="card shadow mb-4">
             <npu class="card-header py-3">
               
-               <input type="submit" value="Approve" class="btn btn-primary btn-icon-split"style="margin-right:3em; ">
+               <input type="submit" value="Approve" class="btn btn-primary"style="margin-right:1.5em; ">
                 <!--<span class="icon text-white-50"><i class="fa fa-check"></i></span>-->
                 <!--<span class="text">Approve</span>-->
-              <input type="submit" value="Deny" class="btn btn-primary btn-icon-split" >
+              <input type="submit" value="Deny" class="btn btn-primary" >
                 <!--<span class="icon text-white-50"><i class="fa fa-close"></i></span>-->
                 <!--<span class="text">Deny</span>-->
             </npu>
