@@ -144,7 +144,7 @@
                   </form>
                 
                       <div class="text-center">
-                    <a class="small" href="login-voter">Already a user? <u>Login</u></a>
+                    <a class="small" href="login-voter"><u>Already Have an Account?</u></a>
                   </div>
                     
                 </div>
