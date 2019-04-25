@@ -43,7 +43,6 @@ public class ReportServlet extends HttpServlet {
         Voter voter = UserDAO.getVoter(loginedInfo.getUserId());
         request.setAttribute("voter", voter);
 
-
         System.out.println(questionid);
         RedirectController.showFrontEnd(request, response, "/html/voter-report.jsp");
     }
