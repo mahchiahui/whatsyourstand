@@ -196,6 +196,7 @@ public class AnswerDAO {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
+        boolean result = false;
 
         try {
             conn = ConnectionManager.getConnection("14819db");
@@ -209,9 +210,9 @@ public class AnswerDAO {
             stmt.setInt(4, answer.getDownvote());
             stmt.setInt(5, answer.getAnswerId());
 
-            int result = stmt.executeUpdate();  // 0 or 1
-            if (result == 1) {
-                return true;
+            int sqlResult = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult == 1) {
+                result = true;
             }
 
         } catch (SQLException se) {
@@ -220,7 +221,7 @@ public class AnswerDAO {
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return false;
+        return result;
     }
 
 
@@ -232,6 +233,7 @@ public class AnswerDAO {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
+        boolean result = false;
 
         try {
             conn = ConnectionManager.getConnection("14819db");
@@ -239,9 +241,9 @@ public class AnswerDAO {
             String sql = "DELETE FROM answer WHERE answerid=" + answerID;
             stmt = conn.prepareStatement(sql);
 
-            int result = stmt.executeUpdate();  // 0 or 1
-            if (result == 1) {
-                return true;
+            int sqlResult = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult == 1) {
+                result = true;
             }
 
         } catch (SQLException se) {
@@ -250,7 +252,37 @@ public class AnswerDAO {
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return false;
+        return result;
+    }
+
+    /**
+     * Delete a answer given the question id
+     * @param questionid : question id
+     */
+    public static boolean deleteAnswersFromQuestionID (int questionid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        boolean result = false;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM answer WHERE questionid=" + questionid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult == 1) {
+                result = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteAnswer", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return result;
     }
 
 

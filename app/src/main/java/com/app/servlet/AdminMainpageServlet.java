@@ -2,6 +2,7 @@ package com.app.servlet;
 
 import com.app.controller.LoginController;
 import com.app.controller.RedirectController;
+import com.app.dao.AnswerDAO;
 import com.app.dao.CookieDao;
 import com.app.dao.QuestionDAO;
 import com.app.dao.UserDAO;
@@ -39,6 +40,7 @@ public class AdminMainpageServlet extends HttpServlet {
 
             QuestionDAO.deleteReportedQuestion(Integer.parseInt(questionID));
             QuestionDAO.deleteQuestion(Integer.parseInt(questionID));
+            AnswerDAO.deleteAnswersFromQuestionID(Integer.parseInt(questionID));
         }
 
         response.sendRedirect(request.getContextPath() + "/admin");
