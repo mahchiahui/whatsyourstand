@@ -16,6 +16,9 @@
 
   <title>My Questions</title>
 
+  <!-- ajax call for question -->
+  <script type="text/javascript" language="javascript" src="html/js/ajax-question.js"></script>
+
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!--<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -38,7 +41,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">What's Your Stand</sup></div>
+        <div class="sidebar-brand-text mx-3">What's Your Stand</div>
       </a>
 
       <!-- Divider -->
@@ -314,20 +317,21 @@
             <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-5">
 
-                    <form class="question" style="text-align: right" method="post" action="question">
-                      <div class="form-group">
-                        <span style="float: left"><b>Title</b><br></span>
-                        <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here" name="title">
+                      <form class="question" style="text-align: right" method="post" action="question">
+                          <div class="form-group">
+                              <span style="float: left"><b>Title</b><br></span>
+                              <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here" name="title">
 
-                        <hr>
-                        <br><span style="float: left"><b>Description</b></span>
-                        <!-- ??? -->
-                        <textarea rows="4" cols="50" name="description">Please input your Description Here</textarea>
-                        <br>
-                
-                        <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
-                      </div>
-                    </form>
+                              <hr>
+                              <br><span style="float: left"><b>Description</b></span>
+                              <!-- ??? -->
+                              <textarea rows="4" cols="50" name="description" placeholder="Please input your description Here."></textarea>
+                              <br>
+                              <input type="hidden" name="lasturl" value="voter-myquestions"/>
+
+                              <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
+                          </div>
+                      </form>
 
                   </div>
             </a>
@@ -346,6 +350,7 @@
               <!-- ******* PRIMARY Q&A CARD ******* -->
               <!-- jsp loaded Q&A CARD -->
               <%
+                String userID = (String) request.getAttribute("userID");
                 List<Question> questionList = (List<Question>) request.getAttribute("question_list");
                 List<Status> statusList = (List<Status>) request.getAttribute("status_list");
                 List<List<Answer>> answersList = (List<List<Answer>>) request.getAttribute("answer_list_of_list");
@@ -354,22 +359,52 @@
                 if (questionList != null && questionList.size() != 0) {
                   for (int i = 0; i < questionList.size(); i++) {
                     Question question = questionList.get(i);
-                    out.println("<div class=\"card border-left-primary shadow h-100 py-2\">\n" +
+                    Status status = statusList.get(i);
+
+                    String statusUpvote = null;
+                    String statusDownvote = null;
+                    if (status.getStatusType() == 0) {
+                      statusUpvote = "far fa-thumbs-up";
+                      statusDownvote = "far fa-thumbs-down";
+                    }
+                    else if (status.getStatusType() == 1) {
+                      statusUpvote = "fas fa-thumbs-up";
+                      statusDownvote = "far fa-thumbs-down";
+                    }
+                    else {
+                      statusUpvote = "far fa-thumbs-up";
+                      statusDownvote = "fas fa-thumbs-down";
+                    }
+
+
+                    out.println("<div class=\"col-xl-10 col-md-10 mb-4\"><div class=\"card border-left-primary shadow h-100 py-2\">\n" +
                             "<div class=\"card-body\">\n" +
                             "<div class=\"row no-gutters align-items-center\">\n" +
                             "<div class=\"col mr-2\">\n" +
 
-                            // Question
-                            "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\"><span>" +
+                    // Question
+                            "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\" id=\"question-" +
+                            question.getQuestionId() + "\"><span>" +
                             question.getLastModifiedTime() + "</span> \n" +
-//                            "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"far fa-heart\">" +
-//                            question.getLikes() + "</i>  </span></a>\n" +
-                            "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
-                            "<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-down\">" +
+                            "<a  href=\"report?questionid=" +
+                            question.getQuestionId() + "&lasturl=voter-myquestions" +
+                            "\" class=\"report\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
+                            "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"downvote\"> <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"" +
+                            statusDownvote + "\">" +
                             question.getDownvote() + "</i></span></a>\n" +
-                            "<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-up\">" +
-                            question.getUpvote() + "</i></span></a>\n" +
-                            "</div>\n" +
+                            "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"upvote\"> <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"" +
+                            statusUpvote + "\">" +
+                            question.getUpvote() + "</i></span></a>\n");
+                    if (userID.equals(String.valueOf(question.getUserId()))) {
+                        out.println("<a  href=\"question-update?questionid=" +
+                            question.getQuestionId() + "&action=update&lasturl=voter-myquestions" +
+                            "\" class=\"update\"> <span style=\"margin-right:1em;float: right\"><i class=\"far fa-edit\"></i></span></a>\n");
+                        out.println("<a  href=\"question-update?questionid=" +
+                            question.getQuestionId() + "&action=delete&lasturl=voter-myquestions" +
+                            "\" class=\"delete\"> <span style=\"margin-right:1em;float: right\"><i class=\"fas fa-trash-alt\"></i></span></a>\n");
+                    }
+
+                    out.println("</div>\n" +
                             "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">\n" +
                             question.getTitle() +
                             "<a class=\"nav-link collapsed\" href=\"#\" data-toggle=\"collapse\" data-target=\"#DesPages\" aria-expanded=\"true\" aria-controls=\"DesPages\" style=\"color:grey!important;float:right\">More</a>\n" +
@@ -395,7 +430,7 @@
 
                       out.println("<div class=\"bg-white py-2 collapse-inner rounded\" style=\"margin-bottom: 3px\">\n" +
                               "<h6 class=\"collapse-header\">\n" +
-                              "<img class=\"img-profile rounded-circle\" src=\"img/profile-pic.jpg\">" +
+                              "<img class=\"img-profile rounded-circle\" src=\"html/img/profile-pic.jpg\">" +
                               candidate.getRealname() +
                               "</h6>\n" +
                               "<div class=\"h5 mb-0 font-weight-bold text-gray-800\"><span class=\"mr-2 d-none d-lg-inline text-gray-600 small\">" +
@@ -403,7 +438,7 @@
                               "<span>\n" + answer.getContent() + "</span>\n" +
                               "</div>\n" +
                               "<br>\n" +
-                              "<span style=\"float: left; margin-top: 3em;\">\n" +
+                              "<span>\n" +
                               "<a class=\"btn btn-primary btn-icon-split\" href=\"#\" style=\"margin-right: 2em;\"> <span class=\"icon text-white-50\" s><i class=\"far fa-thumbs-up\"></i></span>\n" +
                               "<span class=\"text\">" + answer.getUpvote() + "</span></a>\n" +
                               "<a class=\"btn btn-primary btn-icon-split\" href=\"#\" style=\"margin-right: 2em;\"> <span class=\"icon text-white-50\" s><i class=\"far fa-thumbs-down\"></i></span>\n" +
@@ -418,7 +453,7 @@
                       }
                     }
 
-                    out.println("</div></div></div></div></div></div>");
+                    out.println("</div></div></div></div></div></div></div>");
 
                   }
                 }

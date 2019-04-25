@@ -16,13 +16,16 @@ import java.io.IOException;
 public class QuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         Rootuser user = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY);
+        String lastURL = request.getParameter("lasturl");
 
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String curTime = DateUtil.getCurrentTime();
         QuestionDAO.createNewQuestion(user.getUserId(), title, description, curTime, "Pittsburgh");
+
+        response.sendRedirect(request.getServletContext().getContextPath() + "/" + lastURL);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

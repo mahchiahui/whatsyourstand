@@ -342,11 +342,16 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="11111"><span>Jan 24, 2019</span>
-                        <a  href="#" onclick="makeRequest(this)" class="report"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="fas fa-exclamation-circle"></i>  </span></a>
-                        <a  href="#" onclick="makeRequest(this)" class="downvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
-                        <a  href="#" onclick="makeRequest(this)" class="upvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
-                        
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="question-3"><span>Jan 24, 2019</span>
+
+                        <a  href="#" onclick="makeRequestQuestion(this)" class="report"><span style="margin-right:1em;"><i style="margin-right:1em;float: right" class="fas fa-exclamation-circle"></i>  </span></a>
+
+                        <a  href="#" onclick="makeRequestQuestion(this)" class="downvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-down">1</i></span></a>
+                        <a  href="#" onclick="makeRequestQuestion(this)" class="upvote"> <span style="margin-right:1em;float: right"><i style="float: right" class="far fa-thumbs-up">15</i></span></a>
+
+                        <a  href="question-update?questionid=3&action=update" class="update"> <span style="margin-right:1em;float: right"><i class="far fa-edit"></i></span></a>
+                        <a  href="question-update?questionid=3&action=delete&lasturl=voter" class="delete"> <span style="margin-right:1em;float: right"><i class="fas fa-trash-alt"></i></span></a>
+
                       </div>
 
                       <div class="h5 mb-0 font-weight-bold text-gray-800">

@@ -2,7 +2,7 @@ package com.app.utility;
 
 public class Constants {
 
-    public static final String ATTRIBUTE_USER_NAME_KEY ="ATTRIBUTE_USER_NAME_KEY";
+    public static final String ATTRIBUTE_QUESTION_KEY ="ATTRIBUTE_QUESTION_KEY";
 
     public static final String SESSION_USER_KEY ="SESSION_USER_KEY";
 

@@ -325,8 +325,9 @@
                         <hr>
                         <br><span style="float: left"><b>Description</b></span>
                         <!-- ??? -->
-                        <textarea rows="4" cols="50" name="description">Please input your Description Here</textarea>
+                        <textarea rows="4" cols="50" name="description" placeholder="Please input your description Here."></textarea>
                         <br>
+                        <input type="hidden" name="lasturl" value="voter" />
 
                         <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
                       </div>
@@ -346,6 +347,7 @@
                     <!-- ******* PRIMARY Q&A CARD ******* -->
                     <!-- jsp loaded Q&A CARD -->
                     <%
+                      String userID = (String) request.getAttribute("userID");
                       List<Question> questionList = (List<Question>) request.getAttribute("question_list");
                       List<Status> statusList = (List<Status>) request.getAttribute("status_list");
                       List<List<Answer>> answersList = (List<List<Answer>>) request.getAttribute("answer_list_of_list");
@@ -354,22 +356,52 @@
                       if (questionList != null && questionList.size() != 0) {
                           for (int i = 0; i < questionList.size(); i++) {
                               Question question = questionList.get(i);
-                              out.println("<div class=\"col-xl-10 col-md-10 mb-4\">"+"<div class=\"card border-left-primary shadow h-100 py-2\">\n" +
+                              Status status = statusList.get(i);
+
+                              String statusUpvote = null;
+                              String statusDownvote = null;
+                              if (status.getStatusType() == 0) {
+                                  statusUpvote = "far fa-thumbs-up";
+                                  statusDownvote = "far fa-thumbs-down";
+                              }
+                              else if (status.getStatusType() == 1) {
+                                  statusUpvote = "fas fa-thumbs-up";
+                                  statusDownvote = "far fa-thumbs-down";
+                              }
+                              else {
+                                  statusUpvote = "far fa-thumbs-up";
+                                  statusDownvote = "fas fa-thumbs-down";
+                              }
+
+
+                              out.println("<div class=\"col-xl-10 col-md-10 mb-4\"><div class=\"card border-left-primary shadow h-100 py-2\">\n" +
                                   "<div class=\"card-body\">\n" +
                                   "<div class=\"row no-gutters align-items-center\">\n" +
                                   "<div class=\"col mr-2\">\n" +
 
                                   // Question
-                                  "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\"><span>" +
+                                  "<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\" id=\"question-" +
+                                  question.getQuestionId() + "\"><span>" +
                                   question.getLastModifiedTime() + "</span> \n" +
-//                                  "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"far fa-heart\">" +
-//                                  question.getLikes() + "</i>  </span></a>\n" +
-                                  "<a  href=\"#\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
-                                  "<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-down\">" +
+                                  "<a  href=\"report?questionid=" +
+                                      question.getQuestionId() + "&lasturl=voter" +
+                                      "\" class=\"report\"><span style=\"margin-right:1em;\"><i style=\"margin-right:1em;float: right\" class=\"fas fa-exclamation-circle\"></i>  </span></a>\n" +
+                                  "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"downvote\"> <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"" +
+                                      statusDownvote + "\">" +
                                   question.getDownvote() + "</i></span></a>\n" +
-                                  "<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-up\">" +
-                                  question.getUpvote() + "</i></span></a>\n" +
-                                  "</div>\n" +
+                                  "<a  href=\"#\" onclick=\"makeRequestQuestion(this)\" class=\"upvote\"> <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"" +
+                                      statusUpvote + "\">" +
+                                  question.getUpvote() + "</i></span></a>\n");
+                              if (userID.equals(String.valueOf(question.getUserId()))) {
+                                  out.println("<a  href=\"question-update?questionid=" +
+                                      question.getQuestionId() + "&action=update&lasturl=voter" +
+                                      "\" class=\"update\"> <span style=\"margin-right:1em;float: right\"><i class=\"far fa-edit\"></i></span></a>\n");
+                                  out.println("<a  href=\"question-update?questionid=" +
+                                      question.getQuestionId() + "&action=delete&lasturl=voter" +
+                                      "\" class=\"delete\"> <span style=\"margin-right:1em;float: right\"><i class=\"fas fa-trash-alt\"></i></span></a>\n");
+                              }
+
+                              out.println("</div>\n" +
                                   "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">\n" +
                                   question.getTitle() +
                                   "<a class=\"nav-link collapsed\" href=\"#\" data-toggle=\"collapse\" data-target=\"#DesPages\" aria-expanded=\"true\" aria-controls=\"DesPages\" style=\"color:grey!important;float:right\">More</a>\n" +

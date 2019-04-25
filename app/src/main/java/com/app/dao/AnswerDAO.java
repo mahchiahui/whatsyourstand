@@ -26,6 +26,23 @@ public class AnswerDAO {
         PreparedStatement stmt = null;
         int answerID = 0;
 
+        // count number of questions
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("select COUNT(DISTINCT answerid) from answer");
+            rs = stmt.executeQuery();
+            rs.next();
+            answerID = rs.getInt(1);
+        } catch (SQLException se) {
+            logger.error("sql exception in insertQuestion, counting question sql", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        // create new questionID
+        answerID++;
+
         try {
             conn = ConnectionManager.getConnection("14819db");
 
@@ -33,7 +50,7 @@ public class AnswerDAO {
                 "last_mod_time, upvote, downvote) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt (1, answer.getAnswerId());
+            stmt.setInt (1, answerID);
             stmt.setInt (2, answer.getQuestionId());
             stmt.setInt(3, answer.getUserId());
             stmt.setString(4, answer.getContent());

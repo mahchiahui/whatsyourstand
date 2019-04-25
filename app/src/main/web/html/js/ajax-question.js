@@ -27,14 +27,24 @@ function getXMLHttpRequest() {
 /*
  * AJAX call starts with this function
  */
-function makeRequest(ele) {
+function makeRequestQuestion(ele) {
     var xmlHttpRequest = getXMLHttpRequest();
 
     var id = ele.parentNode.id;
     var className = ele.className;
-    var formData = "questionid=" + id + "&action=" + className;
+    var questionId = id.split("-")[1];
+
+    var formData = "questionid=" + questionId + "&action=" + className;
     console.log(className);
 
+    if (className == "upvote") {
+        xmlHttpRequest.onreadystatechange = markUpvote(xmlHttpRequest, id);
+    }
+    else if (className == "downvote") {
+        xmlHttpRequest.onreadystatechange = markDownvote(xmlHttpRequest, id);
+    }
+
+    /*
     switch (className) {
         case "report":
             xmlHttpRequest.onreadystatechange = report(xmlHttpRequest, id);
@@ -46,11 +56,13 @@ function makeRequest(ele) {
             xmlHttpRequest.onreadystatechange = markDownvote(xmlHttpRequest, id);
             break;
     }
+    */
 
     xmlHttpRequest.open("POST", "voter", true);
     xmlHttpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     xmlHttpRequest.send(formData);
 }
+
 
 /*
  * Returns a function that waits for the state change in XMLHttpRequest
@@ -63,12 +75,23 @@ function markUpvote(xmlHttpRequest, id) {
         if (xmlHttpRequest.readyState == 4) {
             if (xmlHttpRequest.status == 200) {
                 // document.getElementById(id).innerHTML = xmlHttpRequest.responseText;
-                var className = document.getElementById(id).firstChild.firstChild.className;
-                if (className == "far fa-thumbs-up") {
-                    document.getElementById(id).className = "fas fa-thumbs-up";
+                // console.log(document.getElementById(id).childNodes);
+                var nodeUp = document.getElementById(id).childNodes[6].childNodes[1].firstChild;
+                var nodeDown = document.getElementById(id).childNodes[4].childNodes[1].firstChild;
+                var count = nodeUp.innerHTML;
+
+                if (nodeUp.className == "far fa-thumbs-up") {
+                    nodeUp.className = "fas fa-thumbs-up";
+                    nodeUp.innerHTML = parseInt(count, 10) + 1;
                 }
                 else {
-                    document.getElementById(id).className = "far fa-thumbs-up";
+                    nodeUp.className = "far fa-thumbs-up";
+                    nodeUp.innerHTML = parseInt(count, 10) - 1;
+                }
+
+                if (nodeDown.className == "fas fa-thumbs-down") {
+                    nodeDown.className = "far fa-thumbs-down";
+                    nodeDown.innerHTML = parseInt(nodeDown.innerHTML, 10) - 1;
                 }
 
             } else {
@@ -85,14 +108,24 @@ function markDownvote(xmlHttpRequest, id) {
     return function() {
         if (xmlHttpRequest.readyState == 4) {
             if (xmlHttpRequest.status == 200) {
-                document.getElementById(id).className = "fas fa-thumbs-down";
-                var className = document.getElementById(id).firstChild.firstChild.className;
-                if (className == "far fa-thumbs-down") {
-                    document.getElementById(id).className = "fas fa-thumbs-down";
+                var nodeUp = document.getElementById(id).childNodes[6].childNodes[1].firstChild;
+                var nodeDown = document.getElementById(id).childNodes[4].childNodes[1].firstChild;
+                var count = nodeDown.innerHTML;
+
+                if (nodeDown.className == "far fa-thumbs-down") {
+                    nodeDown.className = "fas fa-thumbs-down";
+                    nodeDown.innerHTML = parseInt(count, 10) + 1;
                 }
                 else {
-                    document.getElementById(id).className = "far fa-thumbs-down";
+                    nodeDown.className = "far fa-thumbs-down";
+                    nodeDown.innerHTML = parseInt(count, 10) - 1;
                 }
+
+                if (nodeUp.className == "fas fa-thumbs-up") {
+                    nodeUp.className = "far fa-thumbs-up";
+                    nodeUp.innerHTML = parseInt(nodeUp.innerHTML, 10) - 1;
+                }
+
             } else {
                 alert("HTTP error " + xmlHttpRequest.status + ": " + xmlHttpRequest.statusText);
             }
@@ -108,12 +141,14 @@ function report(xmlHttpRequest, id) {
     return function() {
         if (xmlHttpRequest.readyState == 4) {
             if (xmlHttpRequest.status == 200) {
-                var className = document.getElementById(id).firstChild.firstChild.className;
+                var node = document.getElementById(id).childNodes[2].firstChild.firstChild;
+                var className = node.className;
+
                 // change icon style
-                document.getElementById(id).className = "fas fa-bu";
+                node.className = "fas fa-times-circle";
 
                 // pull out drop down text field
-
+                /////// ???? //////
             } else {
                 alert("HTTP error " + xmlHttpRequest.status + ": " + xmlHttpRequest.statusText);
             }
