@@ -43,7 +43,7 @@
 
       <!-- Nav Item - Privacy Policy -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="privacypolicy">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Privacy Policy</span></a>
       </li>
@@ -59,7 +59,7 @@
 
       <!-- Nav Item - My Quetions Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candiate-myanswers.html" >
+        <a class="nav-link" href="candidate-myanswers" >
           <i class="fas fa-fw fa-folder"></i>
           <span>My Answers</span>
         </a>
@@ -67,7 +67,7 @@
 
       <!-- Nav Item - Q & A  Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="candiate-topQ&A.html">
+        <a class="nav-link" href="candidate">
           <i class="fas fa-fw fa-paw"></i>
           <span>Top Question & Answer</span>
         </a>
@@ -78,7 +78,7 @@
 
       <li class="nav-item active">
          
-        <a class="nav-link" href="help.html">
+        <a class="nav-link" href="candidate-help">
           <i class="fas fa-fw fa-question-circle"></i>
           <span>Help</span></a>
       </li>
