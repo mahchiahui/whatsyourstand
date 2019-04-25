@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.app.entity.Voter" %>
+<%@ page import="com.app.entity.Candidate" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +12,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Help</title>
+  <title>Accounts</title>
 
   <!-- Custom fonts for this template-->
   <link href="html/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,54 +42,46 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Privacy Policy -->
+      <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="privacypolicy">
+        <a class="nav-link" href="admin">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Privacy Policy</span></a>
+          <span>Dashboard</span></a>
       </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-     
 
       <!-- Heading -->
       <div class="sidebar-heading">
         Sections
       </div>
 
-      <!-- Nav Item - My Quetions Menu -->
+      <!-- Nav Item - Accounts Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="voter-myquestions" >
-          <i class="fas fa-fw fa-folder"></i>
-          <span>My Questions</span>
-        </a>
-      </li>
-
-      <!-- Nav Item - Q & A  Menu -->
-      <li class="nav-item">
-        <a class="nav-link" href="voter">
-          <i class="fas fa-fw fa-paw"></i>
-          <span>Top Question & Answer</span>
-        </a>
-      </li>
-
-      <!-- Nav Item - Setting Menu -->
-      <li class="nav-item">
-        <a class="nav-link" href="voter-settings" >
+        <a class="nav-link" href="admin-accounts" style="opacity: .3;">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Setting</span>
+          <span>Accounts</span>
         </a>
       </li>
-      <!-- Divider -->
-         <hr class="sidebar-divider my-0">
 
-      <li class="nav-item active">
-         
-        <a class="nav-link" href="voter-help" style="opacity: .4">
-          <i class="fas fa-fw fa-question-circle"></i>
-          <span>Help</span></a>
+      <!-- Nav Item - Q & A Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="admin">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Question & Answer</span>
+        </a>
       </li>
+
+      <!-- Nav Item - Verification Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="admin-verification" >
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Verification</span>
+        </a>
+      </li>
+
+
 
      
 
@@ -260,7 +255,7 @@
             <!-- Nav Item - Rootuser Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Voter 000232200</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - Rootuser Information -->
@@ -295,48 +290,120 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Help</h1>
-           </div>
-
+            <h1 class="h3 mb-0 text-gray-800">Accounts</h1>
+            
+          </div>
 
           <!-- Content Row -->
-
-           
-           
-           <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-2">Need Help?</h1>
-                    <p class="mb-4">Please call us: 111-333-2222</p>
-                  </div>
-                    <p class="mb-4">We get it, stuff happens. Just enter your email address below and we'll contact you later!</p>
-                  </div>
-                  <form class="user">
-                    <div class="form-group">
-                      <p class="mb-4"><u>Please Note:</u> By inputting your email below, you have <b>agreed</b> that we can use your email address to contact you and answer your question(s).</p>
-                      <label>Your Contact Email:</label>
-                      <input type="email" class="form-control form-control-user" id="contactEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
-                      <label>confirm Your Email:</label>
-                      <input type="email" class="form-control form-control-user" id="contactEmailAgain" aria-describedby="emailHelp" placeholder="Enter Email Address Again...">
-
-                      <label>Questions:</label>
-                      <input type="text" class="form-control form-control-user" id="question" placeholder="Please input your question here...">
-
-                    </div>
-                    <a href="#" class="btn btn-primary btn-user btn-block">
-                      Submit Question
-                    </a>
-                  </form>
+          <form action="adminDeleteVoterAccount" method="post">
+             <!-- Voter Accounts -->
+             <h3 class="m-0 font-weight-bold text-primary">Voter Accounts</h3>
+            <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              
+               <input class="btn btn-primary" type="submit" value="Delete Account" style="margin-right:3em;">
+              
                 </div>
+           
+           
+
+              
+         
+            <div class="card-body">
+
+              <div class="table-responsive">
+                <table class="table table-bordered" id="VoterAccountTable" width="100%" cellspacing="0">
+
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>userid</th>
+                      <th>username</th>
+                      <th>location</th>
+                      <th>email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <%
+                    ArrayList<Voter> voters = (ArrayList<Voter>)request.getAttribute("voters");
+                    for(Voter voter: voters){
+                      out.println("<tr>");
+                      out.println("<td><input type=\"checkbox\" name=\"voter_selection\" value=\"" + voter.getUserId() + "\"/>&nbsp;</td>");
+                      out.println("<td>" + voter.getUserId() + "</td>");
+                      out.println("<td>" + voter.getUsername() + "</td>");
+                      out.println("<td>" + voter.getLocation() + "</td>");
+                      out.println("<td>" + voter.getEmail() + "</td>");
+                      out.println("</tr>");
+                    }
+                  %>
+                  </tbody>
+                </table>
               </div>
             </div>
- 
-            
-
           </div>
-          <!-- end of firstrow -->
+            </form>
+
+
+         
+
+
+
+      
+            <!-- Candidate Account -->
+            <h3 class="m-0 font-weight-bold text-primary">Candidate Accounts</h3>
+          <form action="adminDeleteCandidateAccount" method="post">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <input class="btn btn-primary" type="submit" value="Delete Account" />
+            </div>
+            <div class="card-body">
+
+              <div class="table-responsive">
+                <table class="table table-bordered" id="CandidateAccountTable" width="100%" cellspacing="0">
+                   <thead>
+                    <tr>
+                      <th></th>
+                      <th>User ID</th>
+                      <th>Name</th>
+                      <th>Age</th>
+                      <th>Location</th>
+                      <th>Workplace</th>
+                      <th>Political Affiliation</th>
+                      <th>Political Goal</th>
+                      <th>Education</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                      ArrayList<Candidate> candidates = (ArrayList<Candidate>)request.getAttribute("candidates");
+                      for(Candidate candidate: candidates){
+                        out.println("<tr>");
+                        out.println("<td><input type=\"checkbox\" name=\"candidate_selection\" value=\"" + candidate.getUserId() + "\"/>&nbsp;</td>");
+                        out.println("<td>" + candidate.getUserId() + "</td>");
+                        out.println("<td>" + candidate.getRealname() + "</td>");
+                        out.println("<td>" + candidate.getAge() + "</td>");
+                        out.println("<td>" + candidate.getLocation() + "</td>");
+                        out.println("<td>" + candidate.getWorkplace() + "</td>");
+                        out.println("<td>" + candidate.getPoliticalAffiliation() + "</td>");
+                        out.println("<td>" + candidate.getPoliticalGoal()+ "</td>");
+                        out.println("<td>" + candidate.getEducation() + "</td>");
+                        out.println("</tr>");
+                      }
+                    %>
+                  </tbody>
+                
+                </table>
+              </div>
+            </div>
+          </div>
+          </form>
+
+            <!-- Area Table -->
+<!--            <div class="col-xl-10 col-lg-7">
+
+            </div>  -->
+            <!-- end of area Table-->
+             
 
         </div>
         <!-- /.container-fluid -->

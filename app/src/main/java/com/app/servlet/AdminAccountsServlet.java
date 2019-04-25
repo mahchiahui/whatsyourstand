@@ -4,8 +4,10 @@ import com.app.controller.LoginController;
 import com.app.controller.RedirectController;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
+import com.app.entity.Candidate;
 import com.app.entity.Cookie;
 import com.app.entity.Rootuser;
+import com.app.entity.Voter;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "AdminAccountsServlet")
 public class AdminAccountsServlet extends HttpServlet {
@@ -72,7 +75,12 @@ public class AdminAccountsServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            RedirectController.showFrontEnd(request, response, "/html/admin-accounts.html");
+
+            ArrayList<Voter> voters = UserDAO.getAllVoters();
+            ArrayList<Candidate> candidates = UserDAO.getAllCandidates();
+            request.setAttribute("voters",voters);
+            request.setAttribute("candidates",candidates);
+            RedirectController.showFrontEnd(request, response, "/html/admin-accounts.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);

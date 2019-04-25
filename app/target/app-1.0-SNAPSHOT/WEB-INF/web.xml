@@ -166,6 +166,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AdminDeleteVoterAccServlet</servlet-name>
+        <servlet-class>com.app.servlet.AdminDeleteVoterAccServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDeleteVoterAccServlet</servlet-name>
+        <url-pattern>/adminDeleteVoterAccount</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminDeleteCandidateAccServlet</servlet-name>
+        <servlet-class>com.app.servlet.AdminDeleteCandidateAccServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDeleteCandidateAccServlet</servlet-name>
+        <url-pattern>/adminDeleteCandidateAccount</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AdminVerificationServlet</servlet-name>
         <servlet-class>com.app.servlet.AdminVerificationServlet</servlet-class>
     </servlet>
@@ -228,6 +246,53 @@
     <servlet-mapping>
         <servlet-name>CandidateHelpServlet</servlet-name>
         <url-pattern>/candidate-help</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CandidateDeleteAnswerServlet</servlet-name>
+        <servlet-class>com.app.servlet.CandidateDeleteAnswerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CandidateDeleteAnswerServlet</servlet-name>
+        <url-pattern>/deleteCandidateAnswer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CandidateEditAnswerServlet</servlet-name>
+        <servlet-class>com.app.servlet.CandidateEditAnswerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CandidateEditAnswerServlet</servlet-name>
+        <url-pattern>/editCandidateAnswer</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- question -->
+    <servlet>
+        <servlet-name>QuestionServlet</servlet-name>
+        <servlet-class>com.app.servlet.QuestionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionServlet</servlet-name>
+        <url-pattern>/question</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>QuestionUpdateServlet</servlet-name>
+        <servlet-class>com.app.servlet.QuestionUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionUpdateServlet</servlet-name>
+        <url-pattern>/question-update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>com.app.servlet.ReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/report</url-pattern>
     </servlet-mapping>
 
 </web-app>

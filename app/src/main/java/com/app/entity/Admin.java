@@ -1,11 +1,28 @@
 package com.app.entity;
 
-public class Admin extends Rootuser {
+public class Admin {
 
+    private int userId;
     private int level;
 
     public Admin (int userId, String username, String pwd, int level) {
-        super(userId, username, pwd);
+        this.userId = userId;
+        this.level = level;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
         this.level = level;
     }
 }

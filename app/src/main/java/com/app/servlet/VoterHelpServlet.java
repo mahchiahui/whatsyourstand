@@ -6,6 +6,7 @@ import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
 import com.app.entity.Cookie;
 import com.app.entity.Rootuser;
+import com.app.entity.Voter;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
@@ -72,7 +73,9 @@ public class VoterHelpServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            RedirectController.showFrontEnd(request, response, "/html/voter-help.html");
+            Voter voter = UserDAO.getVoter(loginedInfo.getUserId());
+            request.setAttribute("voter", voter);
+            RedirectController.showFrontEnd(request, response, "/html/voter-help.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);

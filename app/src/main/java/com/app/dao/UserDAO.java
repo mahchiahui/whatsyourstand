@@ -1,6 +1,8 @@
 package com.app.dao;
 
+import com.app.entity.Candidate;
 import com.app.entity.Rootuser;
+import com.app.entity.Voter;
 import com.app.utility.ConnectionManager;
 //import org.apache.log4j.Logger;
 //import org.apache.log4j.Priority;
@@ -17,13 +19,7 @@ import java.util.Random;
 
 public class UserDAO {
 
-    private static Connection conn = null;
-    private static ResultSet rs = null;
-    private static PreparedStatement stmt = null;
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserDAO.class);
-
-    public UserDAO () {
-    }
 
 
     /**
@@ -42,7 +38,7 @@ public class UserDAO {
         //count number of voters
         try {
             conn = ConnectionManager.getConnection("14819db");
-            stmt = conn.prepareStatement("select COUNT(DISTINCT userid) from rootuser");
+            stmt = conn.prepareStatement("select IFNULL(MAX(userid),0) from rootuser");
             rs = stmt.executeQuery();
             rs.next();
             userID = rs.getInt(1);
@@ -79,7 +75,7 @@ public class UserDAO {
             }
             else {
                 String sqlCandidate = "INSERT INTO candidate (userid, realname, age, location, " +
-                    "workplace, political_affiliation, political_goal, educationprofile_photo_path) " +
+                    "workplace, political_affiliation, political_goal, education, profile_photo_path) " +
                     "VALUES (?,?,?,?,?,?,?,?,?)";
                 stmt = conn.prepareStatement(sqlCandidate);
                 stmt.setInt (1, userID);
@@ -132,7 +128,15 @@ public class UserDAO {
     }
 
 
+    /**
+     * search for existing user by userid
+     * @param id user id
+     * @return User object if db query return existing user, null if user does not exist
+     */
     public static Rootuser searchUserById (String id) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
         Rootuser user = null;
 
         try {
@@ -163,7 +167,15 @@ public class UserDAO {
     }
 
 
+    /**
+     * search for existing user by username
+     * @param name username
+     * @return User object if db query return existing user, null if user does not exist
+     */
     public static Rootuser searchUserByName (String name) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
         Rootuser user = null;
 
         try {
@@ -196,10 +208,44 @@ public class UserDAO {
 
 
     /**
+     * Search candidate user table given userid
+     * @param userid userid in Rootuser table
+     * @return an object of Candidate class
+     */
+    public static Candidate searchCandidateById (int userid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Candidate user = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM candidate WHERE userid=\""
+                + userid + "\"");
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                user = extractCandidateFromRS(rs);
+            }
+        }
+        catch (SQLException se) {
+            logger.error("sql exception in searchCandidateById",se);
+        }
+        finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return user;
+    }
+
+
+
+    /**
      * Search for all user records requesting account deletion
      * @return
      */
     public static List<Rootuser> searchUsersByDel () {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
         List<Rootuser> users = new ArrayList<>();
 
         try {
@@ -229,9 +275,255 @@ public class UserDAO {
         return users;
     }
 
+    /**
+     * retrieve all voters
+     * @return list of voters
+     */
+    public static ArrayList<Voter> getAllVoters(){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ArrayList<Voter> voters = new ArrayList<>();
 
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN voter ON rootuser.userid = voter.userid WHERE rootuser.role = 1");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt(1);
+                String username = rs.getString(2);
+                String location = rs.getString(7);
+                String email = rs.getString(8);
+                Voter voter = new Voter(userid, username, location, email);
+                voters.add(voter);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return voters;
+    }
+
+    /**
+     * returns the voter with that userid
+     * @param searchThisUserID
+     * @return Voter
+     */
+    public static Voter getVoter(int searchThisUserID){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Voter voter = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN voter ON rootuser.userid = voter.userid WHERE rootuser.role = 1 and rootuser.userid = ?");
+            stmt.setInt(1,searchThisUserID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt(1);
+                String username = rs.getString(2);
+                String location = rs.getString(7);
+                String email = rs.getString(8);
+                voter = new Voter(userid, username, location, email);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return voter;
+    }
+
+    /**
+     * retrieve all candidates
+     * @return list of candidates
+     */
+    public static ArrayList<Candidate> getAllCandidates(){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ArrayList<Candidate> candidates = new ArrayList<>();
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN candidate ON rootuser.userid = candidate.userid WHERE rootuser.role = 2");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt("userid");
+                String realname = rs.getString("realname");
+                int age = rs.getInt("age");
+                String location = rs.getString("location");
+                String workplace = rs.getString("workplace");
+                String political_affiliation = rs.getString("political_affiliation");
+                String political_goal = rs.getString("political_goal");
+                String education = rs.getString("education");
+                String profilePhoto = rs.getString("profile_photo_path");
+                Candidate candidate = new Candidate(userid,realname,age,location,workplace,political_affiliation,political_goal,education,profilePhoto);
+                candidates.add(candidate);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return candidates;
+    }
+
+    /**
+     * get one candidate with the userid
+     * @param userID
+     * @return candidate
+     */
+    public static Candidate getCandidate(int userID){
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Candidate candidate = null;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+            stmt = conn.prepareStatement("SELECT * FROM rootuser LEFT JOIN candidate ON rootuser.userid = candidate.userid WHERE rootuser.role = 2 and candidate.userid = ?");
+            stmt.setInt(1,userID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int userid = rs.getInt("userid");
+                String realname = rs.getString("realname");
+                int age = rs.getInt("age");
+                String location = rs.getString("location");
+                String workplace = rs.getString("workplace");
+                String political_affiliation = rs.getString("political_affiliation");
+                String political_goal = rs.getString("political_goal");
+                String education = rs.getString("education");
+                String profilePhoto = rs.getString("profile_photo_path");
+                candidate = new Candidate(userid,realname,age,location,workplace,political_affiliation,political_goal,education,profilePhoto);
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVoters",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        return candidate;
+    }
+
+    /**
+     * delete voter from the rootuser and voter table
+     * @param userid
+     * @return success of sql operation
+     */
+    public static boolean deleteVoter (int userid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        boolean result1 = false;
+        boolean result12 = false;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM voter WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult == 1) {
+                result1 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteVoter", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM rootuser WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult2 = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult2 == 1) {
+                result12 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteVoter", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return result1 && result12;
+    }
+
+    /**
+     * delete candidate from database
+     * @param userid
+     * @return result of sql operation
+     */
+    public static boolean deleteCandidate (int userid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        boolean result1 = false;
+        boolean result12 = false;
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM candidate WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult == 1) {
+                result1 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteCandidate", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+        try {
+            conn = ConnectionManager.getConnection("14819db");
+
+            String sql = "DELETE FROM rootuser WHERE userid=" + userid;
+            stmt = conn.prepareStatement(sql);
+
+            int sqlResult2 = stmt.executeUpdate();  // 0 or 1
+            if (sqlResult2 == 1) {
+                result12 = true;
+            }
+
+        } catch (SQLException se) {
+            logger.error("sql exception in deleteCandidate", se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return result1 && result12;
+    }
+
+    /**
+     * Update an existing user record in db
+     * @return
+     */
     public static boolean updateUser () {
-
         return false;
     }
 
@@ -245,6 +537,15 @@ public class UserDAO {
     public static void changePassword (String username, String oldPassword, String newPassword, String confirmNewPassword) {
 
     }
+
+
+    /**
+     *
+     * @param username
+     * @param pwd
+     * @param role
+     * @return
+     */
     public static boolean registration (String username, String pwd, int role) {
         // search for existing Rootuser By Name first
         Rootuser user = searchUserByName(username);
@@ -259,4 +560,28 @@ public class UserDAO {
         }
         return false;
     }
+
+
+    /**
+     * Transform result set into Candidate object
+     * @param rs
+     * @return
+     */
+    public static Candidate extractCandidateFromRS (ResultSet rs) throws SQLException {
+        Candidate candidate = new Candidate();
+
+        candidate.setUserId(rs.getInt("userid"));
+        candidate.setRealname(rs.getString("realname"));
+        candidate.setAge(rs.getInt("age"));
+        candidate.setLocation(rs.getString("location"));
+        candidate.setWorkplace(rs.getString("workplace"));
+        candidate.setPoliticalAffiliation(rs.getString("political_affiliation"));
+        candidate.setPoliticalGoal(rs.getString("political_goal"));
+        candidate.setEducation(rs.getString("education"));
+        candidate.setProfilePhotoPath(rs.getString("profile_photo_path"));
+
+        return candidate;
+    }
+
+
 }

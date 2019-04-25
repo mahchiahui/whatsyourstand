@@ -2,8 +2,11 @@ package com.app.servlet;
 
 import com.app.controller.LoginController;
 import com.app.controller.RedirectController;
+import com.app.dao.AnswerDAO;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
+import com.app.entity.Answer;
+import com.app.entity.Candidate;
 import com.app.entity.Cookie;
 import com.app.entity.Rootuser;
 import com.app.utility.Constants;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "CandidateMyAnswerServlet")
 public class CandidateMyAnswerServlet extends HttpServlet {
@@ -71,7 +75,12 @@ public class CandidateMyAnswerServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            RedirectController.showFrontEnd(request, response, "/html/candidate-myanswers.html");
+            ArrayList<Answer> answers = AnswerDAO.getAllAnswers(loginedInfo.getUserId());
+            request.setAttribute("answers",answers);
+
+            Candidate candidate = UserDAO.getCandidate(loginedInfo.getUserId());
+            request.setAttribute("candidate",candidate);
+            RedirectController.showFrontEnd(request, response, "/html/candidate-myanswers.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);

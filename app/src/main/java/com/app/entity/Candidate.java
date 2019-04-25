@@ -1,41 +1,57 @@
 package com.app.entity;
 
-public class Candidate extends Rootuser {
+public class Candidate {
 
-    private String name;
+    private int userId;
+    private String realname;
     private int age;
     private String location;
     private String workplace;
     private String politicalAffiliation;
     private String politicalGoal;
     private String education;
-//    private int totalUpvote;
-//    private int totalDownvote;
     private String profilePhotoPath;
 
+    public Candidate () {
+        this.userId = 0;
+        this.realname = "";
+        this.age = 0;
+        this.location = "";
+        this.workplace = "";
+        this.politicalAffiliation = "";
+        this.politicalGoal = "";
+        this.education = "";
+        this.profilePhotoPath = "/";
+    }
 
-    public Candidate (int userId, String username, String pwd, String name,
-                     int age, String location, String workplace, String politicalAffiliation, String politicalGoal, String education) {
-        super(userId, username, pwd);
-        this.setRole(2);
-        this.name = name;
+    public Candidate (int userId, String realname, int age, String location,
+                      String workplace, String politicalAffiliation, String politicalGoal, String education, String profilePhotoPath) {
+
+        this.userId = userId;
+        this.realname = realname;
         this.age = age;
         this.location = location;
         this.workplace = workplace;
         this.politicalAffiliation = politicalAffiliation;
         this.politicalGoal = politicalGoal;
         this.education = education;
-//        this.totalUpvote = 0;
-//        this.totalDownvote = 0;
-        this.profilePhotoPath = "/";
+        this.profilePhotoPath = profilePhotoPath;
     }
 
-    public String getName() {
-        return name;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
     public int getAge() {
@@ -85,22 +101,6 @@ public class Candidate extends Rootuser {
     public void setEducation(String education) {
         this.education = education;
     }
-
-//    public int getTotalUpvote() {
-//        return totalUpvote;
-//    }
-
-//    public void setTotalUpvote(int totalUpvote) {
-//        this.totalUpvote = totalUpvote;
-//    }
-
-//    public int getTotalDownvote() {
-//        return totalDownvote;
-//    }
-
-//    public void setTotalDownvote(int totalDownvote) {
-//        this.totalDownvote = totalDownvote;
-//    }
 
     public String getProfilePhotoPath() {
         return profilePhotoPath;

@@ -4,6 +4,7 @@ import com.app.controller.LoginController;
 import com.app.controller.RedirectController;
 import com.app.dao.CookieDao;
 import com.app.dao.UserDAO;
+import com.app.entity.Candidate;
 import com.app.entity.Cookie;
 import com.app.entity.Rootuser;
 import com.app.utility.Constants;
@@ -72,7 +73,10 @@ public class CandidateHelpServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            RedirectController.showFrontEnd(request, response, "/html/candidate-help.html");
+
+            Candidate candidate = UserDAO.getCandidate(loginedInfo.getUserId());
+            request.setAttribute("candidate",candidate);
+            RedirectController.showFrontEnd(request, response, "/html/candidate-help.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);

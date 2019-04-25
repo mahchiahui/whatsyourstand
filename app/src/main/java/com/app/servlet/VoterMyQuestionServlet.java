@@ -1,11 +1,13 @@
 package com.app.servlet;
 
 import com.app.controller.LoginController;
+import com.app.controller.QuestionController;
 import com.app.controller.RedirectController;
+import com.app.dao.AnswerDAO;
 import com.app.dao.CookieDao;
+import com.app.dao.QuestionDAO;
 import com.app.dao.UserDAO;
-import com.app.entity.Cookie;
-import com.app.entity.Rootuser;
+import com.app.entity.*;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "VoterMyQuestionServlet")
 public class VoterMyQuestionServlet extends HttpServlet {
@@ -72,7 +76,42 @@ public class VoterMyQuestionServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            RedirectController.showFrontEnd(request, response, "/html/voter-myquestions.html");
+
+            /*
+             * get all the questions
+             * get the answers for the questions
+             * get the upvote and downvote status for the questions
+             * get the candidates for the questions
+             * sends it all back to the jsp
+             */
+            List<Question> questions = QuestionDAO.readQuestionList(loginedInfo);
+            List<Status> statuses = new ArrayList<>();
+            List<List<Answer>> answersList = new ArrayList<>();
+            List<List<Candidate>> candidatesList = new ArrayList<>();
+
+            for (Question question : questions) {
+                statuses.add(QuestionController.showStatus(question.getQuestionId(), loginedInfo.getUserId()));
+
+                List<Answer> answers = AnswerDAO.readAnswerList(question);
+                answersList.add(answers);
+
+                List<Candidate> candidates = new ArrayList<>();
+                for (Answer answer : answers) {
+                    candidates.add(UserDAO.searchCandidateById(answer.getUserId()));
+                }
+                candidatesList.add(candidates);
+            }
+
+            request.setAttribute("question_list", questions);
+            request.setAttribute("status_list", statuses);
+            request.setAttribute("answer_list_of_list", answersList);
+            request.setAttribute("candidate_list_of_list", candidatesList);
+            String userID = String.valueOf(loginedInfo.getUserId());
+            request.setAttribute("userID", userID);
+
+            Voter voter = UserDAO.getVoter(loginedInfo.getUserId());
+            request.setAttribute("voter", voter);
+            RedirectController.showFrontEnd(request, response, "/html/voter-myquestions.jsp");
         }
         else {
             RedirectController.redirectToLoginPage(request, response);
