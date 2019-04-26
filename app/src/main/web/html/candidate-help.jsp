@@ -140,36 +140,26 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Help</h1>
-           </div>
+          </div>
 
 
           <!-- Content Row -->
-
-           
-           
-           <div class="row">
-              
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-2">Need Help?</h1>
-                    <p class="mb-4">Please call us: 111-111-1111</p>
-                  </div>
-                   
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-2">Need Help?</h1>
+                  <p class="mb-4">Please call us: 111-111-1111</p>
                 </div>
               </div>
             </div>
- 
-            
-
           </div>
-          <!-- end of firstrow -->
 
         </div>
-        <!-- /.container-fluid -->
+        <!-- End Page Content -->
 
       </div>
-      <!-- End of Main Content -->
+        <!-- End of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -182,7 +172,7 @@
       <!-- End of Footer -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper-->
 
   </div>
   <!-- End of Page Wrapper -->

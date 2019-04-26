@@ -356,20 +356,10 @@
               </div>
             </div>
           </form>
-          </div>
-
-            <!-- Area Table -->
-<!--            <div class="col-xl-10 col-lg-7">
-
-            </div>  -->
-            <!-- end of area Table-->
-             
-
         </div>
-        <!-- /.container-fluid -->
-
+        <!-- end of container fluid -->
       </div>
-      <!-- End of Main Content -->
+      <!-- end of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -382,7 +372,7 @@
       <!-- End of Footer -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper-->
 
   </div>
   <!-- End of Page Wrapper -->

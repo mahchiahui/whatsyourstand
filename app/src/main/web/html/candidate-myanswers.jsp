@@ -139,77 +139,35 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">My Answers</h1>
-           
-
-    
-         
-           <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="TelDropdown">
-                <h6 class="dropdown-header">
-                 Create a new Question
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-5">
-                  <form class="user" style="text-align: right" >
-                    <div class="form-group">
-                  <span style="float: left"><b>Title</b><br></span>
-                  <input style="margin-bottom: 20px;width: 80%;display: inline-block;" type="text" class="form-control form-control-user" id="Title" placeholder="Enter Your Title Here"> 
-
-                  <hr>
-                    <br><span style="float: left"><b>Description</b></span>
-                  <textarea rows="4" cols="50">
-                    Please input your Description Here
-                  </textarea>
-                  <br>
-                
-                  <input type="submit" class="btn btn-primary btn-user btn-block" value="submit question">
-
-                     </div>
-                 </form>
-
-                    
-                  </div>
-                </a>
           </div>
-        
-                </div>
-            
-
 
           <!-- Content Row -->
  
-            <div class="row">
-              <!-- JSP loaded answers -->
-              <%
-                ArrayList<Answer> answers = (ArrayList<Answer>)request.getAttribute("answers");
-                for(Answer answer:answers){
-                  out.println("<div class=\"col-xl-10 col-md-10 mb-4\">");
-                  out.println("<div class=\"card border-left-primary shadow h-100 py-2\">");
-                  out.println("<div class=\"card-body\">");
-                  out.println("<div class=\"row no-gutters align-items-center\">");
-                  out.println("<div class=\"col mr-2\">");
-                  out.println("<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\"><span>Created: " + answer.getCreatedTime() + "</span>" + "<br><span>Last Modified: " + answer.getLastModifiedTime() + "</span>");
-                  out.println("<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-down\">" + answer.getDownvote() + "</i></span></a>");
-                  out.println("<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-up\">" + answer.getUpvote() + "</i></span></a>");
-                  out.println("</div>");
-                  out.println("<div class=\"h5 mb-0 font-weight-bold text-gray-800\">");
-                  out.println(answer.getContent());
-                  out.println("</div>");
-                  out.println("</div></div></div></div></div>");
-                }
-              %>
-            </div>
-
-              </div>
-            </div>
-
+          <div class="row">
+            <!-- JSP loaded answers -->
+            <%
+              ArrayList<Answer> answers = (ArrayList<Answer>)request.getAttribute("answers");
+              for(Answer answer:answers){
+                out.println("<div class=\"col-xl-10 col-md-10 mb-4\">");
+                out.println("<div class=\"card border-left-primary shadow h-100 py-2\">");
+                out.println("<div class=\"card-body\">");
+                out.println("<div class=\"row no-gutters align-items-center\">");
+                out.println("<div class=\"col mr-2\">");
+                out.println("<div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\"><span>Created: " + answer.getCreatedTime() + "</span>" + "<br><span>Last Modified: " + answer.getLastModifiedTime() + "</span>");
+                out.println("<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-down\">" + answer.getDownvote() + "</i></span></a>");
+                out.println("<a  href=\"#\" > <span style=\"margin-right:1em;float: right\"><i style=\"float: right\" class=\"far fa-thumbs-up\">" + answer.getUpvote() + "</i></span></a>");
+                out.println("</div>");
+                out.println("<div class=\"h5 mb-0 font-weight-bold text-gray-800\">");
+                out.println(answer.getContent());
+                out.println("</div>");
+                out.println("</div></div></div></div></div>");
+              }
+            %>
           </div>
-          <!-- end of firstrow -->
-
         </div>
         <!-- /.container-fluid -->
-
       </div>
-      <!-- End of Main Content -->
+      <!-- end of Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -220,10 +178,8 @@
         </div>
       </footer>
       <!-- End of Footer -->
-
     </div>
     <!-- End of Content Wrapper -->
-
   </div>
   <!-- End of Page Wrapper -->
 
@@ -253,7 +209,7 @@
 
   <!-- Bootstrap core JavaScript-->
   <script src="html/vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="html/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
   <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>
