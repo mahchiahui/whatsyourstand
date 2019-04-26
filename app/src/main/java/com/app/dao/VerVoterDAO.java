@@ -126,4 +126,33 @@ public class VerVoterDAO {
         }
 
     }
+
+    public static VerVoter getVerVoter(int voterid){
+        VerVoter verVoter = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = ConnectionManager.getConnection("verification");
+
+            stmt = conn.prepareStatement("select * from voter where voterID = " + voterid);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int voterID = rs.getInt(1);
+                String name = rs.getString(2);
+                String hashedPN = rs.getString(3);
+                String city = rs.getString(4);
+                String documentPath = rs.getString(5);
+                String email = rs.getString(6);
+                verVoter = new VerVoter(voterID,hashedPN,city,documentPath,email,name);
+            }
+        } catch (SQLException se) {
+            logger.error("sql exception in getAllVerVoter, counting voter sql",se);
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return verVoter;
+    }
 }

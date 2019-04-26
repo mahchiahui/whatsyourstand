@@ -11,6 +11,7 @@ import com.app.entity.Rootuser;
 import com.app.entity.VerVoter;
 import com.app.utility.Constants;
 import com.app.utility.DateUtil;
+import com.app.utility.SendEmailTLS;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,22 +36,38 @@ public class AdminVerificationServlet extends HttpServlet {
          * convert it to an Arraylist
          * get the voterID
          */
-        String[] accounts = request.getParameterValues("account_selection");
-        ArrayList<String> list = new ArrayList(Arrays.asList(accounts));
-        for(String voterID: list){
-            int voterIDNum = Integer.parseInt(voterID);
-            String path = getServletContext().getRealPath(".");
-            /**
-             * sends token to Q&A database
-             */
-            boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
-            if(tokenResult){
-                VerVoterDAO.deleteVerVoter(list);
+
+        String option = request.getParameter("option");
+        if(option.equals("Approve")) {
+            String[] accounts = request.getParameterValues("account_selection");
+            ArrayList<String> list = new ArrayList(Arrays.asList(accounts));
+            for (String voterID : list) {
+                int voterIDNum = Integer.parseInt(voterID);
+                String path = getServletContext().getRealPath(".");
+                /**
+                 * sends token to Q&A database
+                 */
+                boolean tokenResult = VerificationTokenController.verifiedUser(voterIDNum, path);
+                if (tokenResult) {
+                    VerVoterDAO.deleteVerVoter(list);
+                }
+                request.setAttribute("tokenResult", tokenResult);
+                RequestDispatcher view = request.getRequestDispatcher("/html/admin-verificationSuccessful.jsp");
+                view.forward(request, response);
             }
-            request.setAttribute("tokenResult",tokenResult);
+        } else {
+            String[] accounts = request.getParameterValues("account_selection");
+            ArrayList<String> list = new ArrayList(Arrays.asList(accounts));
+            for (String voterID : list) {
+                VerVoter verVoter = VerVoterDAO.getVerVoter(Integer.parseInt(voterID));
+                String message = "Dear " + verVoter.getName() + ", \n\nYour request for verification has been denied\n";
+                message += "Please email whatsyourstandeps@gmail.com to enquire about the reason for denial\n";
+                message += "\n\nRegards\nWhatsYourStand";
+                SendEmailTLS.sendEmail(message,"Verification Failure","whatsyourstandtest@gmail.com");
+            }
+            VerVoterDAO.deleteVerVoter(list);
+            response.sendRedirect(request.getContextPath() + "/admin-verification");
         }
-        RequestDispatcher view = request.getRequestDispatcher("/html/admin-verificationSuccessful.jsp");
-        view.forward(request, response);
 
     }
 
