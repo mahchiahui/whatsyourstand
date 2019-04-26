@@ -3,7 +3,6 @@ package com.app.controller;
 import com.app.dao.TokenDAO;
 import com.app.utility.AsymmetricCryptography;
 import com.app.utility.GenerateKeys;
-import jdk.nashorn.internal.parser.Token;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.NoSuchPaddingException;
@@ -14,23 +13,37 @@ import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+/**
+ * Controller class for token in business logic layer.
+ * Utilize utility class and java's built-in security package to perform asymmetric cryptography
+ * encryption and decryption.
+ * Both public and private keys are pre-generated.
+ */
 public class ActualTokenController {
+
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ActualTokenController.class);
     private static String publicKeyPath = "";
     private static String privateKeyPath = "";
-    public static boolean receiveEncryptedMessage(String encrypted_msg) {
+
+    /**
+     * Decrypt token message using pre-generated private key,
+     * and call TokenDao to store token into database.
+     * @param encrypted_msg encrypted token message
+     * @return true means success, false means failure
+     */
+    public static boolean receiveEncryptedMessage (String encrypted_msg) {
 
         try{
-            //get private key to decrypt
+            // get private key to decrypt
             AsymmetricCryptography ac = new AsymmetricCryptography();
             PrivateKey privateKey = ac.getPrivate(privateKeyPath);
 
-            //decrypt token
+            // decrypt token
             String decrypted_msg = ac.decryptText(encrypted_msg, privateKey);
-            String token = decrypted_msg.substring(decrypted_msg.indexOf("token:")+6,decrypted_msg.indexOf(" "));
+            String token = decrypted_msg.substring(decrypted_msg.indexOf("token:") + 6, decrypted_msg.indexOf(" "));
             String timestamp = decrypted_msg.substring(decrypted_msg.indexOf("timestamp:")+10);
 
-            //insert token to database
+            // insert token to database, store token and timestamp
             return TokenDAO.insertToken(token, timestamp);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             logger.error("broke in receiveEncryptedMessage",e);
@@ -38,14 +51,18 @@ public class ActualTokenController {
             logger.error("broke in receiveEncryptedMessage",e);
         }
         return false;
-
-        //store token and timestamp
-
     }
 
-    public static PublicKey getPublicKey(String path){
 
-        //generateKeys if no keys
+    /**
+     * Generate public and private keys,
+     * and store them into local files
+     * @param path root path of local files for storing public and private keys
+     * @return an object of java built-in PublicKey class
+     */
+    public static PublicKey getPublicKey (String path) {
+
+        // generateKeys if no keys
         publicKeyPath = path + "\\KeyPair\\QnAPublicKey";
         privateKeyPath = path + "\\KeyPair\\QnAPrivateKey";
         PublicKey pubKey = null;
@@ -63,7 +80,7 @@ public class ActualTokenController {
             }
         }
 
-        //get the generated publicKey and return it
+        // get the generated publicKey and return it
         try {
             AsymmetricCryptography ac = new AsymmetricCryptography();
             pubKey = ac.getPublic(publicKeyPath);

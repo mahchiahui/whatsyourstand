@@ -10,10 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "VerifyPhoneNumServlet")
+/**
+ * This servlet handles HTTP request for url "/VerifyPhoneNum" for validating phone token
+ * as the second step in the registration process.
+ * doPost function handles token form submission. If token matched, direct them to the page of
+ * the third step. Otherwise, stay on current page showing error message.
+ * doGet function display the registration code enter page.
+ */
 public class VerifyPhoneNumServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /**
+        /*
          * this takes the token sent from the form
          * checks if the token exists
          * if it does, send it to the document registration page

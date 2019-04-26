@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Controller class for handling page show and redirection in business logic layer.
+ * Initial goal is to register redundant page redirection logic in this file.
+ */
 public class RedirectController {
 
     /**
@@ -23,28 +27,6 @@ public class RedirectController {
         throws ServletException, IOException {
             RequestDispatcher view = request.getRequestDispatcher(filePath);
             view.forward(request, response);
-    }
-
-
-
-    public static void showHomePage (HttpServletRequest request, HttpServletResponse response, int role)
-        throws ServletException, IOException {
-
-        String strHtml = null;
-        switch (role) {
-            case 1:
-                strHtml = "/html/login-voter.html";
-                break;
-            case 2:
-                strHtml = "/html/login-candidate.html";
-                break;
-            default:
-                strHtml = "/html/login-admin.html";
-        }
-
-        // If not logined, redirect to login page (LoginServlet).
-        RequestDispatcher view = request.getRequestDispatcher(strHtml);
-        view.forward(request, response);
     }
 
 

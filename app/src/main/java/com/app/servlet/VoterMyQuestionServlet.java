@@ -21,7 +21,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "VoterMyQuestionServlet")
+/**
+ * This servlet handles HTTP request for voter's my questions page.
+ * Note that my question page's POST request is handled by VoterMainpageServlet's doPost() function
+ * as well since the logic is the same.
+ * doGet function handles page display on url "/voter-myquestions". It checks the login status first.
+ * If login status exists, read the question list posted by current login user, if there is any,
+ * and read the corresponding answer lists and candidate information
+ * from the database and dynamically display this page using jsp.
+ */
 public class VoterMyQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

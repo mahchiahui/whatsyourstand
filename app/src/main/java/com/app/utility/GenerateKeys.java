@@ -10,6 +10,10 @@ import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+/**
+ * Custom key generator utility class based on java security's built-in functionalities
+ * Key values are stored into local files
+ */
 public class GenerateKeys {
     private KeyPairGenerator keyGen;
     private KeyPair pair;

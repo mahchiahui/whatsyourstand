@@ -12,13 +12,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO functions processing table "question" in Q&A system's db
+ * as part of data persistence layer.
+ * Contain typical CRUD functions.
+ */
 public class QuestionDAO {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(QuestionDAO.class);
 
 
     /**
-     * Create a new question record in db
+     * Create a new question record in db.
      * @param userID
      * @param title
      * @param description
@@ -31,7 +36,7 @@ public class QuestionDAO {
         PreparedStatement stmt = null;
         int questionID = 0;
 
-        // count number of questions
+        // obtain current max question id
         try {
             conn = ConnectionManager.getConnection("14819db");
             stmt = conn.prepareStatement("SELECT IFNULL(MAX(questionid),0) FROM question");
@@ -48,6 +53,7 @@ public class QuestionDAO {
         // create new questionID
         questionID++;
 
+        // insert a new question record into db
         try {
             conn = ConnectionManager.getConnection("14819db");
 
@@ -67,7 +73,7 @@ public class QuestionDAO {
             stmt.setInt(10, 0);
             stmt.setInt(11, 0);
 
-            stmt.executeUpdate();  // int result =
+            stmt.executeUpdate();
 
         } catch (SQLException se) {
             logger.error("sql exception in createNewQuestion, inserting question into table", se);
@@ -79,9 +85,9 @@ public class QuestionDAO {
 
 
     /**
-     * Union table user and question to get the list of question posted by certain user
-     * @param user
-     * @return
+     * Get the list of questions posted by a given user.
+     * @param user an object of Rootuser
+     * @return a list of objects of Question entity class
      */
     public static List<Question> readQuestionList (Rootuser user) {
         Connection conn = null;
@@ -113,28 +119,22 @@ public class QuestionDAO {
 
 
     /**
-     * Obtain questions with the most number of
-     * @return
+     * Obtain questions sorted by value of (# of upvote - # of downvote)
+     * @return a list of objects of Question entity class
      */
     public static List<Question> readTopQuestionList () {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
         List<Question> questions = new ArrayList<>();
-//        int cnt = 0;
 
         try {
             conn = ConnectionManager.getConnection("14819db");
             stmt = conn.prepareStatement("SELECT * FROM question ORDER BY (upvote - downvote) DESC");
-//            stmt.setInt(1, threshold);
             rs = stmt.executeQuery();
             while (rs.next()) {
-//                if (cnt >= threshold) {
-//                    break;
-//                }
                 Question question = extractQuestionFromRS(rs);
                 questions.add(question);
-//                cnt++;
             }
 
         } catch (SQLException se) {
@@ -149,8 +149,9 @@ public class QuestionDAO {
 
 
     /**
-     * Update a record in question table, if it exists
-     * @param question
+     * Update a record in question table, if it exists.
+     * @param question an object of Question entity class
+     * @return true if update succeeds, false if it fails
      */
     public static boolean updateQuestion (Question question) {
         Connection conn = null;
@@ -159,13 +160,6 @@ public class QuestionDAO {
 
         try {
             conn = ConnectionManager.getConnection("14819db");
-
-            /*
-            String sql = "INSERT INTO question (questionid, userid, title, description, created_time, " +
-                "last_mod_time, location, num_answer, upvote, downvote, likes, problematic) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-             */
-
             String sql = "UPDATE question SET title=?, description=?, last_mod_time=?, location=?, " +
                 "num_answer=?, upvote=?, downvote=?, problematic=? WHERE questionid=?";
 
@@ -196,8 +190,8 @@ public class QuestionDAO {
 
 
     /**
-     * Search for a question using given question id
-     * @param questionid : question's id
+     * Search for a question using given question id.
+     * @param questionid question's id
      * @return an object of entity class Question
      */
     public static Question searchQuestionByID (int questionid) {
@@ -225,7 +219,8 @@ public class QuestionDAO {
 
     /**
      * Delete a question given the question id
-     * @param questionID : question's id
+     * @param questionID question's id
+     * @return true if delete succeeds, false if it fails
      */
     public static boolean deleteQuestion (int questionID) {
         Connection conn = null;
@@ -255,8 +250,8 @@ public class QuestionDAO {
 
     /**
      * Transform result set into Question object
-     * @param rs
-     * @return
+     * @param rs result set object returned by sql statement
+     * @return a Question entity object
      * @throws SQLException
      */
     private static Question extractQuestionFromRS (ResultSet rs) throws SQLException {

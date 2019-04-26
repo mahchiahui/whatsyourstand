@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * DAO functions processing table "Rootuser", "voter", "candidate" and "admin" in Q&A system's db
+ * as part of data persistence layer.
+ * Contain typical CRUD functions.
+ */
 public class UserDAO {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserDAO.class);
@@ -25,9 +30,10 @@ public class UserDAO {
     /**
      * Insert a new user record into db
      * before calling this function, pwd should be hashed
+     * @param username
      * @param password
      * @param role
-     * @return
+     * @return username if insert succeeds, empty string if it fails
      */
     public static String insertUser(String username, String password, int role){
         Connection conn = null;
@@ -35,7 +41,7 @@ public class UserDAO {
         PreparedStatement stmt = null;
         int userID = 0;
 
-        //count number of voters
+        // obtain current max user id
         try {
             conn = ConnectionManager.getConnection("14819db");
             stmt = conn.prepareStatement("select IFNULL(MAX(userid),0) from rootuser");
@@ -43,7 +49,7 @@ public class UserDAO {
             rs.next();
             userID = rs.getInt(1);
         } catch (SQLException se) {
-            logger.error("sql exception in insertUser, counting user sql",se);
+            logger.error("sql exception in insertUser, obtain max user id",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -194,7 +200,6 @@ public class UserDAO {
                     user = new Rootuser(userid, username, password, role, del);
                     break;
                 }
-
             }
         }
         catch (SQLException se) {
@@ -240,7 +245,7 @@ public class UserDAO {
 
     /**
      * Search for all user records requesting account deletion
-     * @return
+     * @return a list of Rootuser entity class objects
      */
     public static List<Rootuser> searchUsersByDel () {
         Connection conn = null;
@@ -275,9 +280,10 @@ public class UserDAO {
         return users;
     }
 
+
     /**
-     * retrieve all voters
-     * @return list of voters
+     * Retrieve all voter records from db
+     * @return a list of voters
      */
     public static ArrayList<Voter> getAllVoters(){
         Connection conn = null;
@@ -308,10 +314,11 @@ public class UserDAO {
         return voters;
     }
 
+
     /**
-     * returns the voter with that userid
-     * @param searchThisUserID
-     * @return Voter
+     * Search for a voter record by userid
+     * @param searchThisUserID user id
+     * @return Voter object if it exits, null if not
      */
     public static Voter getVoter(int searchThisUserID){
         Connection conn = null;
@@ -342,9 +349,10 @@ public class UserDAO {
         return voter;
     }
 
+
     /**
-     * retrieve all candidates
-     * @return list of candidates
+     * Retrieve all candidate records from db
+     * @return a list of candidates
      */
     public static ArrayList<Candidate> getAllCandidates(){
         Connection conn = null;
@@ -371,7 +379,7 @@ public class UserDAO {
             }
 
         } catch (SQLException se) {
-            logger.error("sql exception in getAllVoters",se);
+            logger.error("sql exception in getAllCandidates",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -380,10 +388,11 @@ public class UserDAO {
         return candidates;
     }
 
+
     /**
-     * get one candidate with the userid
-     * @param userID
-     * @return candidate
+     * Search for candidate record by userid
+     * @param userID user id
+     * @return an Candidate entity class object if it exists, null if not
      */
     public static Candidate getCandidate(int userID){
         Connection conn = null;
@@ -410,7 +419,7 @@ public class UserDAO {
             }
 
         } catch (SQLException se) {
-            logger.error("sql exception in getAllVoters",se);
+            logger.error("sql exception in getCandidate",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
@@ -419,17 +428,18 @@ public class UserDAO {
         return candidate;
     }
 
+
     /**
-     * delete voter from the rootuser and voter table
-     * @param userid
-     * @return success of sql operation
+     * Delete voter from both rootuser and voter table
+     * @param userid user id
+     * @return true if delete succeeds, false if it fails
      */
     public static boolean deleteVoter (int userid) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
         boolean result1 = false;
-        boolean result12 = false;
+        boolean result2 = deleteUser(userid);
 
         try {
             conn = ConnectionManager.getConnection("14819db");
@@ -449,37 +459,21 @@ public class UserDAO {
             ConnectionManager.close(conn, stmt, rs);
         }
 
-        try {
-            conn = ConnectionManager.getConnection("14819db");
-
-            String sql = "DELETE FROM rootuser WHERE userid=" + userid;
-            stmt = conn.prepareStatement(sql);
-
-            int sqlResult2 = stmt.executeUpdate();  // 0 or 1
-            if (sqlResult2 == 1) {
-                result12 = true;
-            }
-
-        } catch (SQLException se) {
-            logger.error("sql exception in deleteVoter", se);
-
-        } finally {
-            ConnectionManager.close(conn, stmt, rs);
-        }
-        return result1 && result12;
+        return result1 && result2;
     }
 
+
     /**
-     * delete candidate from database
+     * Delete candidate record from database
      * @param userid
-     * @return result of sql operation
+     * @return true if delete succeeds, false if it fails
      */
     public static boolean deleteCandidate (int userid) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
         boolean result1 = false;
-        boolean result12 = false;
+        boolean result2 = deleteUser(userid);
 
         try {
             conn = ConnectionManager.getConnection("14819db");
@@ -499,6 +493,21 @@ public class UserDAO {
             ConnectionManager.close(conn, stmt, rs);
         }
 
+        return result1 && result2;
+    }
+
+
+    /**
+     * Delete user record from Rootuser table
+     * @param userid
+     * @return true if delete succeeds, false if it fails
+     */
+    public static boolean deleteUser (int userid) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        boolean result = false;
+
         try {
             conn = ConnectionManager.getConnection("14819db");
 
@@ -507,40 +516,22 @@ public class UserDAO {
 
             int sqlResult2 = stmt.executeUpdate();  // 0 or 1
             if (sqlResult2 == 1) {
-                result12 = true;
+                result = true;
             }
 
         } catch (SQLException se) {
-            logger.error("sql exception in deleteCandidate", se);
+            logger.error("sql exception in deleteUser", se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return result1 && result12;
-    }
-
-    /**
-     * Update an existing user record in db
-     * @return
-     */
-    public static boolean updateUser () {
-        return false;
-    }
-
-    /**
-     * Change existing password for a user
-     * @param username
-     * @param oldPassword
-     * @param newPassword
-     * @param confirmNewPassword
-     */
-    public static void changePassword (String username, String oldPassword, String newPassword, String confirmNewPassword) {
-
+        return result;
     }
 
 
     /**
-     *
+     * Register a new user in db.
+     * This function is only used for developer's testing purpose.
      * @param username
      * @param pwd
      * @param role
@@ -549,13 +540,14 @@ public class UserDAO {
     public static boolean registration (String username, String pwd, int role) {
         // search for existing Rootuser By Name first
         Rootuser user = searchUserByName(username);
+
+        // if current user doesn't exist in db, create one
         if (user == null) {
             // hash pwd
             String salt = BCrypt.gensalt(11);
             String hashed = BCrypt.hashpw(pwd, salt);
-            System.out.println("hashed pwd: " + hashed);
+            logger.info("hashed pwd: " + hashed);
 
-//            return createUser(username, hashed, role);
             return ! insertUser(username, hashed, role).equals("");
         }
         return false;
@@ -564,8 +556,8 @@ public class UserDAO {
 
     /**
      * Transform result set into Candidate object
-     * @param rs
-     * @return
+     * @param rs result set object returned by sql statement
+     * @return an object of Candidate entity class
      */
     public static Candidate extractCandidateFromRS (ResultSet rs) throws SQLException {
         Candidate candidate = new Candidate();

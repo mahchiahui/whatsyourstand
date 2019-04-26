@@ -1,11 +1,12 @@
 package com.app.entity;
 
+/**
+ * A mapping of table "voter" in Q&A system's db.
+ * This entity class belongs to data layer, served as part of data persistence layer.
+ */
 public class Voter {
 
     private int userId;
-
-
-
     private String username;
     private String location;
     private String email;

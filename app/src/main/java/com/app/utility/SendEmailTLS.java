@@ -1,6 +1,5 @@
 package com.app.utility;
 
-import com.app.dao.CookieDao;
 import org.slf4j.LoggerFactory;
 
 import javax.mail.*;
@@ -8,6 +7,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ * Utility class for configuring email client to send email in registration process
+ */
 public class SendEmailTLS {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SendEmailTLS.class);
 

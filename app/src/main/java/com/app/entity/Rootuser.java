@@ -1,11 +1,14 @@
 package com.app.entity;
 
+/**
+ * A mapping of table "rootuser" in Q&A system's db.
+ * This entity class belongs to data layer, served as part of data persistence layer.
+ */
 public class Rootuser {
 
     private int userId;
     private String username;
     private String hashpwd;
-
     private int role;  // 0: admin; 1: voter; 2: candidate
     private int requestDel;
 
@@ -13,7 +16,6 @@ public class Rootuser {
         this.userId = userId;
         this.username = username;
         this.hashpwd = pwd;
-
         this.role = 0;
         this.requestDel = 0;
     }
@@ -22,7 +24,6 @@ public class Rootuser {
         this.userId = userId;
         this.username = username;
         this.hashpwd = pwd;
-
         this.role = role;
         this.requestDel = req_del;
     }

@@ -22,7 +22,13 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 
-@WebServlet(name = "CandidateEditAnswerServlet")
+/**
+ * This servlet handles HTTP request on url "/editCandidateAnswer" for candidate's page.
+ * doPost function handles answer update form submission. It updates corresponding answer record in db
+ * and redirect to candidate's home page.
+ * doGet function handles edit answer page display using dynamic jsp. It keep track of which answer is clicked on,
+ * what's the original content, and which candidate is currently login.
+ */
 public class CandidateEditAnswerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String answerContent = request.getParameter("answerContent");
@@ -88,16 +94,21 @@ public class CandidateEditAnswerServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            System.out.println(loginedInfo.getRole());
+
+            // get AnswerID from query string
+            String answerID = request.getParameter("answerID");
+
+            // get answer and candidate record from db
+            Answer answer = AnswerDAO.getAnswer(answerID);
+            request.setAttribute("candidateAnswer", answer);
+            Candidate candidate = UserDAO.getCandidate(loginedInfo.getUserId());
+            request.setAttribute("candidate",candidate);
+
+            RedirectController.showFrontEnd(request, response, "/html/candidate-update-answer.jsp");
+        }
+        else {
+            RedirectController.redirectToLoginPage(request, response);
         }
 
-        //getAnswerID
-        String answerID = request.getParameter("answerID");
-        Answer answer = AnswerDAO.getAnswer(answerID);
-
-        request.setAttribute("candidateAnswer", answer);
-        Candidate candidate = UserDAO.getCandidate(loginedInfo.getUserId());
-        request.setAttribute("candidate",candidate);
-        RedirectController.showFrontEnd(request, response, "/html/candidate-update-answer.jsp");
     }
 }

@@ -12,7 +12,6 @@ import com.app.utility.Constants;
 import com.app.utility.DateUtil;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "AdminAccountsServlet")
+/**
+ * This servlet handles HTTP request for admin's account page.
+ * doGet function handles page display on url "/admin-accounts". It checks the login status first.
+ * If login status exists, read all voter user list and candidate user list
+ * from the database and dynamically display this page using jsp.
+ */
 public class AdminAccountsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -76,6 +80,7 @@ public class AdminAccountsServlet extends HttpServlet {
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
 
+            // read voter and candidate user list from db, send them to jsp page
             ArrayList<Voter> voters = UserDAO.getAllVoters();
             ArrayList<Candidate> candidates = UserDAO.getAllCandidates();
             request.setAttribute("voters",voters);

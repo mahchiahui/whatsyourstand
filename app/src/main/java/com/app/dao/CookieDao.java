@@ -1,7 +1,6 @@
 package com.app.dao;
 
 import com.app.entity.Cookie;
-import com.app.servlet.HomeServlet;
 import com.app.utility.ConnectionManager;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
+/**
+ * DAO functions processing table "cookie" in Q&A system's db
+ * as part of data persistence layer.
+ */
 public class CookieDao {
 
     private static Connection conn = null;
@@ -18,13 +21,10 @@ public class CookieDao {
     private static PreparedStatement stmt = null;
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CookieDao.class);
 
-    public CookieDao() {
-    }
-
-
     /**
-     * Insert a new record of cookie into db
+     * Insert a new record of cookie into db.
      * @param cookieId
+     * @param userId
      * @param timestamp
      */
     public static void insertCookie (String cookieId, String userId, String timestamp) {
@@ -44,14 +44,14 @@ public class CookieDao {
         finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-//        return flagSuccess;
+
     }
 
 
     /**
-     * Search for cookie by cookie id
+     * Search for cookie by cookie id.
      * @param cookieId
-     * @return
+     * @return an object of Cookie entity class
      */
     public static Cookie searchCookie (String cookieId) {
         Cookie cookie = null;
@@ -59,7 +59,7 @@ public class CookieDao {
         try {
             conn = ConnectionManager.getConnection("14819db");
             String sql = "SELECT * FROM cookie WHERE cookieid='" + cookieId + "'";
-            System.out.println("sql: " + sql);
+            logger.info("sqlSearch: " + sql);
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {

@@ -9,35 +9,42 @@ import com.app.entity.Report;
 import com.app.entity.Rootuser;
 import com.app.entity.Status;
 
+/**
+ * Controller class for question's CRUD operations in business logic layer.
+ * Call DAO functions in data access layer to manipulate the database.
+ * Tables involved in db to support the operations includes: question, report, status, and user.
+ */
 public class QuestionController {
 
-
     /**
-     * Mark an question as problematic as long as someone report an issue of a question
+     * Mark an question as problematic and create a new record of report in db
+     * as long as someone report an issue of a question.
+     * @param questionId
+     * @param userId
+     * @param content
      * @return
      */
-    public static boolean markAsProblematic (int questionId, int userId, String content) {
+    public static void markAsProblematic (int questionId, int userId, String content) {
         Report report = new Report(0, questionId, userId, content);
-        if (ReportDAO.checkReportExist(report)) {
-            Question question = QuestionDAO.searchQuestionByID(questionId);
-            question.setFlagProblematic(1);
-            QuestionDAO.updateQuestion(question);
-            ReportDAO.createReport(report);
-            return true;
-        }
-        return false;
+        Question question = QuestionDAO.searchQuestionByID(questionId);
+        question.setFlagProblematic(1);
+        QuestionDAO.updateQuestion(question);
+        ReportDAO.createReport(report);
     }
 
 
     /**
-     * Query the db twice to decide what status of upvote & downvote to return to the frontend
+     * Query the db at most twice to decide what status of
+     * upvote & downvote to return to the frontend.
      * @param questionId
      * @param userId
      * @return
      */
     public static Status showStatus (int questionId, int userId) {
+        // default status is that neither upvote and downvote is marked
         Status finalStatus = new Status(questionId, userId, 0);
 
+        // check if upvote or downvote status exists in db
         if (StatusDAO.checkStatus(new Status(questionId, userId, 1))) {
             finalStatus.setStatusType(1);
             return finalStatus;
@@ -46,13 +53,15 @@ public class QuestionController {
             finalStatus.setStatusType(2);
             return finalStatus;
         }
+
+        // return default status if neither status exists in db
         return finalStatus;
     }
 
 
     /**
      * Decide whether or not to add or reduce a upvote, how to set the status type,
-     * and update the number of upvote in corresponding question table
+     * and update the number of upvote in corresponding question table.
      * @param questionId
      * @param userId
      */
@@ -79,7 +88,7 @@ public class QuestionController {
 
     /**
      * Decide whether or not to add or reduce a downvote, how to set the status type,
-     * and update the number of downvote in corresponding question table
+     * and update the number of downvote in corresponding question table.
      * @param questionId
      * @param userId
      */
@@ -105,9 +114,9 @@ public class QuestionController {
 
 
     /**
-     * Increase one upvote in certain question
+     * Increase one upvote in certain question.
      * @param question
-     * @return
+     * @param user
      */
     public static void addUpvote (Question question, Rootuser user) {
         int upvote = question.getUpvote();
@@ -118,9 +127,9 @@ public class QuestionController {
 
 
     /**
-     * Reduce one upvote in certain question
+     * Reduce one upvote in certain question.
      * @param question
-     * @return
+     * @param user
      */
     public static void reduceUpvote (Question question, Rootuser user) {
         int upvote = question.getUpvote();
@@ -131,9 +140,9 @@ public class QuestionController {
 
 
     /**
-     * Increase one upvote in certain question
+     * Increase one downvote in certain question.
      * @param question
-     * @return
+     * @param user
      */
     public static void addDownvote (Question question, Rootuser user) {
         int downvote = question.getDownvote();
@@ -144,9 +153,9 @@ public class QuestionController {
 
 
     /**
-     * Reduce one upvote in certain question
+     * Reduce one downvote in certain question.
      * @param question
-     * @return
+     * @param user
      */
     public static void reduceDownvote (Question question, Rootuser user) {
         int downvote = question.getDownvote();
@@ -154,6 +163,5 @@ public class QuestionController {
         StatusDAO.deleteStatus(new Status(question.getQuestionId(), user.getUserId(), 2));
         QuestionDAO.updateQuestion(question);
     }
-
 
 }

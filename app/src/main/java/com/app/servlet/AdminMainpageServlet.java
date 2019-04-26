@@ -16,7 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet(name = "AdminMainpageServlet")
+/**
+ * This servlet handles HTTP request for admin's questions and answers dashboard page.
+ * doGet function handles page display on url "/admin". It checks the login status first.
+ * If login status exists, display this page using html,
+ * since we don't have enough time to implement dynamic display anymore.
+ */
 public class AdminMainpageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -71,7 +76,7 @@ public class AdminMainpageServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
-            System.out.println(loginedInfo.getRole());
+
             RedirectController.showFrontEnd(request, response, "/html/admin-Q&A.html");
         }
         else {

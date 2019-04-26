@@ -1,5 +1,9 @@
 package com.app.entity;
 
+/**
+ * A mapping of table "report" in Q&A system's db.
+ * This entity class belongs to data layer, served as part of data persistence layer.
+ */
 public class Report {
 
     private int reportId;

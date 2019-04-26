@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@WebServlet(name = "AdminDeleteCandidateAccServlet")
+/**
+ * This servlet handles HTTP request on url "/adminDeleteCandidateAccount" for admin's account page.
+ * doPost function handles candidate accounts deletion. Parameters are passed as a string list.
+ * After deleting account in the list, refresh admin's account page.
+ */
 public class AdminDeleteCandidateAccServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] candidateSelections = request.getParameterValues("candidate_selection");

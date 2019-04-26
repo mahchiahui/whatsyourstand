@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "CandidateDeleteAnswerServlet")
+/**
+ * This servlet handles HTTP request on url "/deleteCandidateAnswer" for candidate's page.
+ * doGet function handles candidate answer deletion. Answer id are passed as a string.
+ * After deletion, redirect to candidate's main page.
+ */
 public class CandidateDeleteAnswerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

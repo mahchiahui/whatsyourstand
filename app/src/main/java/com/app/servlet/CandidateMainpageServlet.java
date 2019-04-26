@@ -23,13 +23,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//@WebServlet(name = "CandidateMainpageServlet")
+/**
+ * This servlet handles HTTP request for candidate's top questions page.
+ * doPost function handles new answer form submission under question record card.
+ * doGet function handles page display on url "/candidate". It checks the login status first.
+ * If login status exists, read question list sorted by (# of upvote - # of downvote) value,
+ * the corresponding answer lists and candidate information
+ * from the database and dynamically display this page using jsp.
+ */
 public class CandidateMainpageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String candidateAnswer = request.getParameter("candidateAnswer");
         String questionid = request.getParameter("questionid");
 
-        //retrieve userID
+        // retrieve userID
         String userID = "0";
         String cookieid = LoginController.getCookieId(request);
         if (cookieid != null) {
@@ -38,18 +45,19 @@ public class CandidateMainpageServlet extends HttpServlet {
 
             // Cookie is valid in db and has not expired
             if (cookie != null &&
-                    DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
+                DateUtil.isTimeDiffLessThanOneDay(curTime, cookie.getTimestamp())) {
                 userID = cookie.getUserId();
             }
         }
 
-        //generate new answerID
+        // generate new answerID
         int answerID = AnswerDAO.createNewAnswerID();
 
-        //generate timestamp
+        // generate timestamp
         Date date= new Date();
         Timestamp ts = new Timestamp(date.getTime());
 
+        // create a answer record in db and refresh the page
         Answer answer = new Answer(answerID, Integer.parseInt(questionid), Integer.parseInt(userID), candidateAnswer, ts.toString());
         AnswerDAO.createNewAnswer(answer);
         response.sendRedirect(request.getContextPath() + "/candidate");

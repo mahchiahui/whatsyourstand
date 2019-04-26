@@ -1,9 +1,6 @@
 package com.app.dao;
 
-import com.app.entity.Question;
 import com.app.entity.Report;
-import com.app.entity.Rootuser;
-import com.app.entity.Status;
 import com.app.utility.ConnectionManager;
 import org.slf4j.LoggerFactory;
 
@@ -12,15 +9,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO functions processing table "report" in Q&A system's db
+ * as part of data persistence layer.
+ */
 public class ReportDAO {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(QuestionDAO.class);
 
-
     /**
-     * Check if a report from a user exists in the db
-     * @param report
-     * @return
+     * Check if a report from a user exists in the db.
+     * @param report an object of report entity class
+     * @return true if delete succeeds, false if it fails
      */
     public static boolean checkReportExist (Report report) {
         Connection conn = null;
@@ -51,7 +51,7 @@ public class ReportDAO {
 
     /**
      * Insert a new record of question report
-     * @param report
+     * @param report an object of report entity class
      */
     public static void createReport (Report report) {
         Connection conn = null;
@@ -98,8 +98,9 @@ public class ReportDAO {
 
 
     /**
-     * Remove a record of report from db
-     * @param report
+     * Remove a record of report from db.
+     * @param report an object of report entity class
+     * @return true if delete succeeds, false if it fails
      */
     public static boolean deleteReport (Report report) {
         Connection conn = null;

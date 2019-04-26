@@ -12,37 +12,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO functions processing table "answer" in Q&A system's db
+ * as part of data persistence layer.
+ * Contain typical CRUD functions.
+ */
 public class AnswerDAO {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AnswerDAO.class);
 
     /**
-     * Create a new answer in db
-     * @param answer
+     * Create a new answer in db.
+     * @param answer an answer object
      */
     public static void createNewAnswer (Answer answer) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        int answerID = 0;
 
-        // count number of questions
-        try {
-            conn = ConnectionManager.getConnection("14819db");
-            stmt = conn.prepareStatement("select IFNULL(MAX(answerid),0) from answer");
-            rs = stmt.executeQuery();
-            rs.next();
-            answerID = rs.getInt(1);
-        } catch (SQLException se) {
-            logger.error("sql exception in insertQuestion, counting question sql", se);
+        // obtain a new answer id larger than current max id in db
+        int answerID = createNewAnswerID();
 
-        } finally {
-            ConnectionManager.close(conn, stmt, rs);
-        }
-
-        // create new questionID
-        answerID++;
-
+        // create a new question record in db
         try {
             conn = ConnectionManager.getConnection("14819db");
 
@@ -69,9 +60,10 @@ public class AnswerDAO {
         }
     }
 
+
     /**
-     * creates new answer ID
-     * @return new answer ID
+     * Obtain a new answer id larger than current max id in db
+     * @return a new answer ID
      */
     public static int createNewAnswerID () {
         Connection conn = null;
@@ -79,7 +71,7 @@ public class AnswerDAO {
         PreparedStatement stmt = null;
         int answerID = 0;
 
-        // count number of questions
+        // obtain current max answer id
         try {
             conn = ConnectionManager.getConnection("14819db");
             stmt = conn.prepareStatement("select IFNULL(MAX(answerid),0) from answer");
@@ -87,18 +79,23 @@ public class AnswerDAO {
             rs.next();
             answerID = rs.getInt(1);
         } catch (SQLException se) {
-            logger.error("sql exception in insertQuestion, counting question sql", se);
+            logger.error("sql exception in createNewAnswerID, obtaining max answer id sql", se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
 
-        // create new questionID
+        // generate new answerID
         answerID++;
-
         return answerID;
     }
 
+
+    /**
+     * Get a record of answer given an answer id
+     * @param answerID
+     * @return Answer object
+     */
     public static Answer getAnswer (String answerID) {
         Connection conn = null;
         ResultSet rs = null;
@@ -124,6 +121,12 @@ public class AnswerDAO {
         return answer;
     }
 
+
+    /**
+     * Get the list of answers created by a certain user
+     * @param userID userid
+     * @return a list of answers
+     */
     public static ArrayList<Answer> getAllAnswers (int userID) {
         Connection conn = null;
         ResultSet rs = null;
@@ -153,7 +156,7 @@ public class AnswerDAO {
 
     /**
      * Obtain a list of answer attached to a certain question
-     * @param question : given question object to read questionID
+     * @param question given question object to read questionID
      * @return a list of Answer objects
      */
     public static List<Answer> readAnswerList (Question question) {
@@ -190,7 +193,8 @@ public class AnswerDAO {
 
     /**
      * Update a record in answer table, if it exists
-     * @param answer
+     * @param answer an answer object
+     * @return true if update succeeds, false if fails
      */
     public static boolean updateAnswer (Answer answer) {
         Connection conn = null;
@@ -226,7 +230,8 @@ public class AnswerDAO {
 
     /**
      * Delete a answer given the answer id
-     * @param answerID : answer's id
+     * @param answerID answer's id
+     * @return true if delete succeeds, false if fails
      */
     public static boolean deleteAnswer (int answerID) {
         Connection conn = null;
@@ -256,8 +261,8 @@ public class AnswerDAO {
 
     /**
      * Transform result set into Answer object
-     * @param rs
-     * @return
+     * @param rs result set object returned by sql statement
+     * @return an Answer entity object
      * @throws SQLException
      */
     private static Answer extractAnswerFromRS (ResultSet rs) throws SQLException {

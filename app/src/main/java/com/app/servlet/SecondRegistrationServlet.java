@@ -11,13 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet("/second-registration")
+/**
+ * This servlet is only available for developer's account creation testing purpose.
+ * The url it handles is "/second-registration".
+ * It should not be included in the actual functionality.
+ */
 public class SecondRegistrationServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    public SecondRegistrationServlet() {
-        super();
-    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //    response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -34,13 +33,6 @@ public class SecondRegistrationServlet extends HttpServlet {
         boolean isRegis = UserDAO.registration(username, password, role);
         System.out.println(isRegis);
 
-/*
-        // Suppose a user has successfully logged.
-        UserInfo loginedInfo = new UserInfo("Tom", "USA", 5);
-
-        // Storing user information in an attribute of Session.
-        session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
-*/
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
