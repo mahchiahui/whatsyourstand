@@ -135,16 +135,6 @@
         <url-pattern>/voter</url-pattern>
     </servlet-mapping>
 
-    <!-- Filters -->
-    <filter>
-        <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>com.app.filter.AuthenticationFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
-        <url-pattern>/*/</url-pattern>
-    </filter-mapping>
-
     <!--   privacy policy  -->
     <servlet>
         <servlet-name>PrivacyPolicyServlet</servlet-name>
@@ -211,14 +201,6 @@
         <url-pattern>/voter-help</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>VoterSettingServlet</servlet-name>
-        <servlet-class>com.app.servlet.VoterSettingServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>VoterSettingServlet</servlet-name>
-        <url-pattern>/voter-settings</url-pattern>
-    </servlet-mapping>
 
     <!--   candidate pages  -->
     <servlet>
@@ -228,15 +210,6 @@
     <servlet-mapping>
         <servlet-name>CandidateMyAnswerServlet</servlet-name>
         <url-pattern>/candidate-myanswers</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>CandidateMyProfileServlet</servlet-name>
-        <servlet-class>com.app.servlet.CandidateMyProfileServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CandidateMyProfileServlet</servlet-name>
-        <url-pattern>/candidate-myprofile</url-pattern>
     </servlet-mapping>
 
     <servlet>

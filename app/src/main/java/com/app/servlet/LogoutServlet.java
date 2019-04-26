@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet(name = "LogoutServlet")
+/**
+ * This servlet handles HTTP request on url "/logout" possibly jumped from any landing pages.
+ * doGet function invalidates the previous session, clears local cookie storage, and redirect
+ * user to the voter login interface.
+ */
 public class LogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

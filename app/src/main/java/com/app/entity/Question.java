@@ -1,5 +1,9 @@
 package com.app.entity;
 
+/**
+ * A mapping of table "question" in Q&A system's db.
+ * This entity class belongs to data layer, served as part of data persistence layer.
+ */
 public class Question {
 
     private int questionId;
@@ -9,7 +13,6 @@ public class Question {
     private String createdTime;
     private String lastModifiedTime;
     private String location;
-
     private int numberOfAnswer;
     private int upvote;
     private int downvote;
@@ -24,7 +27,6 @@ public class Question {
         this.createdTime = "";
         this.lastModifiedTime = "";
         this.location = "";
-
         this.numberOfAnswer = 0;
         this.upvote = 0;
         this.downvote = 0;
@@ -39,7 +41,6 @@ public class Question {
         this.createdTime = time;
         this.lastModifiedTime = "";
         this.location = location;
-
         this.numberOfAnswer = 0;
         this.upvote = 0;
         this.downvote = 0;

@@ -10,7 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * DAO functions processing table "voter" in verification system's db
+ * as part of data persistence layer.
+ * Contain typical CRUD functions.
+ */
 public class VerVoterDAO {
+
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(VerVoterDAO.class);
 
     /**
@@ -28,7 +34,7 @@ public class VerVoterDAO {
         PreparedStatement stmt = null;
         int voterID = 0;
 
-        //count number of voters
+        // obtain current maximum voter id
         try {
             conn = ConnectionManager.getConnection("verification");
 
@@ -37,16 +43,16 @@ public class VerVoterDAO {
             rs.next();
             voterID = rs.getInt(1);
         } catch (SQLException se) {
-            logger.error("sql exception in setVerVoter, counting voter sql",se);
+            logger.error("sql exception in setVerVoter, obtain current maximum voter id",se);
 
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
 
-        //create new voterID
+        // create new voterID
         voterID++;
 
-        //insert voter into database
+        // insert voter into database
         String sql = "INSERT INTO voter (voterID, name, hashedPN, city, locationDocumentPath, email) VALUES (?,?,?,?,?,?)";
 
         try {
@@ -73,6 +79,11 @@ public class VerVoterDAO {
         return true;
     }
 
+
+    /**
+     * Read a list of all existing unverified voter from verification db
+     * @return a list of VerVoter entity class objects
+     */
     public static ArrayList<VerVoter> getAllVerVoter(){
         ArrayList<VerVoter> allVerVoter = new ArrayList<>();
         Connection conn = null;
@@ -103,8 +114,13 @@ public class VerVoterDAO {
         return allVerVoter;
     }
 
+
+    /**
+     * Delete all voters that are on the list
+     * @param list a list of string of voter's user id
+     */
     public static void deleteVerVoter(ArrayList<String> list){
-        for(String voterID: list){
+        for (String voterID: list) {
             Connection conn = null;
             ResultSet rs = null;
             PreparedStatement stmt = null;
@@ -118,7 +134,7 @@ public class VerVoterDAO {
 
                 stmt.executeUpdate();
             } catch (SQLException se) {
-                logger.error("sql exception in setVerVoter, inserting voter in to db",se);
+                logger.error("sql exception in deleteVerVoter in VerVoterDAO",se);
 
             } finally {
                 ConnectionManager.close(conn, stmt, rs);

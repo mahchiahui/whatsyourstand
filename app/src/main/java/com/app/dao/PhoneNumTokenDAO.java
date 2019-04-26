@@ -8,11 +8,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO functions processing table "phonenumtoken" in verification system's db
+ * as part of data persistence layer.
+ */
 public class PhoneNumTokenDAO {
+
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PhoneNumTokenDAO.class);
 
     /**
-     * inserts phone number token into database
+     * Insert phone number token into database.
      * @param token
      * @return true or false
      */
@@ -22,7 +27,7 @@ public class PhoneNumTokenDAO {
         PreparedStatement stmt = null;
         boolean result = false;
 
-        //insert token into database
+        // insert token into database
         String sql = "INSERT INTO phonenumtoken (token) VALUES (?)";
 
         try {
@@ -45,8 +50,9 @@ public class PhoneNumTokenDAO {
         return result;
     }
 
+
     /**
-     * checks if the phone number token exists
+     * Check if the phone number token exists.
      * @param token
      * @return result of the sql query
      */

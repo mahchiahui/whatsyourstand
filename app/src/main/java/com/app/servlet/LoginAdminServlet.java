@@ -17,19 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet(name = "com.app.servlet.LoginServlet")
-//@WebServlet("/Login")
+/**
+ * This servlet handles HTTP request on url "/login-admin".
+ * doPost function handles login form submission and user authentication by communicating with db.
+ * After validating a user, its login status and user information is stored in session.
+ * A new cookie will be added to the local cookie storage so that if user visit this site within 24 hours,
+ * he/she doesn't need to login again.
+ * doGet function handles page display. If a user has login before, redirect them to home page, otherwise,
+ * display the login html page.
+ */
 public class LoginAdminServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-
-    public LoginAdminServlet() {
-        super();
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    response.getWriter().append("Served at: ").append(request.getContextPath());
-
         // Get HttpSession object
         HttpSession session = request.getSession();
         // setting session to expiry in 60 mins
@@ -51,7 +50,6 @@ public class LoginAdminServlet extends HttpServlet {
             RedirectController.redirectToHomePage(request, response, user);
         }
         else {
-//            System.out.println("Login failed");
             RequestDispatcher view = request.getRequestDispatcher("/html/login-fail.html");
             view.forward(request, response);
         }

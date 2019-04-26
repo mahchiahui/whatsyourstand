@@ -17,8 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet(name = "com.app.servlet.LoginServlet")
-//@WebServlet("/Login")
+/**
+ * This servlet handles HTTP request on url "/login-candidate".
+ * doPost function handles login form submission and user authentication by communicating with db.
+ * After validating a user, its login status and user information is stored in session.
+ * A new cookie will be added to the local cookie storage so that if user visit this site within 24 hours,
+ * he/she doesn't need to login again.
+ * doGet function handles page display. If a user has login before, redirect them to home page, otherwise,
+ * display the login html page.
+ */
 public class LoginCandidateServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

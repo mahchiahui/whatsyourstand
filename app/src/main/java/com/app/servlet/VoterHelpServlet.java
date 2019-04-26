@@ -18,7 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "VoterHelpServlet")
+/**
+ * This servlet handles HTTP request for voter's help page.
+ * doGet function handles page display on url "/voter-help". It checks the login status first.
+ * If login status exists, display this page using static html.
+ */
 public class VoterHelpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

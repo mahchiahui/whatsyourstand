@@ -19,10 +19,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Handle question update and delete,
- * need to keep track of the original page so that it could redirect back to the original page
+ * This servlet handles HTTP request for url "/question-update" for question update and delete.
+ * It needs to keep track of the original page so that it could redirect back to the original page.
+ * doPost function handles updated question form submission. It updates question record in db and
+ * if it succeeds, redirect user to the previous voter page.
+ * doGet function keeps track of whichever previous url is, is it an update or delete action,
+ * what's the id of question card that is clicked on, store these information into session,
+ * and then display the page using jsp.
  */
-//@WebServlet(name = "QuestionUpdateServlet")
 public class QuestionUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -34,8 +38,6 @@ public class QuestionUpdateServlet extends HttpServlet {
         String location = request.getParameter("location");
         String curTime = DateUtil.getCurrentTime();
 
-//        HttpSession session = request.getSession(false);
-//        Question question = (Question) session.getAttribute(Constants.ATTRIBUTE_QUESTION_KEY);
         Question question = QuestionDAO.searchQuestionByID(Integer.parseInt(questionId));
         question.setTitle(title);
         question.setDescription(description);
@@ -44,8 +46,6 @@ public class QuestionUpdateServlet extends HttpServlet {
 
         if (QuestionDAO.updateQuestion(question)) {
             response.sendRedirect(request.getServletContext().getContextPath() + "/" + lastURL);
-            // "/voter-myquestions"
-//            RedirectController.showFrontEnd(request, response, "/html/voter-myquestions.jsp");
         }
         else {
             ServletOutputStream out = response.getOutputStream();
@@ -55,10 +55,12 @@ public class QuestionUpdateServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // obtain parameters from query string
         String questionid = request.getParameter("questionid");
         String action = request.getParameter("action");
         String lastURL = request.getParameter("lasturl");
 
+        // store previous page's information into session
         HttpSession session = request.getSession();
         session.setAttribute(Constants.ATTRIBUTE_QUESTION_KEY, questionid);
         session.setAttribute(Constants.CALLBACK_URL_KEY, lastURL);
@@ -66,7 +68,7 @@ public class QuestionUpdateServlet extends HttpServlet {
         Voter voter = UserDAO.getVoter(loginedInfo.getUserId());
         request.setAttribute("voter", voter);
 
-//        System.out.println(questionid);
+        // redirect to corresponding pages
         if (action.equals("update")) {
             RedirectController.showFrontEnd(request, response, "/html/voter-updatequestion.jsp");
         }

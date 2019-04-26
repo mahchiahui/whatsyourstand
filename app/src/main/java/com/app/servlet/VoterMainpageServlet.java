@@ -13,38 +13,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.registry.infomodel.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@WebServlet(name = "VoterMainpageServlet")
+/**
+ * This servlet handles HTTP request for voter's top questions page.
+ * doPost function handles user click on upvote or downvote button of question record card.
+ * doGet function handles page display on url "/voter". It checks the login status first.
+ * If login status exists, read question list sorted by (# of upvote - # of downvote) value,
+ * the corresponding answer lists and candidate information
+ * from the database and dynamically display this page using jsp.
+ */
 public class VoterMainpageServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
+        // obtain authenticated user's id stored in current session
         HttpSession session = request.getSession();
         Rootuser loginedInfo = (Rootuser) session.getAttribute(Constants.SESSION_USER_KEY);
+        int userId = loginedInfo.getUserId();
 
+        // get parameters in query string
         String questionId = request.getParameter("questionid");
         String action = request.getParameter("action");
-        switch (action) {
-            case "report":
-                Report report = new Report();
-                report.setQuestionId(Integer.parseInt(questionId));
-                report.setUserId(loginedInfo.getUserId());
-                report.setContent("Report Content: Spam");  // how to get this value from pop up window
-                ReportDAO.createReport(report);
-                break;
-            case "upvote":
-                QuestionController.setUpvote(Integer.parseInt(questionId), loginedInfo.getUserId());
-                break;
-            case "downvote":
-                QuestionController.setDownvote(Integer.parseInt(questionId), loginedInfo.getUserId());
-                break;
+
+        // call corresponding functions in controller
+        if (action.equals("upvote")) {
+            QuestionController.setUpvote(Integer.parseInt(questionId), userId);
         }
-//        response.getWriter().write(id); // "Hello World!"
+        else if (action.equals("downvote")) {
+            QuestionController.setDownvote(Integer.parseInt(questionId), userId);
+        }
     }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

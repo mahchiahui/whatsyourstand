@@ -21,7 +21,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "CandidateMyAnswerServlet")
+/**
+ * This servlet handles HTTP request for candidate's my answers page.
+ * doGet function handles page display on url "/candidate-myanswers". It checks the login status first.
+ * If login status exists, read answer lists posted by current login user, if there is any,
+ * from the database and dynamically display this page using jsp.
+ */
 public class CandidateMyAnswerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -75,6 +80,8 @@ public class CandidateMyAnswerServlet extends HttpServlet {
                 session = request.getSession();
                 session.setAttribute(Constants.SESSION_USER_KEY, loginedInfo);
             }
+
+            // obtain answer list and corresponding candidate information from db
             ArrayList<Answer> answers = AnswerDAO.getAllAnswers(loginedInfo.getUserId());
             request.setAttribute("answers",answers);
 

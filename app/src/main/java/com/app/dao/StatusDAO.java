@@ -10,16 +10,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * This class manipulates the crud of Status table for: Like, Upvote, Downvote
+ * DAO functions processing table "status" in Q&A system's db
+ * as part of data persistence layer.
  */
 public class StatusDAO {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(QuestionDAO.class);
 
     /**
-     * Check if there is record of status for a user on certain question
-     * @param status
-     * @return
+     * Check if there is record of status for a user on certain question.
+     * @param status an object of Status entity class
+     * @return true if status exists, false if not
      */
     public static boolean checkStatus (Status status) {
         Connection conn = null;
@@ -50,8 +51,8 @@ public class StatusDAO {
 
 
     /**
-     * Insert a new record of status
-     * @param status
+     * Insert a new record of status into db
+     * @param status an object of Status entity class
      */
     public static void createStatus (Status status) {
         Connection conn = null;
@@ -79,8 +80,8 @@ public class StatusDAO {
 
 
     /**
-     * Remove a record of status from db
-     * @param status
+     * Remove a record of status from db.
+     * @param status an object of Status entity class
      */
     public static boolean deleteStatus (Status status) {
         Connection conn = null;

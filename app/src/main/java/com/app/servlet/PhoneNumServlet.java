@@ -5,22 +5,27 @@ import com.app.utility.SendEmailTLS;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Random;
 
-@WebServlet(name = "PhoneNumServlet")
+/**
+ * This servlet handles HTTP request on url "/phoneNumberCheck" for validating phone token
+ * as the first step in the registration process.
+ * doPost function always sends an email with random token string generated on the fly to a voter's
+ * gmail account. After this is done, redirect user to a new page using jsp.
+ * doGet function handles page display using jsp.
+ */
 public class PhoneNumServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        /**
+        /*
          * This creates a random token
          * store the token in the database
-         * sends an email to chiahuim@andrew.cmu.edu with the token
-         **/
+         * sends an email to testing voter gmail account with the token
+         */
         String token = getRandomNumberString();
         PhoneNumTokenDAO.insertPhoneNumToken(token);
         String message = "Dear Voter, \n\n This is the token the verify your phone number: " + token;

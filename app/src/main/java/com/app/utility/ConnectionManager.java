@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * JDBC connection manager utility for MySQL database.
+ * Set up db connection with hardcoded credentials stored in property file.
+ */
 public class ConnectionManager {
-    private static final String PROPS_FILENAME =    "/com/app/connection.properties";
+    private static final String PROPS_FILENAME = "/com/app/connection.properties";
     private static String dbUser;
     private static String dbPassword;
     private static String dbURL;
@@ -64,6 +68,10 @@ public class ConnectionManager {
         }
     }
 
+
+    /**
+     * Instantiate a new jdbc driver for MySQL
+     */
     private static void initDBDriver() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -76,8 +84,9 @@ public class ConnectionManager {
         }
     }
 
+
     /**
-     * Gets a connection to the database
+     * Gets a connection to the MySQL database
      *
      * @return the connection
      * @throws SQLException if an error occurs when connecting

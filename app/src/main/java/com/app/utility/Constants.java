@@ -1,5 +1,8 @@
 package com.app.utility;
 
+/**
+ * Constant utility class where commonly used keys in HTTP session are registered
+ */
 public class Constants {
 
     public static final String ATTRIBUTE_QUESTION_KEY ="ATTRIBUTE_QUESTION_KEY";

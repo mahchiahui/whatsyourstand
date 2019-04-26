@@ -18,7 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "CandidateHelpServlet")
+/**
+ * This servlet handles HTTP request for candidate's help page.
+ * Get request handles page display on url "/candidate-help". It checks the login status first.
+ * If login status exists, display this page using static html.
+ */
 public class CandidateHelpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

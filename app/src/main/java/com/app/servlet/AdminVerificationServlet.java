@@ -27,11 +27,18 @@ import java.util.Arrays;
 
 import static com.app.dao.VerVoterDAO.getAllVerVoter;
 
-@WebServlet(name = "AdminVerificationServlet")
+/**
+ * This servlet handles HTTP request for admin's voter verification dashboard page.
+ * doPost function handles voter account approval when all voter records with the checkbox selected
+ * are sent back as a list of string.
+ * doGet function handles page display on url "/admin-verification". It checks the login status first.
+ * If login status exists, read all the unverified voter records
+ * from the database and dynamically display this page using jsp.
+ */
 public class AdminVerificationServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        /**
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
          * takes the array of accounts that the admin has approved
          * convert it to an Arraylist
          * get the voterID

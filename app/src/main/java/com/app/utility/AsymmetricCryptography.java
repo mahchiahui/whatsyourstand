@@ -1,11 +1,9 @@
 package com.app.utility;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
-import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -21,6 +19,9 @@ import javax.crypto.NoSuchPaddingException;
 
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * Custom implementation of RSA asymmetric cryptography utility class
+ */
 public class AsymmetricCryptography {
     private Cipher cipher;
 

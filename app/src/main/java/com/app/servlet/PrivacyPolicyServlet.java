@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "PrivacyPolicyServlet")
+/**
+ * This servlet handles HTTP request on url "/privacypolicy" for privacy policy page.
+ * doGet function handles privacy policy page display using static html.
+ */
 public class PrivacyPolicyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

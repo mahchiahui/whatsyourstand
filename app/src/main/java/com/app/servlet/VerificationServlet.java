@@ -13,6 +13,13 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This servlet handles HTTP request for url "/VoterVerification"
+ * for submitting identity verification request as the third step in the registration process.
+ * doPost function handles verification form submission. It reads the parameters and stores the
+ * uploaded document into the verification system's db.
+ * doGet function display the registration page using html.
+ */
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)

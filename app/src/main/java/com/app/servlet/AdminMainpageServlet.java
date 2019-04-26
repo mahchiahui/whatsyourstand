@@ -24,7 +24,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//@WebServlet(name = "AdminMainpageServlet")
+/**
+ * This servlet handles HTTP request for admin's questions and answers dashboard page.
+ * doGet function handles page display on url "/admin". It checks the login status first.
+ * If login status exists, display this page using html,
+ * since we don't have enough time to implement dynamic display anymore.
+ */
 public class AdminMainpageServlet extends HttpServlet {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(QuestionDAO.class);
 
