@@ -15,7 +15,7 @@ public class PrivacyPolicyServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/privacypolicy.html");
+        RequestDispatcher view = request.getRequestDispatcher("/html/privacy-notice.html");
         view.forward(request, response);
     }
 }
