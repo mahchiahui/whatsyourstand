@@ -31,6 +31,7 @@ import static com.app.dao.VerVoterDAO.getAllVerVoter;
  * This servlet handles HTTP request for admin's voter verification dashboard page.
  * doPost function handles voter account approval when all voter records with the checkbox selected
  * are sent back as a list of string.
+ * if the admin chooses to deny the voter's verification documents, the voter will receive an email informing them about the denial and an email to contact for more information
  * doGet function handles page display on url "/admin-verification". It checks the login status first.
  * If login status exists, read all the unverified voter records
  * from the database and dynamically display this page using jsp.
