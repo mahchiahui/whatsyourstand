@@ -124,34 +124,11 @@
                             <div class="md-step-bar-right"></div>
                         </div>
                     </div>
-                   <a style="margin-bottom: 20px;" href="privacypolicy" class="btn btn-privary btn-block">Please Read our <u style="color:purple;">Privacy Policy</u></a>
+                    <div style="margin-bottom: 20px; text-align: center">Please Read our <a href="privacypolicy"><u>Privacy Policy</u></a></div>
                   <form class="user" style="text-align: center" method="post" action="phoneNumberCheck">
                     <div class="form-group">
-                      <input style="margin-bottom: 20px;width: 70%;display: inline-block;" type="text" class="form-control form-control-user" id="telnumber" aria-describedby="Tel Help" placeholder="Enter Your Telephone Number" required>
-                       
-                       <a class="dropdown-toggle" href="#" id="TelDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Why<span class="icon text-purple-50">
-                      <i class="fa fa-question"></i>
-                    </span></a>
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="TelDropdown">
-                <h6 class="dropdown-header">
-                 Why Telephone?
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <b>Why?</b></br>
-                    Becuase we want to forbid malicious multiple registrations</br>
-                    
-                    <b>When will we delete?</b></br>
-                    We will delete plain text after verifying the tel is yours</br>
-
-                    <b>How will we store?</b></br>
-                    Hashed value(not plain text)</br></br>
-
-                    <b>For more details: Please Read our <u style="color:purple;">Privay Policy</u></b>
-
-                  </div>
-                </a>
-              </div>
+                        <input style="margin-bottom: 20px;width: 70%;display: inline-block;" type="text" class="form-control form-control-user" id="telnumber" aria-describedby="Tel Help" placeholder="Enter Your Telephone Number" required>
+                        <button type="button" class="btn btn-primary" data-html="true" data-trigger="focus" data-toggle="popover" title="Why?" data-content="Because we want to forbid malicious multiple registrations</br></br><b>When will we delete?</b></br>We will delete plain text after verifying the tel is yours</br></br><b>How will we store?</b></br>Hashed value(not plain text)</br></br><b>For more details: Please Read our <a href='privacypolicy'>Privacy Policy</a></b>">Why?</button>
                     </div>
                         <div class="custom-control custom-checkbox small" style="margin-bottom: 30px;">
                             <input type="checkbox" class="custom-control-input" id="customCheck" />
@@ -182,12 +159,20 @@
   <!-- Bootstrap core JavaScript-->
   <script src="html/vendor/jquery/jquery.min.js"></script>
   <script src="html/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
   <!-- Core plugin JavaScript-->
   <script src="html/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="html/js/sb-admin-2.min.js"></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+    $('.popover-dismiss').popover({
+        trigger: 'focus'
+    })
+</script>
 
 </body>
 

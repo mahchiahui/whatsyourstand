@@ -129,7 +129,7 @@
                         }
                     %>
 
-                   <a style="margin-bottom: 20px;" href="privacypolicy" class="btn btn-privary btn-block">Please Read our <u style="color:purple;">Privacy Policy</u></a>
+                    <div style="margin-bottom: 20px; text-align: center">Please Read our <a href="privacypolicy"><u>Privacy Policy</u></a></div>
                   <form class="user" style="text-align: center" method="post" action="VerifyPhoneNum">
                     <div class="form-group">
                       <div>
